@@ -1,0 +1,1008 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="性能调优,MultiDex,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
+<meta name="keywords" content="性能调优,MultiDex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给App启用MultiDex功能">
+<meta property="og:url" content="http://kaedea.com/2015/09/02/android/enable-multidex/index.html">
+<meta property="og:site_name" content="中二病也要开发ANDROID">
+<meta property="og:description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-08-09T13:39:29.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="给App启用MultiDex功能">
+<meta name="twitter:description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kaedea.com/2015/09/02/android/enable-multidex/">
+
+
+
+
+
+  <title> 给App启用MultiDex功能 | 中二病也要开发ANDROID </title>
+</head>
+
+<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=58507383";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'10%'}, 150);
+    </script>
+    
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">中二病也要开发ANDROID</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'30%'}, 150);
+    </script>
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2015/09/02/android/enable-multidex/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                给App启用MultiDex功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-09-02T00:00:00+00:00">
+              2015-09-02
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-09T13:39:29+00:00">
+              2021-08-09
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/02/android/enable-multidex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/02/android/enable-multidex/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/09/02/android/enable-multidex/" class="leancloud_visitors" data-flag-title="给App启用MultiDex功能">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。</p>
+<a id="more"></a>
+<h2 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h2><h3 id="65535问题"><a href="#65535问题" class="headerlink" title="65535问题"></a>65535问题</h3><p>当App的功能越来越丰富、使用的库越来越多时，其包含的Java方法总数也越来越多，这时候就会出现65535问题。</p>
+<p>在构建apk的时候限制了一个dex文件能包含的方法数，其总数不能超过65535（则64K，1K = 2^10 = 1024 , 64 * 1024 = 65535）。MultiDex, 顾名思义，是指多dex实现，大多数App，解压其apk后，一般只有一个classes.dex文件，采用MultiDex的App解压后可以看到有classes.dex，classes2.dex，… classes(N).dex，这样每个dex都可以最大承载64k个方法，很大限度地缓解了单dex方法数限制。</p>
+<p>（2016-10-1 具体原因分析可以参考<a href="http://www.jayfeng.com/2016/03/10/%E7%94%B1Android-65K%E6%96%B9%E6%B3%95%E6%95%B0%E9%99%90%E5%88%B6%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank" rel="noopener">由Android-65K方法数限制引发的思考</a>）</p>
+<h3 id="LinearAlloc问题"><a href="#LinearAlloc问题" class="headerlink" title="LinearAlloc问题"></a>LinearAlloc问题</h3><p>现在这个问题已经不常见了，它多发生在2.x版本的设备上，安装时会提示INSTALL_FAILED_DEXOPT。这个问题发生在安装期间，在使用Dalvik虚拟机的设备上安装APK时，会通过DexOpt工具将Dex文件优化为odex文件，即Optimized Dex，这样可以提高执行效率(不同的设备需要不同的odex格式，所以这个过程只能安装apk后进行)。</p>
+<p>LinearAlloc是一个固定大小的缓冲区，dexopt使用LinearAlloc来存储应用的方法信息，在Android的不同版本中有4M/5M/8M/16M等不同大小，目前主流4.x系统上都已到8MB或16MB，但是在Gingerbread或以下系统（2.2和2.3）LinearAlloc分配空间只有5M大小的。当应用的方法信息过多导致超出缓冲区大小时，会造成dexopt崩溃，造成INSTALL_FAILED_DEXOPT错误。</p>
+<h2 id="启用MultiDex解决问题"><a href="#启用MultiDex解决问题" class="headerlink" title="启用MultiDex解决问题"></a>启用MultiDex解决问题</h2><p>直接忽视Eclipse，在Android Studio中，可以通过以下方式来启用MultiDex。</p>
+<h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ul>
+<li>使用 Android Studio 开发工具；</li>
+<li>Android SDK Build Tools &gt;= 21.1；</li>
+<li>使用 Support Repository 中的 multidex (刚出来时是0.1版本，目前已有有1.0.0和1.0.1)；</li>
+</ul>
+<h3 id="配置build-gradle"><a href="#配置build-gradle" class="headerlink" title="配置build.gradle"></a>配置build.gradle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">21</span></span><br><span class="line">    buildToolsVersion <span class="string">"21.1.0"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">        minSdkVersion <span class="number">14</span></span><br><span class="line">        targetSdkVersion <span class="number">21</span></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        multiDexEnabled <span class="keyword">true</span> <span class="comment">// Enable MultiDex.</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile <span class="string">'com.android.support:multidex:1.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在代码里启动MultiDex"><a href="#在代码里启动MultiDex" class="headerlink" title="在代码里启动MultiDex"></a>在代码里启动MultiDex</h3><p>最后，在Java代码里启动MultiDex，有两种方式可以搞定。</p>
+<p>方式一，使用MultiDexApplication。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"xxx"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.support.multidex.MultiDexApplication"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>方式二，在自己的Application#attachBaseContext(Context)方法里添加以下代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">attachBaseContext</span><span class="params">(Context base)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.attachBaseContext(base);</span><br><span class="line">		MultiDex.install(<span class="keyword">this</span>); <span class="comment">// Enable MultiDex.</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>MultiDex并不是万全的方案，Google貌似不太热衷于旧版本的兼容工作，通过阅读MultiDex Support库的源码，我们也能发现其代码写得貌似没有那么严谨。</p>
+<p>目前来说，使用MultiDex可能存在以下问题。</p>
+<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>如果你在调用MultiDex#install(Context)做了别的工作，而这些工作需要用到的类却存在于别的dex文件里面（Secondary Dexes），就会出现类找不到的运行时异常。</p>
+<p>正确的做法是把这些需要用到的类标记在multidex.keep清单文件里面，再在build.gradle里面启用该清单文件。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">  defaultConfig &#123;</span><br><span class="line">    multiDexEnabled <span class="keyword">true</span></span><br><span class="line">    <span class="function">multiDexKeepProguard <span class="title">file</span><span class="params">(<span class="string">'multidex.pro'</span>)</span></span></span><br><span class="line"><span class="function">   &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">dependencies </span>&#123;</span><br><span class="line">  compile<span class="string">'com.android.support:multidex:1.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>multiDexKeepProguard</code>使用的是类似于混淆文件的过滤规则，出了这个配置项之外还有<code>multiDexKeepFile</code>，这个要求你在清单文件里把所有的类都罗列出来。</p>
+<h3 id="卡顿问题"><a href="#卡顿问题" class="headerlink" title="卡顿问题"></a>卡顿问题</h3><p>通过阅读源码，我们可以看出，目前Android 5.0以上的设备已经自身支持了MultiDex功能，也就是说在安装apk的时候，系统已经会帮我们把apk里面的所有dex文件都做好Optimize处理，所以不需要我们在代码里启用MultiDex了。但是对于Android 5.0以下的设置，则依然要求我们启用MultiDex。而这些系统的设备在第一次运行App的时候，需要对所有的Secondary Dexes文件都进行一次解压以及Optimize处理（生成odex文件），这段时间会有明显的耗时（大概5000毫秒左右，dex越多越大越明显），所有会产生明显的卡顿现象。</p>
+<p>不过好在，在Application#attachBaseContext(Context)中，UI线程的阻塞是不会引发ANR的，只不过这段长时间的卡顿（白屏）还是会影响用户体验，解决方案能想到的有两种。</p>
+<p>第一种，在安装一个新的apk的时候，先在Worker线程里做好MultiDex的Optimize工作，安装apk并启动后，直接使用之前Optimize产生的odex文件，这样就可以避免第一次启动时候的Optimize工作。</p>
+<p>第二种，启动App的时候，先显示一个简单的Splash闪屏界面，然后启动Worker线程执行MultiDex#install(Context)工作，就可以避免UI线程阻塞。不过要确保启动以及启动MultiDex#install(Context)所需要的类都在Main Dex里面。</p>
+<h3 id="多进程同步"><a href="#多进程同步" class="headerlink" title="多进程同步"></a>多进程同步</h3><p>参考Google的MultiDex的源码，可以发现Google并没有考虑多进程同步的问题，如果App是多进程的，并且刚好同时有两个进程出发了MultiDex#install(Context)工作，可以会有多进程冲突的风险。</p>
+<p>如果你采用了上面解决卡顿问题时说到的第二种方法，你也应该考虑多进程的问题，因为这种方法并不是在进程一启动就在主线程里面去做MultiDex初始化了，可能存在同步问题的风险。</p>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p>早期在使用MultiDex的时候，Android Studio会出现apk编译后无法安装的问题，然而使用命令行编译出来的apk文件又可以安装了，这个问题现在基本没有出现了，不再追究原因了。</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="noopener">Configure Apps with Over 64K Methods</a></li>
+<li><a href="http://blog.csdn.net/t12x3456/article/details/40837287" target="_blank" rel="noopener">Android 使用android-support-multidex解决Dex超出方法数的限制问题,让你的应用不再爆棚</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能调优/" rel="tag"># 性能调优</a>
+          
+            <a href="/tags/MultiDex/" rel="tag"># MultiDex</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/19/android-smooth-emulator-for-develop/" rel="next" title="流畅的ANDROID模拟器">
+                <i class="fa fa-chevron-left"></i> 流畅的ANDROID模拟器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/05/themia-demo-using-thmia/" rel="prev" title="HEXO响应式主题・THEMIA">
+                HEXO响应式主题・THEMIA <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
+          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
+          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/rurin" title="微博" target="_blank">
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
+                  
+                  HaoMoe
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
+                  
+                  Pixiv
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="/about/" title="友情链接">友情链接</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题"><span class="nav-number">1.</span> <span class="nav-text">出现的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#65535问题"><span class="nav-number">1.1.</span> <span class="nav-text">65535问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinearAlloc问题"><span class="nav-number">1.2.</span> <span class="nav-text">LinearAlloc问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用MultiDex解决问题"><span class="nav-number">2.</span> <span class="nav-text">启用MultiDex解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境要求"><span class="nav-number">2.1.</span> <span class="nav-text">环境要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置build-gradle"><span class="nav-number">2.2.</span> <span class="nav-text">配置build.gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在代码里启动MultiDex"><span class="nav-number">2.3.</span> <span class="nav-text">在代码里启动MultiDex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存在的问题"><span class="nav-number">3.</span> <span class="nav-text">存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError"><span class="nav-number">3.1.</span> <span class="nav-text">NoClassDefFoundError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卡顿问题"><span class="nav-number">3.2.</span> <span class="nav-text">卡顿问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程同步"><span class="nav-number">3.3.</span> <span class="nav-text">多进程同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">3.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'60%'}, 150);
+    </script>
+    
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'80%'}, 150);
+    </script>
+    
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'kidhaibara';
+      var disqus_identifier = '2015/09/02/android/enable-multidex/';
+
+      var disqus_title = "给App启用MultiDex功能";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+
+  <!-- update loading -->
+  
+  <script type="text/javascript">
+      $('.headband').animate({'width':'100%'}, 150);
+  </script>
+  
+
+  <!-- pangu auto space -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
+  <script> pangu.spacingPage(); </script>
+
+</body>
+</html>

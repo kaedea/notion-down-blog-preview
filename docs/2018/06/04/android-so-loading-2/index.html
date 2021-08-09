@@ -1,0 +1,1090 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="动态加载,插件化,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta name="keywords" content="动态加载,插件化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
+<meta property="og:url" content="http://kaedea.com/2018/06/04/android-so-loading-2/index.html">
+<meta property="og:site_name" content="中二病也要开发ANDROID">
+<meta property="og:description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://kaedea.com/assets/so_loading_flow_ee66c324_0375_41c9_a9d4_3643769fc9e9_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/jni_separated_diagram_a2bb6b5e_bddc_4b24_849b_a353b653fe90_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/jni_builtin_diagram_737587da_0307_42d4_a466_7ba877043376_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/so_deps_screenshot_a3f75364_3ae6_42e5_9f9f_8e9c375f4ed6_untitled.png">
+<meta property="og:updated_time" content="2021-08-09T13:39:29.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
+<meta name="twitter:description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta name="twitter:image" content="http://kaedea.com/assets/so_loading_flow_ee66c324_0375_41c9_a9d4_3643769fc9e9_untitled.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kaedea.com/2018/06/04/android-so-loading-2/">
+
+
+
+
+
+  <title> 动态下发 so 库在 Android APK 安装包瘦身方面的应用 | 中二病也要开发ANDROID </title>
+</head>
+
+<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=58507383";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'10%'}, 150);
+    </script>
+    
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">中二病也要开发ANDROID</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'30%'}, 150);
+    </script>
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2018/06/04/android-so-loading-2/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                动态下发 so 库在 Android APK 安装包瘦身方面的应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-04T00:00:00+00:00">
+              2018-06-04
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-09T13:39:29+00:00">
+              2021-08-09
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/06/04/android-so-loading-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/04/android-so-loading-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/06/04/android-so-loading-2/" class="leancloud_visitors" data-flag-title="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="# 动态下发 - so - 库在 - android-apk - 安装包瘦身方面的应用">动态下发 so 库在 Android APK 安装包瘦身方面的应用</a><ul>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 需求价值">需求价值</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 动态化需要解决的问题">动态化需要解决的问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1.- 安全性问题">1. 安全性问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.- 版本控制问题">2. 版本控制问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.-abi - 兼容性判断">3. abi 兼容性判断</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4.-system#load - 加载代码侵入问题">4. System#load 加载代码侵入问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 具体方案">具体方案</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1.- 系统加载 - so - 库的工作流程">1. 系统加载 so 库的工作流程</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.-jni - 代码隔离方案">2. JNI 代码隔离方案</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.-jni - 代码内置方案">3. JNI 代码内置方案</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4.- 处理 - dlopen - 问题">4. 处理 dlopen 问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5.-so - 依赖分析工具">5. so 依赖分析工具</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 其他问题">其他问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 相关 - jni - 类污染问题">相关 JNI 类污染问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 代码后续维护成本">代码后续维护成本</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 持续集成、部署问题（ci/cd）">持续集成、部署问题（CI/CD）</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#play-store - 动态代码禁用问题">Play Store 动态代码禁用问题</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 尾巴">尾巴</a></li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="动态下发-so-库在-Android-APK-安装包瘦身方面的应用"><a href="#动态下发-so-库在-Android-APK-安装包瘦身方面的应用" class="headerlink" title="动态下发 so 库在 Android APK 安装包瘦身方面的应用"></a>动态下发 so 库在 Android APK 安装包瘦身方面的应用</h1><p>总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
+<a id="more"></a>
+<h2 id="需求价值"><a href="#需求价值" class="headerlink" title="需求价值"></a>需求价值</h2><p>一般来说，越是成熟的 Android 项目，Native 代码的贡献量就越多，以往 APK 体积的主要占比大都是资源文件，不过现在 Native 代码带来的 so 体积占比也很可观了，所以 so 动态化的价值越来越凸显。另一方面，现在支持 arm64 的 Android 项目也越来越多，Google Play 更是强制要求支持 arm64，所以有的 Android 项目需要内置两种甚至以上 abi 支持（比如 B 站客户端项目就同时支持 arm32/arm64/x86 三种，以往还支持 arm5），结果就是 so 体积成倍地上涨。因此，能不能将非主要的 abi 相关的 so 文件动态化，也成为了国内 Android 项目瘦身优化不得不优先考虑的问题。</p>
+<p>此外，一些第三方 SDK 库也自带了不少 so 库（比如腾讯视频 SDK，以前我在接入这个 SDK 的时候，项目本身才 15 MB 体积，而 SDK 自身 so 已经占了 17 MB），或许是为了精简第三方 SDK 带来的体积，或许是为了隔离第三方 SDK 的 API（项目只自身依赖自己定义的业务相关性 API，通过依赖注入的方式访问第三方 SDK 的实现，这样以后更换 SDK 的时候只需要切换依赖注入的形式即可），都需要具体的 so 动态化方案提供技术支撑。</p>
+<h2 id="动态化需要解决的问题"><a href="#动态化需要解决的问题" class="headerlink" title="动态化需要解决的问题"></a>动态化需要解决的问题</h2><p>动态下发 so 库，看上只是把原本就算运行时动态加载的 so 文件，从 APK 安装包里面抽离出来，工作流程上变化不大，但实际上这也是一种完备的插件化技术，也就是说所有插件需要面临问题的问题我们统统需要考虑。我在以往的文章 <a href="http://kaedea.com/2016/06/04/android-dynamical-loading-04-so-problems">使用 SO 库时要注意的一些问题</a> 中简单谈过 so 动态化的一些问题，不过那些问题也仅仅是在 DEMO 项目里进行挖掘，当具体投入到生产项目中时，面临的挑战要严峻许多。以下我针对实际投产时遇到的问题进行一一分析讲解。</p>
+<h3 id="1-安全性问题"><a href="#1-安全性问题" class="headerlink" title="1. 安全性问题"></a>1. 安全性问题</h3><p>动态化本质上就是运行时加载可执行代码，而所有可执行代码在拷贝安装到安全路径（比如 Android 的 data/data 内部路径）之前，都有被劫持或者破坏的风险。so 动态化也不得不考虑这个安全性问题，最好的做法是每次加载 so 库之前都对其做一次安全性校验。考虑到检查带来的时间成本，可以假设内部路径是无条件可信的（对 Android 来说， data/data 路径在设备 root 情况下是不安全的；而且除了劫持风险外，内部路径文件有可能被应用自身一些不当文件操作给破坏导致插件不完整，因此如果要考虑绝对安全，内部路径插件被加载也必须做安全检查），在 so 文件拷贝到内部路径后单独做一次检查，检查失败就丢弃文件走 fail 逻辑，检查通过就生成一个 flag 文件作为标志，以后通过判断 flag 标志是否存在来决定是否需要执行安全检查。</p>
+<p>怎么校验安全性呢？</p>
+<p>最简单的方式是记录 so 文件的 MD5 或者 CRC 等 Hash 信息（粒度可以是每个单独的 so 文件，或者一批 so 文件的压缩包），将信息内置到 APK 内部或者服务器（如果保存在服务器，客户端需要通过类似 HTTPS 之类的可信通道获取这些数据），通过校验 so 文件 Hash 信息是否一致来确保安全性。不过 Hash 信息一般都会随之 so 文件的变动而改变，每次都需要调整这些数据比较麻烦，我想到的优化方案是 “通过类似 APK 安装包签名校验的方式来确保安全性”：将 so 文件打包成 APK 格式的插件包并使用 Android Keystore 进行签名，将 Keystore 的指纹信息保存在宿主包内部，安全检验环节只需要校验插件包的签名信息是否和内置的指纹信息一致即可。（一种优化的方案是，使用和宿主包一样的 Keystore 给插件包签名，检验环节只需要检查插件和宿主的签名信息是否一致。）</p>
+<p>具体代码实现可以参考一下：<a href="https://github.com/kaedea/android-dynamical-loading/blob/develop/android-frontia/frontia/src/main/java/moe/studio/frontia/PluginInstallerImpl.java#L54" target="_blank" rel="noopener">Installer#checkSafety ()</a>。</p>
+<h3 id="2-版本控制问题"><a href="#2-版本控制问题" class="headerlink" title="2. 版本控制问题"></a>2. 版本控制问题</h3><p>和一般的插件化方案一样，so 动态化也必须处理好版本控制问题：从 APK 里把 so 剥离出来后，我们除了要保证 so 文件的安全性，还要保证 so 文件和依赖它的宿主代码是 API 兼容的（严格上必须要求版本一直，至少做到向前兼容）。如果不需要一般插件那样考虑升降级问题，那也必须做到 so 文件和 APK 包版本是一致的：宿主下载相应版本的 so 文件后，安装到指定的版本路径；宿主版本升级后必须再次下载新版本的 so 文件而不能受到存量旧版本 so 文件的干扰（如果需要做到动态升降级，还需要保留最近一两个版本的存量 so 文件，用于 fallback 逻辑需要）。</p>
+<p>版本控制除了解决插件的 API 兼容问题，还可以实现 “<strong> 即时吊销 </strong>” 策略。设想我们发布了某一个版本宿主 APK 和与之对应的 so 插件包，而这个版本的 so 是有 Bug 的可能导致 APP 崩溃。通过版本控制流程，我们可以在服务端禁用这个版本的 so 插件，从而使客户端进入 “so 插件不可用” 的逻辑，而不至于执行有问题的代码。（如果 so 插件支持动态升降级，还可以配置让客户端强制更新到 fix 插件版本，或者 fallback 回没有问题的存量旧版。）</p>
+<p>从框架设计上，版本控制涉及动态化的 Update 和 Install 两个环节，具体实现代码可以参考 <a href="https://github.com/kaedea/android-dynamical-loading/blob/develop/android-frontia/frontia/src/main/java/moe/studio/frontia/PluginUpdaterImpl.java#L270" target="_blank" rel="noopener">Updater#doUpdatePolicy ()</a> 和 <a href="https://github.com/kaedea/android-dynamical-loading/blob/develop/android-frontia/frontia/src/main/java/moe/studio/frontia/PluginInstallerImpl.java#L201" target="_blank" rel="noopener">Installer#isInstalled ()</a>。</p>
+<h3 id="3-abi-兼容性判断"><a href="#3-abi-兼容性判断" class="headerlink" title="3. abi 兼容性判断"></a>3. abi 兼容性判断</h3><p>abi 兼容性是 so 插件特有的动态化问题，除了考虑 so 插件是否安全之外，我们还需要检查 so 插件包里的 so 库 abi 信息是否与宿主目前运行时的 abi 一致。考虑这么一种情况：宿主 APK 里面内置了 ARM32 和 AMR64 两种 so 文件，同样插件包里也内置这两种 so 文件，当宿主 APK 安装在 ARM32 的设备上，动态加载 so 插件的时候，我们必须只解压并加载相应 AMR32 的 so 插件，对于 ARM64 的设备也是同样的道理。也就是说：同样的 APK 宿主，同样的 so 插件，安装在不同 abi 设备上时，动态化框架的插件处理行为是不一样的。</p>
+<p>这个问题也可是说是版本控制问题上面的一个分支问题。考虑到框架的完备性，框架自身应该能自动设别和处理好 abi 兼容问题，而不是通过 so 插件的打包流程来规避这个问题（容错）。</p>
+<h3 id="4-System-load-加载代码侵入问题"><a href="#4-System-load-加载代码侵入问题" class="headerlink" title="4. System#load 加载代码侵入问题"></a>4. System#load 加载代码侵入问题</h3><p>侵入性问题也是 so 插件特有的问题，这个问题跟 Android Framework 加载 so 库的具体方式有关。Framework 一般不让用户直接通过 dlopen 函数加载动态链接库，而是封装了以下两种加载 so 库的方式（实际上第二种最终也是需要通过  libName 找到具体的 so 文件路径，再通过文件路径加载 so 库，与第一种方式殊途同归）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">System</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 方式一：通过 so 文件路径加载</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load</span> <span class="params">(String filename)</span> </span>&#123;Runtime.getRuntime ().load0 (VMStack.getStackClass1 (), filename);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 方式二：通过 so 库名加载</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadLibrary</span> <span class="params">(String libname)</span> </span>&#123;Runtime.getRuntime ().loadLibrary0 (VMStack.getCallingClassLoader (), libname);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常情况下，我们是通过 <code>方式二</code> 以 <code>System.loadLibrary (&quot;xxx&quot;)</code> 的方式来加载 so 文件 <code>libxxx.so</code>，而将 so 文件动态化之后，我们需要将 so 文件安装到内部安全路径，在通过 <code>方式一</code> 以 <code>System.load (&quot;{安全路径}/libxxx.so&quot;)</code> 的方式来加载。这种方案是大部分 so 动态化项目采用的方案，一直以来也都能稳定工作，不过我们也在这个方案里发现了不少麻烦。</p>
+<p>采用 <code>方式一</code> 作为 so 动态化的方案，意味着代码里要写死 <code>System.load (&quot;{安全路径}/libxxx.so&quot;)</code> 。这样一来，首先我们在代码调节阶段就蛋疼了，Native 代码在开发阶段完全可以用传统的内置方案进行调试，在集成阶段再按动态化的方案打包，这也就意味着我们必须频繁地在 <code>方式一</code> 和 <code>方式二</code> 直接来回修改，代码侵入性问题非常严重。然而这还不是最麻烦的问题，对于第三方的 SDK 项目的动态化问题，如果 SDK 项目本身的 so 库是以 <code>方式二</code> 的方式加载（正常的开发方式，对于一些自身就带有 so 文件下载逻辑的 SDK 项目，则很可能是以 <code>方式一</code> 加载的，这种情况下反而问题不大），则可能需要借助 ASM 这种 “曲线救国” 的方式来把 SDK 项目里 so 加载的相关代码修改成 <code>方式一</code>；或者选择在准备好 so 插件之后立即以 <code>方式一</code> 把插件里的所有 so 文件加载进宿主，这样可以兜住插件里 <code>方式二</code> 的加载代码（如果目标 so 库已经加载过一次，则 <code>方式二</code> 加载代码变成一个空实现）。</p>
+<p>解决 so 动态化的 System#load 代码侵入问题，要借鉴 Android 热修复技术方案的思路：按 <code>方式二</code>，即通过 <code>System#loadLibrary (&quot;xxx&quot;)</code> 加载 so 库， Android Framework 会遍历当前上下文的 ClassLoader 实例里的 <a href="https://cs.android.com/android/platform/superproject/+/master:libcore/dalvik/src/main/java/dalvik/system/DexPathList.java;bpv=1;bpt=1;l=80" target="_blank" rel="noopener">nativeLibraryDirectories</a> 数组，在数组里所有的文件路径下查找文件名为 <code>libxxx.so</code> 的文件，所以我们的解决思路就是在安装好 so 插件之后，将其所在的内部安全路径注入到这个 nativeLibraryDirectories 数组里，即可实现通过 <code>方式二</code> 加载。（思路虽然简单清晰，不过 <strong> 在实际应用中还是有不少问题 </strong>，以来在具体的解决方案中进行详细说明。）</p>
+<p>具体注入代码实现可以参考一下 <a href="https://github.com/Tencent/tinker/blob/dev/tinker-android/tinker-android-lib/src/main/java/com/tencent/tinker/lib/library/TinkerLoadLibrary.java" target="_blank" rel="noopener">TinkerLoadLibrary#installNativeLibraryPath (ClassLoader, File)</a>。以下篇幅 <strong> 对 so 动态化的方案和具体技术细节给出我们的分析和答案 </strong>。</p>
+<h2 id="具体方案"><a href="#具体方案" class="headerlink" title="具体方案"></a>具体方案</h2><h3 id="1-系统加载-so-库的工作流程"><a href="#1-系统加载-so-库的工作流程" class="headerlink" title="1. 系统加载 so 库的工作流程"></a>1. 系统加载 so 库的工作流程</h3><p>当我们调用 <code>System#loadLibrary (&quot;xxx&quot;)</code> 后，Android Framework 都干了些了啥？</p>
+<p>简单来说，Android 的 so 加载流程，大致可以分为以下四个环节：</p>
+<ol>
+<li>PMS install：安装 APK 包的时候，PackageManagerService 根据当前设备的 abi 信息，从 APK 包里拷贝相应的 so 文件。</li>
+<li>Native classpath：启动 APP 的时候， Android Framework 创建应用的 ClassLoader 实例，并将当前应用相关的所有 so 文件所在目录注入到当前 ClassLoader 相关字段。</li>
+<li>so loading：调用 System.loadLibrary (“xxx”)， Android Framework 从当前上下文 ClassLoader 实例（或者用户指定）的目录数组里查找并加载名为 libxxx.so 的文件。</li>
+<li>jni calling：调用 so 相关 JNI 方法。</li>
+</ol>
+<p>大致流程示意图如下：</p>
+<p><img src="/assets/so_loading_flow_ee66c324_0375_41c9_a9d4_3643769fc9e9_untitled.png" alt="so loading flow"></p>
+<p>具体流程以及方法调用链这里不做深入讨论，有兴趣这里推荐老罗的 <a href="https://blog.csdn.net/luoshengyang/article/details/8923483" target="_blank" rel="noopener">Dalvik 虚拟机 JNI 方法的注册过程分析</a> 一文。根据这个流程以及上面提到的 “加载代码侵入问题”，按照 <code>System.loadLibrary (&quot;xxx&quot;)</code> 加载代码和 JNI 方法相关类（以下统称 JNI 代码）所在的 ClassLoader 实例不同，so 动态化技术可以分为 “JNI 代码隔离” 和 “JNI 代码内置” 两种解决方案。</p>
+<h3 id="2-JNI-代码隔离方案"><a href="#2-JNI-代码隔离方案" class="headerlink" title="2. JNI 代码隔离方案"></a>2. JNI 代码隔离方案</h3><p><img src="/assets/jni_separated_diagram_a2bb6b5e_bddc_4b24_849b_a353b653fe90_untitled.png" alt="jni-separated diagram"></p>
+<p>顾名思义，就是将涉及到的 JNI 代码拆解到一个独立的模块，一同打包进 so 插件包里。运行时动态加载 so 库的时候，先给 so 插件创建一个插件 ClassLoader，在插件 ClassLoader 内部执行 “so loading” 和 “jni calling”。代码隔离方案的优点是是能够做到插件模块编译隔离，其他模块的代码无法 Reference 插件里面的相关 JNI 方法，不容易干扰 JNI 调用的生命周期，后续维护成本低（这也是一般的插件化方案需要做到的目标）。同时缺点也是非常明显的：根据项目历史包袱的具体情况，<strong> 模块拆解成本可能比动态化改造的收益还大 </strong>。因此，代码隔离方案比较适合新增的 Native 模块，一开始就奔着动态化、延迟加载的方向去。</p>
+<h3 id="3-JNI-代码内置方案"><a href="#3-JNI-代码内置方案" class="headerlink" title="3. JNI 代码内置方案"></a>3. JNI 代码内置方案</h3><p><img src="/assets/jni_builtin_diagram_737587da_0307_42d4_a466_7ba877043376_untitled.png" alt="jni-builtin diagram"></p>
+<p>考虑到拆解 JNI 模块的技术成本，可以考虑先单独把 so 文件单独打包进插件包，JNI 代码保留在宿主代码内部，so 插件共用宿主的 ClassLoader 实例，“so loading” 和 “jni calling” 依旧保留在宿主内部执行。这种 “偷懒” 的 JNI 代码内置方案相对于隔离方案来说改造难度要小得多，相应地由于没有把代码拆解干净，非常容易造成代码污染问题，后续维护成本大。考虑到时间成本，我相信大部分项目只能选择 JNI 代码内置方案。毕竟代码污染问题，可以通过 Code Review、Lint 静态检查等方式来加强 “代码准入” 门槛，缓解问题。</p>
+<p>这里需要特别强调的是，相比于代码隔离方案，JNI 代码内置方案有个特有的技术问题不得不解决：向 <code>nativeLibraryDirectories</code> 注入 so 插件路径带来的 <strong>集合并发修改</strong> 问题。由于 nativeLibraryDirectories 的具体实现是一个 ArrayList 实例，其元素读写操作自身是不保证线程安全的，而我们在 Worker 线程加载 so 插件的环节最后需要将新的 so 文件路径注入到 ArrayList 集合里，如果这时候刚好有另一个线程因为执行 “so loading” 操作而正在遍历集合元素，则会抛出 ConcurrentModificationException（ArrayList 内部实现）。</p>
+<p>解决并发修改问题的思路有两种：</p>
+<blockquote>
+<p>给 “so loading” 和 “so 文件路径注入” 这两种操作同时上锁，锁的实例是 so 相关的 ClassLoader 实例。在所有 “so loading” 操作之前（比如冷启动初始化环节）就预先注入预留好的 so 文件路径。</p>
+</blockquote>
+<p>思路 1 比较简单合理，不过加锁的操作需要 “侵入” 其他所有相关的 <code>System.loadLibrary (&quot;xxx&quot;)</code> 调用，同样容易造成代码污染问题；而思路 2 总感觉有点违反程序设计的一般原则（有些 so 插件可能基本用不上，犯不着在一开始就把其路径注入进来），具体取舍要看项目实际情况。作为补充，思路 1 可以再优化一下：为了避免加锁操作带来的代码污染，可以绕个弯子在编译阶段通过 ASM 手段给自动给所有 “so loading” 上锁；或者在往 ClassLoader 注入路径的时候，不要在原有的 nativeLibraryDirectories 集合上做修改，而是重新 new 一个 List 实例把所有的路径都拷贝到新集合上，最后再整体塞回去 ClassLoader，避免并发修改异常，代价是允许出现并发读脏数据问题（不至于崩溃）。</p>
+<p>我们这两个思路都有尝试，实际投产用的是思路 2，除了污染问题之外，主要是因为下面谈到的 “<strong>dlopen 问题 </strong>”。</p>
+<h3 id="4-处理-dlopen-问题"><a href="#4-处理-dlopen-问题" class="headerlink" title="4. 处理 dlopen 问题"></a>4. 处理 dlopen 问题</h3><p><code>dlopen</code> 是 Native 开发比较熟悉的一个函数，其功能是以指定模式加载指定的动态链接库（使用 dlclose 来卸载打开的库）。实际上，Android Framework 加载 so 库的 <code>System.loadLibrary (&quot;xxx&quot;)</code> 调用，最后也是通过 <code>dlopen</code>  来实现 ，大致的调用路径如下：</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sysytem#loadLibrary --&gt; Sysytem#load --&gt; Runtime#nativeLoad</span><br><span class="line">                                           Java  +</span><br><span class="line">                                                 |  Native</span><br><span class="line">                                          dvmLoadNativeCode --&gt; dlopen</span><br></pre></td></tr></table></figure>
+<p>在 NDK 开发中，如果我们有两个 so 文件：<a href="http://libxxx.so/" target="_blank" rel="noopener">libxxx.so</a> 和 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a>（后者是基础库，前者需要依赖后者的 API），xxx 需要动态链接 log，具体体现在 CMake 配置如下：</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">TARGET_LINK_LIBRARIES(xxx liblog.so)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>则当我们调用 <code>System.loadLibrary (&quot;xxx&quot;)</code> 的时候，Android Framework 会通过上面提到的调用链最终通过 dlopen 加载 <a href="http://libxxx.so/" target="_blank" rel="noopener">libxxx.so</a> 文件，并接着通过其依赖信息，自动使用 dlopen 加载 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a>（第二步没有返回 System#load，而是直接在 Native 层面执行）。对于熟悉 Native 开发的同学来说可能司空见惯，但对于只在第三方 SDK 里接触过 so 文件的同学来说，应该不太知道着这一点。然而恰恰正是这一点，给 so 动态化添加了非常大的困难，也让我们在具体的实践项目中吃了很大的亏。</p>
+<p>根据项目经验，现在无论是插件化技术，或者是热修复技术，里面关于动态加载 so 文件的技术方案应该相当成熟，所有的坑都踩得七七八八，就算有没有解决的坑，那应该也不不会严重到影响项目方案可行性的地步。所以一开始，我们把动态化方案主要的风险评估放在模块代码拆解方面，而完全没有担心技术风险。实际上，在 Android N 以前，只要你将 <a href="http://libxxx.so/" target="_blank" rel="noopener">libxxx.so</a> 和 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a> 所在的文件目录路径都注入到当前 ClassLoader 的 nativeLibraryDirectories 里，则在加载 so 插件的时候，这两个文件都能正常被找到。而从 N 开始情况就不一样了： <a href="http://libxxx.so/" target="_blank" rel="noopener">libxxx.so</a> 能正常加载，而 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a> 会出现加载失败错误。具体异常如下：</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/ExceptionHandler: Uncaught Exception java.lang.UnsatisfiedLinkError: dlopen failed: library &quot;liblog.so&quot; not found</span><br><span class="line">at java.lang.Runtime.loadLibrary0(Runtime.java:xxx)</span><br><span class="line">at java.lang.System.loadLibrary(System.java:xxx)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>其主要原因是，Android Native 用来链接 so 库的 <a href="https://cs.android.com/android/platform/superproject/+/master:bionic/linker/linker.h;bpv=1;bpt=1;l=96?gsn=do_dlopen" target="_blank" rel="noopener">Linker.cpp dlopen 函数</a> 的具体实现变化比较大（主要是引入了 <strong>Namespace 机制 </strong>）：以往的实现里，Linker 会在 ClassLoder 实例的 nativeLibraryDirectories 里的所有路径查找相应的 so 文件；更新之后，Linker 里检索的路径在创建 ClassLoader 实例后就被系统通过 Namespace 机制绑定了，当我们注入新的路径之后，虽然 ClassLoader 里的路径增加了，但是 Linker 里 Namespace 已经绑定的路径集合并没有同步更新，所以出现了 <a href="http://libxxx.so/" target="_blank" rel="noopener">libxxx.so</a> 文件能找到，而 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a> 找不到的情况。</p>
+<p>至于 Namespace 机制的工作原理了，可以简单认为是一个以 ClassLoader 实例 HashCode 为 Key 的 Map，Native 层通过 ClassLoader 实例获取 Map 里存放的 Value（也就是 so 文件路径集合），具体代码可以参考 <a href="https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/com/android/internal/os/ClassLoaderFactory.java;bpv=1;bpt=1;l=111?gsn=createClassLoader" target="_blank" rel="noopener">ClassLoaderFactory#createClassLoader ()</a>。</p>
+<p>我之前琢磨着，Tinker 之所以一直没有把 dlopen 问题暴露出来，主要是因为 Tinker 是热修复框架，补丁插件里需要的  <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a> 文件，往往在宿主里本来就有内置一份，所以只会导致热修复部分失效，而不会出现 <a href="http://liblog.so/" target="_blank" rel="noopener">liblog.so</a> 找不到问题。而实际上好巧不巧，Tinker 在解决 Android N 的混合编译带来的热修复失败问题时，在往 ClassLoader 注入插件 so 文件路径的时候，会创建一个新的 AndroidNClassLoader 实例用来替换 APP 自身的 ClassLoader，这个替换的操作刚好一并兜住了 dlopen 问题。至于其他插件化框架里为何没有提到这个问题，大概是因为一般适合动态化改造的插件都比较轻量，一般不会有 Native 代码（就算有也往往没有 so 依赖）。</p>
+<p>解决 dlopen 问题主要有以下几个思路：</p>
+<blockquote>
+<p>自定义 System#load，加载 libxxx.so 前，先解析 libxxx.so 的依赖信息，再递归加载其依赖的 so 文件（推荐参考开源方案 SoLoader）。自定义 Linker，完全自己控制 so 文件的检索逻辑（推荐参考开源方案 ReLinker）。类似 Tinker，在合适的时机替换 ClassLoader 实例（这是我们现在投产的方案）。</p>
+</blockquote>
+<h3 id="5-so-依赖分析工具"><a href="#5-so-依赖分析工具" class="headerlink" title="5. so 依赖分析工具"></a>5. so 依赖分析工具</h3><p>上面提到的都是 so 动态化方案中的具体技术难题，剩下的都是一些繁琐的项目问题了（技术债务），比如上面提到的 so 依赖分析。想要把 so 动态化技术应用到 APK 的瘦身项目中来，除了分析哪些 so 文件体积占比比较大之外，最好的做法是将其依赖的所有 so 文件一定挪到插件包里。怎么了解 APK 里所有 so 文件具体的依赖信息呢？根据 so 文件模型手撸代码解析依赖信息固然可行，不过那都是大神干的活，吾等平凡之辈还是选择站在巨人的肩膀上。</p>
+<p>这里推荐一款 Google 开源的 APK 解析工具 <a href="https://github.com/google/android-classyshark" target="_blank" rel="noopener">android-classyshark</a>，除了提供分析 APK dex/so 依赖信息之外，它还提供了 GUI 可视化界面，非常适合快速上手。</p>
+<p><img src="/assets/so_deps_screenshot_a3f75364_3ae6_42e5_9f9f_8e9c375f4ed6_untitled.png" alt="so deps screenshot"></p>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="相关-JNI-类污染问题"><a href="#相关-JNI-类污染问题" class="headerlink" title="相关 JNI 类污染问题"></a>相关 JNI 类污染问题</h3><p>JNI 方法需要在加载完成相应的 so 库才能正常调用，所以有不少开发选择将 <code>System#loadLibrary (&quot;xxx&quot;)</code> 之类的代码写在 JNI 类的静态代码块，以保证在访问 JNI 之前一定会先完成 so 库加载。不过这实际上非常不 “Best Practice”：一方面，加载 so 原本就属于一种动态化技术，其自身就存在失败的可能性，而且 Native 开发在 Android 上一直存在诸多 “疑难杂症”（推荐参考一下这篇文章 <a href="https://medium.com/keepsafe-engineering/the-perils-of-loading-native-libraries-on-android-befa49dce2db" target="_blank" rel="noopener">The Perils of Loading Native Libraries on Android</a>），最好的办法是考虑所有 so 加载和 JNI 方法调用失败的可能性；另一方面，加载 so 文件本身就有些许性能损耗，在静态代码块中加载会加剧性能问题。最麻烦的是，so 动态化改造之后，如果项目后续开发中有人不小心在 so 插件尚未安装完成之前引用了相关的 JNI 类（比如访问静态方法），哪怕没有发生实际的方法调用，也会导致 JNI 类提前被 ClassLoader 加载，进而提前触发 <code>System#loadLibrary (&quot;xxx&quot;)</code> 逻辑，触发 Crash。</p>
+<p>对于项目已有的 JNI 代码，如果存在 “静态代码块加载 so 问题”，则在改造成动态化的时候，最好将相关加载代码挪出静态代码块，并且增加 so 加载失败时候的 onFail 逻辑，确保所有 so 加载和 JNI 方法调用都不会出现崩溃问题。</p>
+<h3 id="代码后续维护成本"><a href="#代码后续维护成本" class="headerlink" title="代码后续维护成本"></a>代码后续维护成本</h3><p>这也是我目前比较头疼的问题，由于采用了 “JNI 代码内置方案”，没有对 JNI 代码进行编译隔离，非常容易导致后续代码维护过程中，在不正确的生命周期里访问了动态化 so 相关的 JNI 方法，增加 Crash 的风险。</p>
+<p>按照以往的动态化项目经验，“比较稳定，代码变化不大，模块边界比较内聚” 的业务比较适合动态化改造，所以 so 动态化应该优选则这种类型的模块，无论是改造成 “JNI 代码隔离方案”，还是后续的维护成本，都相对要小许多。对于那些代码耦合比较严重，版本迭代非常活跃的业务模块，这是一个典型的 “在高速行驶的火车上更换引擎” 的问题：在动态化改造的同时，FT 代码还在并行迭代，势必会产生许多冲突；对于耦合比较严重的代码，考虑投入产出比的话一般都会选择 “JNI 代码内置” 方案，没有对 JNI 代码进行编译隔离，所以非常容易导致 Crash；改造完成后，后续 FT 代码变动频繁，后续代码维护压力大，而且可能是。</p>
+<p>目前我觉得比较靠谱的处理方案是从项目管理流程上找突破点，主要方向最好还是让 FT 开发自己负责自己模块的动态化改造工作，降低维护成本（考虑到业务团队跟质量团队之间绩效目标的冲突，可能难以推动）。同时需要尽量根据项目的实际需要完善动态化框架以及相关配到的知道文档，降低 FT 的接入成本。作为辅助，还需要给容易产生代码冲突的地方加上相应的静态检查 Case，以便及时发现问题。</p>
+<h3 id="持续集成、部署问题（CI-CD）"><a href="#持续集成、部署问题（CI-CD）" class="headerlink" title="持续集成、部署问题（CI/CD）"></a>持续集成、部署问题（CI/CD）</h3><p>踩了上面一系列的坑，眼看着动态化技术方案完善得七七八八了，实际上 <strong> 我们才刚刚开始而已 </strong>！</p>
+<p>首先，怎么编译出 so 插件包也是个技术活，这一点要根据具体的项目情况选择合适的方案（我们选用的是 Gradle 插件在 PackageApplication 阶段抽取目标资源文件）。这个是一个 CI 问题，换句话说就是我们需要一个稳定灵活的流水线，用于稳定编译我们指定版本的 so 插件包，而不是每次都通过非常手工、笨拙的方式编包。其次，插件包编译之后，不应该通过手工的方式把文件上传到后端，在填写相关的版本、依赖等配置信息。这是一个 CD 问题（Continuous Deployment），我们应该采用自动化的手段（哪怕只是脚本），在集成阶段之后收集需要的配置信息，自动上传到一个内部环境的管理平台（平台上我们可以查看每个版本的数据），在 Test/Release 阶段根据需要将指定版本的配置信息 “一键导入” 到测试、预发布环境，每个环节上都要尽量避免人工操作。</p>
+<p>因此，从工程管理的角度来看，一个完备的动态化方案，必须涵盖集成、部署、加载框架三个流程的内容，而前面的两点是大多数动态化项目或者技术文章没有提及到的，往往容易被忽视。</p>
+<h3 id="Play-Store-动态代码禁用问题"><a href="#Play-Store-动态代码禁用问题" class="headerlink" title="Play Store 动态代码禁用问题"></a>Play Store 动态代码禁用问题</h3><p>由于一些总所周知的原因，包含有动态代码的 APK 包是无法上传到 Play Store 的。不过实际上 Google 不是禁止动态代码，而是禁止绕过 Play 渠道下发未进过审核的动态代码。经过咨询，通过 Play 提供的 <a href="https://developer.android.com/google/play/expansion-files" target="_blank" rel="noopener">APK 拓展资源包 Expansion Files</a> 服务，可以向客户端下发相关插件资源包，没有政策风险（该服务主要是面向游戏客户端，可以想 APK 客户端下发绑定版本的 “一个主资源包 + 一个 patch 包”，体积上限个 1G。需要说明的是，用户发布特定版本的 APK 之前必须先绑定资源包，一旦发布就无法修改）。</p>
+<h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><p>本文主要是根据我自身实际投产的 Android 动态化项目经验（SDK 插件、动态组件化）以及最近相关的 so 动态化实践，分享一些动态加载 so 库时需要考虑的问题。内容主要包括插件化方案的共同问题、abi 兼容性问题、代码侵入性问题、并发修改问题，以及最重要也最容易忽视的 dlopen 问题。千言万语汇成一句话：</p>
+<blockquote>
+<p>插件有风险，投资须谨慎！</p>
+</blockquote>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="http://kaedea.com/2016/06/04/android-dynamical-loading-04-so-problems/">使用 SO 库时要注意的一些问题</a></li>
+<li><a href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">设计一个框架化框架</a></li>
+<li><a href="https://github.com/kaedea/android-dynamical-loading/tree/develop/android-frontia" target="_blank" rel="noopener">Android Frontia</a></li>
+<li><a href="https://blog.csdn.net/luoshengyang/article/details/8923483" target="_blank" rel="noopener">Dalvik 虚拟机 JNI 方法的注册过程分析</a></li>
+<li><a href="https://blog.hike.in/reduce-the-size-of-your-app-by-moving-so-files-to-over-the-air-b51ca9dfdaf2" target="_blank" rel="noopener">Reduce the size of your app by moving .SO files to over-the-air</a></li>
+</ol>
+<!-- Generated by HexoWriter
+notion-down.version = 0.1.0
+notion-down.revision = b'e4a8577'
+Title = 动态下发 so 库在 Android APK 安装包瘦身方面的应用
+Date = 2018-06-04
+Published = true
+Category = Android
+Tag = ['动态加载', '插件化']
+FileLocate = 
+FileName = android-so-loading-2
+hexo.comments = true
+-->
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动态加载/" rel="tag"># 动态加载</a>
+          
+            <a href="/tags/插件化/" rel="tag"># 插件化</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/01/devops/incremental-spa/" rel="next" title="增量静态检查（SPA）在代码合入检查里的应用">
+                <i class="fa fa-chevron-left"></i> 增量静态检查（SPA）在代码合入检查里的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
+          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
+          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/rurin" title="微博" target="_blank">
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
+                  
+                  HaoMoe
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
+                  
+                  Pixiv
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="/about/" title="友情链接">友情链接</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#动态下发-so-库在-Android-APK-安装包瘦身方面的应用"><span class="nav-number">1.</span> <span class="nav-text">动态下发 so 库在 Android APK 安装包瘦身方面的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求价值"><span class="nav-number">1.1.</span> <span class="nav-text">需求价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态化需要解决的问题"><span class="nav-number">1.2.</span> <span class="nav-text">动态化需要解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安全性问题"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 安全性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-版本控制问题"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 版本控制问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-abi-兼容性判断"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. abi 兼容性判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-System-load-加载代码侵入问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. System#load 加载代码侵入问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体方案"><span class="nav-number">1.3.</span> <span class="nav-text">具体方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-系统加载-so-库的工作流程"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 系统加载 so 库的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JNI-代码隔离方案"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. JNI 代码隔离方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JNI-代码内置方案"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. JNI 代码内置方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-处理-dlopen-问题"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 处理 dlopen 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-so-依赖分析工具"><span class="nav-number">1.3.5.</span> <span class="nav-text">5. so 依赖分析工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">1.4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关-JNI-类污染问题"><span class="nav-number">1.4.1.</span> <span class="nav-text">相关 JNI 类污染问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码后续维护成本"><span class="nav-number">1.4.2.</span> <span class="nav-text">代码后续维护成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续集成、部署问题（CI-CD）"><span class="nav-number">1.4.3.</span> <span class="nav-text">持续集成、部署问题（CI/CD）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Play-Store-动态代码禁用问题"><span class="nav-number">1.4.4.</span> <span class="nav-text">Play Store 动态代码禁用问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾巴"><span class="nav-number">1.5.</span> <span class="nav-text">尾巴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.6.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'60%'}, 150);
+    </script>
+    
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'80%'}, 150);
+    </script>
+    
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'kidhaibara';
+      var disqus_identifier = '2018/06/04/android-so-loading-2/';
+
+      var disqus_title = "动态下发 so 库在 Android APK 安装包瘦身方面的应用";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+
+  <!-- update loading -->
+  
+  <script type="text/javascript">
+      $('.headband').animate({'width':'100%'}, 150);
+  </script>
+  
+
+  <!-- pangu auto space -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
+  <script> pangu.spacingPage(); </script>
+
+</body>
+</html>

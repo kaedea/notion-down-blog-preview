@@ -1,0 +1,1019 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="动态加载,插件化,Android,Frontia,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&amp;lt;ゝω·)☆”。">
+<meta name="keywords" content="动态加载,插件化,Android,Frontia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计一个框架化框架 FRONTIA">
+<meta property="og:url" content="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/index.html">
+<meta property="og:site_name" content="中二病也要开发ANDROID">
+<meta property="og:description" content="结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&amp;lt;ゝω·)☆”。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-7-12/1819669.jpg?imageView2/2/w/600/interlace/1">
+<meta property="og:updated_time" content="2021-08-09T13:39:29.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计一个框架化框架 FRONTIA">
+<meta name="twitter:description" content="结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&amp;lt;ゝω·)☆”。">
+<meta name="twitter:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-7-12/1819669.jpg?imageView2/2/w/600/interlace/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">
+
+
+
+
+
+  <title> 设计一个框架化框架 FRONTIA | 中二病也要开发ANDROID </title>
+</head>
+
+<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=58507383";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'10%'}, 150);
+    </script>
+    
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">中二病也要开发ANDROID</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'30%'}, 150);
+    </script>
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                设计一个框架化框架 FRONTIA
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-10T00:00:00+00:00">
+              2016-07-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-09T13:39:29+00:00">
+              2021-08-09
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
+                    <span itemprop="name">动态加载</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/10/android-dynamical-loading-08-satrt-frontia/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/10/android-dynamical-loading-08-satrt-frontia/" class="leancloud_visitors" data-flag-title="设计一个框架化框架 FRONTIA">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-7-12/1819669.jpg?imageView2/2/w/600/interlace/1" alt></p>
+<p>结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&lt;ゝω·)☆”。<br><a id="more"></a></p>
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>
+<li>Author : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a></li>
+<li>Index : <a href="http://kaedea.com/2016/02/05/android-dynamical-loading-00-index">ANDROID动态加载系列</a></li>
+<li>GitHub : <a href="https://github.com/kaedea/android-dynamical-loading" target="_blank" rel="noopener">kaedea/android-dynamical-loading</a></li>
+</ul>
+<p>Frontia是一个Android的插件化框架（基于ClassLoader的动态加载技术），相比其他开源项目，Frontia 的特点是扩展性强，更加专注于插件的下载、更新、安装、管理，以及插件和宿主之间的交互。在深入介绍Frontia之前，我们先想想开发一个插件化框架需要考虑的问题有哪些。</p>
+<h2 id="满足多种业务需求的插件"><a href="#满足多种业务需求的插件" class="headerlink" title="满足多种业务需求的插件"></a>满足多种业务需求的插件</h2><p>现在的插件化需求有许多花样，首先，有的只需要将一些特定的类（或者接口的实现类）插件化，比如一些游戏的SDK，需要把登录功能和支付功能的实现插件化，这样SDK就能实现动态升级。其次，有一些业务需要将so库给做成插件化，因为一些so库需要同时内置多个CPU类型（x86/arm64等）的版本，所以会占用非常可观的体积，如果这些so库并不是核心的业务，完全可以做成插件，等到需要的时候再动态加载。再则，也有一些相对独立的业务需要独立升级，而不希望随着APP一起发版。比如“游戏广场”这样的一个业务，APP只提供一个入口启动游戏广场，启动后接下来就不管了，这样的业务可以做成插件，插件可以动态升级（游戏广场可以自由设计自己的界面，甚至增加新的页面），也可以在多个APP之间使用同一插件业务（许多APP都有游戏广场的推广业务）。</p>
+<p>考虑到种种需求，我们的插件有时只需要加载一些普通的类，有时候需要加载res资源，有时候需要加载so库，有时候需要加载新的组件类（Activity、Service等）甚至调用宿主APP的某些功能（比如获取用户账号信息）。因此，我们的插件化框架在处理插件加载的具体过程时，应该能够灵活地扩展，以满足以上以及将来的各种插件需求。</p>
+<h2 id="插件的更新策略"><a href="#插件的更新策略" class="headerlink" title="插件的更新策略"></a>插件的更新策略</h2><p>除了处理插件的加载问题外，插件化框架还需要处理插件的更新问题，要不然插件化开发就没有意义了。加载插件前，我们需要从服务器下载插件，或者判断是否需要从服务器下载新的插件版本，下载新版本插件失败的时候，我们有又需要判断本地是否有可用的旧版本。因此，插件化框架需要提供一个完善的插件更新策略，以从服务器的插件版本列表和本地的缓存插件版本列表中，挑选出最佳的插件版本（目标插件）。</p>
+<p>当我们插件的某个版本出现严重问题的时候，我们希望所有的下载过这个版本的插件的APP都要抛弃这个插件，所以插件化框架需要有“及时吊销”功能。当我们插件的最新版本更新了某些重要的功能，我们希望所有的APP都立刻升级到这个插件版本，如果下载最新版本插件失败，需要重新下载或者直接抛弃插件，而不能使用旧版本的插件，也就是说框架需要“强制升级”功能。</p>
+<h2 id="插件的安装策略"><a href="#插件的安装策略" class="headerlink" title="插件的安装策略"></a>插件的安装策略</h2><p>同一个版本的插件只需要下载一次就可以了，不能重复下载。插件化框架需要将下载下来的插件需要存放到指定的目录（我们可以把这个过程当作是“安装插件”），以便于知道当前APP已经安装了哪些插件，以及这些插件有哪些版本，这样我们才可以判断需不需要从服务器下载新版本的插件。</p>
+<p>同时，存放在本地文件系统上的插件是不安全的，可能被其他人恶意修改，但插件被加载进宿主APP后，它就是APP程序的一部分，可以访问APP的所有内存数据，插件化框架还需要提供对本地已安装插件的安全校验功能。</p>
+<h2 id="插件投入生产前需要解决的问题"><a href="#插件投入生产前需要解决的问题" class="headerlink" title="插件投入生产前需要解决的问题"></a>插件投入生产前需要解决的问题</h2><p>上面谈到的问题大致可以归类成插件的更新、安装以及加载问题，这些都是插件化框架应该解决的基本问题。当然除了这些问题之外，在将插件化开发引入实际生产的项目中的时候，还有一些问题不得不考虑，比如在开发插件的时候如何快捷地调试和构建插件，当插件出现BUG的时候如何快速定位问题（因为一个插件的BUG可能是由“具体的设备型号 + 具体的宿主APP版本号 + 具体的插件版本号”导致的，这也是插件化开发的诟病，尽量不要吧频繁变动的业务插件化），如何做好数据上报统计以评估插件的工作效果，当然，必不可少的，我们还需要一个可靠的服务器来托管我们插件（理想的情景是，我们调试完把代码推到构建系统，构建系统构建完把插件入库并把插件的版本信息上传到服务器，服务器更新新插件版本的可用信息，整个过程不需要手动操作）。</p>
+<p>类似之前谈到的Android动态加载技术需要解决的两个主要问题，插件化开发投入生产需要解决的问题大致可归纳如下：</p>
+<ul>
+<li>插件的更新、安装、加载策略；</li>
+<li>插件的安全性校验；</li>
+<li>插件与宿主的通讯（互调）方式，甚至插件间互相调用的方式；</li>
+<li>插件调试和构建的方法；</li>
+<li>出现BUG时定位问题的方法；</li>
+<li>插件数据统计；</li>
+<li>插件托管的服务器（插件的持续集成）；</li>
+</ul>
+<p>一言以蔽之，插件化开发不仅仅需要解决一个开发框架的问题，从整体上来看更像是需要解决一个开发平台的问题，除了解决代码的问题（粗体部分），还需解决生产工具或者效率的问题。</p>
+<p>Frontia项目致力于解决以上问题，最后，放上项目的地址：<a href="https://github.com/kaedea/android-dynamical-loading/tree/develop/android-frontia" target="_blank" rel="noopener">android-frontia</a> 。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动态加载/" rel="tag"># 动态加载</a>
+          
+            <a href="/tags/插件化/" rel="tag"># 插件化</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Frontia/" rel="tag"># Frontia</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/01/living-cp18-pictures/" rel="next" title="魔都漫展 COMICCUP18 写真">
+                <i class="fa fa-chevron-left"></i> 魔都漫展 COMICCUP18 写真
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/17/front/front-hexo-theme-next/" rel="prev" title="HEXO THEME NEXT">
+                HEXO THEME NEXT <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
+          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
+          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/rurin" title="微博" target="_blank">
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
+                  
+                  HaoMoe
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
+                  
+                  Pixiv
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="/about/" title="友情链接">友情链接</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信息"><span class="nav-number">1.</span> <span class="nav-text">基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#满足多种业务需求的插件"><span class="nav-number">2.</span> <span class="nav-text">满足多种业务需求的插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件的更新策略"><span class="nav-number">3.</span> <span class="nav-text">插件的更新策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件的安装策略"><span class="nav-number">4.</span> <span class="nav-text">插件的安装策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件投入生产前需要解决的问题"><span class="nav-number">5.</span> <span class="nav-text">插件投入生产前需要解决的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'60%'}, 150);
+    </script>
+    
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'80%'}, 150);
+    </script>
+    
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'kidhaibara';
+      var disqus_identifier = '2016/07/10/android-dynamical-loading-08-satrt-frontia/';
+
+      var disqus_title = "设计一个框架化框架 FRONTIA";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+
+  <!-- update loading -->
+  
+  <script type="text/javascript">
+      $('.headband').animate({'width':'100%'}, 150);
+  </script>
+  
+
+  <!-- pangu auto space -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
+  <script> pangu.spacingPage(); </script>
+
+</body>
+</html>

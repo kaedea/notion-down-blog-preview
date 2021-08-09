@@ -1,0 +1,1030 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="ProGuard,注解,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。 ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我">
+<meta name="keywords" content="ProGuard,注解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ProGuard 又搞了个大新闻">
+<meta property="og:url" content="http://kaedea.com/2017/03/20/android/naughty-proguard/index.html">
+<meta property="og:site_name" content="中二病也要开发ANDROID">
+<meta property="og:description" content="一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。 ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/17-3-20/28777207-file_1489980325292_11b0a.png">
+<meta property="og:updated_time" content="2021-08-09T13:39:29.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ProGuard 又搞了个大新闻">
+<meta name="twitter:description" content="一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。 ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我">
+<meta name="twitter:image" content="http://7xih5c.com1.z0.glb.clouddn.com/17-3-20/28777207-file_1489980325292_11b0a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kaedea.com/2017/03/20/android/naughty-proguard/">
+
+
+
+
+
+  <title> ProGuard 又搞了个大新闻 | 中二病也要开发ANDROID </title>
+</head>
+
+<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
+<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=58507383";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'10%'}, 150);
+    </script>
+    
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">中二病也要开发ANDROID</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+ </div>
+    </header>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'30%'}, 150);
+    </script>
+    
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2017/03/20/android/naughty-proguard/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ProGuard 又搞了个大新闻
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-20T00:00:00+00:00">
+              2017-03-20
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-09T13:39:29+00:00">
+              2021-08-09
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/20/android/naughty-proguard/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/20/android/naughty-proguard/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/20/android/naughty-proguard/" class="leancloud_visitors" data-flag-title="ProGuard 又搞了个大新闻">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。</p>
+<p>ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我们往往无法察觉BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。</p>
+<p>不过今天被ProGuard坑的不是混淆API导致的BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
+<a id="more"></a>
+<h2 id="新闻发生时候的背景"><a href="#新闻发生时候的背景" class="headerlink" title="新闻发生时候的背景"></a>新闻发生时候的背景</h2><p>最近在给项目的开发一个模块之间通讯用的路由框架，它需要有一些处理注解的APT功能，大概是长这个样子的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Route</span>(uri = <span class="string">"action://sing/"</span>, desc = <span class="string">"念两句诗"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PoemAction</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>功能大概是这样的，我先编写一个叫做 <code>PoemAction</code>，它的业务功能主要是帮你念上两句诗。然后客户只需要调用 <code>Router.open(&quot;action://sing/&quot;)</code> 就可以当场念上两句诗，这也是现在一般路由框架的功能。其中的<code>desc</code>没有别的功能，只是为了在生成路由表的时候加上一些注释，说明当前的路由地址是干什么的，看起来像是这样的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoGeneratedRouteTable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Route <span class="title">find</span><span class="params">(String uri)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">"action://sing/"</span>.equals(uri)) &#123;</span><br><span class="line">            <span class="comment">// 念两句诗</span></span><br><span class="line">            <span class="keyword">return</span> PoemActionRoute;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>嗯，代码很完美，单元测试和调试阶段都没有发现任何问题，好，合并进develop分支了。搞定收工，我都不禁想赞美自己的才能了，先去栖霞路玩会儿先。半个小时候突然收到了工头 <a href="https://yrom.net/" target="_blank" rel="noopener">Yrom·半仙·灵魂架构师·Wang</a> 的电话，我还以为他也想来玩呢，结果他说不知道谁在项目的代码里下毒，导致构建机上有已经有几十个构建任务失败了。我了个去，我刚刚提交的代码，该不会是我的锅吧，赶紧回来。</p>
+<h2 id="问题排查过程"><a href="#问题排查过程" class="headerlink" title="问题排查过程"></a>问题排查过程</h2><p>异常看起来是这样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FAILURE: Build failed with an exception.</span><br><span class="line"></span><br><span class="line">* What went wrong:</span><br><span class="line">Execution failed for task &apos;:app:transformClassesWithMultidexlistForRelease&apos;.</span><br><span class="line">&gt; java.lang.UnsupportedOperationException (no error message)</span><br><span class="line"></span><br><span class="line">* Try:</span><br><span class="line">Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.</span><br><span class="line"></span><br><span class="line">BUILD FAILED</span><br></pre></td></tr></table></figure>
+<p>这看起来好像是MultiDex的问题啊，但是没道理Debug构建没问题，而只有Release构建出问题了，<code>transformClassesWithMultidexlistForRelease</code>任务的源码暂时也没有精力去看了，先解决阻塞同事开发的问题要紧。老规矩，使用 <strong>二分定位法</strong> 挨个回滚到develop上面的commit记录，逐个查看是那次提交导致的，结果还真是我的提交导致的。</p>
+<p>难道是开了混淆，导致一些类找不到？但是类找不到只是运行时的异常而已，应该只会在运行APP的时候抛出“ClassNotFoundException”，不应该导致构建失败啊。难道是APT生成的类格式不对，导致Javac在编译该类的时候失败？于是我打开由APT工具生成的<code>AutoGeneratedRouteTable.java</code>类文件瞧瞧，发文件类的格式很完美，没有问题，甚至由于担心是中文引起的问题，我还把“念两句诗”改成“Sing two poems”，问题依旧。</p>
+<p>总之一时半会无法排查出问题所在，还是赶紧解决APK的构建问题，现在因为构建失败的原因，旁边已经有一票同事正在摩拳擦掌准备把我狠狠的批判一番。所以我打算先去掉APT功能，不通过自动生成注册类的方式，而是通过手动代码注册的方式让路由工作，就当我以为事情告一段落的时候，我才发现我还是“too young”啊，构建机给了同样的错误反馈。</p>
+<p>…………<br>……<br>…</p>
+<p>这TM就尴尬了啊，我现在导致构建失败的提交与上一次正常构建的提交之间的差异就是给<code>PeomAction</code>加多了注解而已啊，而且这个注解现在都没有用到了，难道是注解本身的存在就会导致构建失败？</p>
+<p>突然我想起来，注解类本身我是没有加入混淆的，因为代码里没有用反射的反射获取注解，而且我设计注解类本身的目的也只是为了帮我自动生成注册类而已，这些类是编译时生成的，所以不会受到混淆功能的影响。抱着死马当活马医的心态，我把注解里面的<code>desc</code>字段去掉了，万万没想到构建问题居然就解决了，而且就算我开启APT功能，问题还是没有重现，这…… 这与构建出问题的状态的差别只有一段注释的差别啊，没问题的代码看起来是这样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoGeneratedRouteTable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Route <span class="title">find</span><span class="params">(String uri)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">"action://sing/"</span>.equals(uri)) &#123;</span><br><span class="line">            (这里的注释没有了)</span><br><span class="line">            <span class="keyword">return</span> PoemActionRoute;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这难道是真实存在的某种膜法在干扰我的构建过程？突然我又想起来，因为注解类本身不需要写什么代码，所以我创建<code>Route.java</code>这个类后基本就没有对它进行过编辑了，我甚至已经忘了我对它写过什么代码，所以我决定看看是不是我写错了些什么。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Route &#123;</span><br><span class="line">    String[] value();</span><br><span class="line">    <span class="function">String <span class="title">desc</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个注解类看起来再普通不过，一般写完之后也不需要再怎么修改了，而且这个类我是直接参(co)考(py)另外一个优秀的Java APT项目 <a href="https://github.com/airbnb/DeepLinkDispatch" target="_blank" rel="noopener">DeepLinkDispatch</a> 的，想必也不会有什么大坑。目前看起来唯一有更改可能性的地方就是<code>Target</code>和<code>Retention</code>这两个属性，至于这俩的作用不属于此文章的范畴，不做展开。</p>
+<p>首先，<strong>我试着把<code>Retention</code>的级别由原来的<code>CLASS</code>改成<code>SOURCE</code>级别，没想到就这么一个小改动，编译居然通过了！如果不修改<code>Retention</code>的级别，把注解里的<code>desc</code>字段移除，只保留一个<code>value</code>字段，问题也能解决，真是神奇啊</strong>，顿时我好像感受到了一股来自古老东方的神秘力量。</p>
+<p>在我一直以来的认知里，<code>RetentionPolicy.SOURCE</code>是源码级别的注解，比如<code>@Override</code>、<code>@WorkerThread</code>、<code>@VisibleForTest</code>等这些注解类，这类的注解一般是配合IDE工作的，不会给代码造成任何实际影响，IDE会获取这些注解，并向你提示哪些代码可能有问题，在编译阶段这类注解加与不加没有任何实际的影响。看一下源码的解释吧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be discarded by the compiler.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    SOURCE,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be recorded in the class file by the compiler</span></span><br><span class="line"><span class="comment">     * but need not be retained by the VM at run time.  This is the default</span></span><br><span class="line"><span class="comment">     * behavior.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    CLASS,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Annotations are to be recorded in the class file by the compiler and</span></span><br><span class="line"><span class="comment">     * retained by the VM at run time, so they may be read reflectively.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> java.lang.reflect.AnnotatedElement</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    RUNTIME</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原来如此，<code>RetentionPolicy.CLASS</code>级别的注解会被保留到<code>.class</code>文件里，所以混淆的时候，注解类也会参与混淆，大概是混淆的时候出的问题吧。总之，先看看注解类<code>Route.java</code>被混淆后变成什么样子，查看 <code>build/output/release/mapping.txt</code> 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">moe.studio.router.Route -&gt; bl.buu:</span><br><span class="line">    java.lang.String[] value() -&gt; a</span><br><span class="line">    java.lang.String desc() -&gt; a</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>果然不出我所料，<strong>ProGuard工具在混淆注解类类<code>Route.java</code>的时候，把它的两个字段都混淆成<code>a</code>了</strong>（按道理应该是一个a和一个b，不知道是不是ProGuard的BUG，还是Route与其他库冲突了）。</p>
+<p>所以，最后的解决方案就是把<code>Retention</code>的级别由原来的<code>CLASS</code>降级成<code>SOURCE</code>，或者把注解类的字段改成一个。顺便一说，现在大多的Java APT项目用的还是<code>CLASS</code>，它们之所以没有遇到类似的问题，大多是因为他们都选择把整个注解类都KEEP住，不进行混淆了。</p>
+<h2 id="一些姿势"><a href="#一些姿势" class="headerlink" title="一些姿势"></a>一些姿势</h2><p>通过这个事件我也发现了不少问题。其一，无论单元测试写得再完美，集成进项目之前还是有必要进行一次Release构建，以确保避免一些平时开发的时候容易忽略的问题，不然小心自己打自己的脸。以下是一次打脸现场。</p>
+<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/17-3-20/28777207-file_1489980325292_11b0a.png" alt></p>
+<p>所以我决定，给项目的构建机加上一次 <strong>Daily Building</strong> 的功能，每天都定期构建一次，以便尽早发现问题。</p>
+<p>其二，除了构建的问题之外，年轻人果然还是要多多学习，<strong>提高一下自己的知识水平</strong>。设想，如果我的Java基础够扎实的话，也就不会像这次一样，犯下<code>RetentionPolicy</code>错用这样低级的错误。如果有仔细阅读过 <code>transformClassesWithMultidexlistForRelease</code> 任务以及ProGuard工具的的源码的话，也许能很快定位到问题发生的根本原因，从而釜底抽薪一举解决问题，不像这次一样，阻塞一大半天开发进度。</p>
+<p>以下放出这次定位问题的大致过程。</p>
+<p>① 先定位 <code>transformClassesWithMultidexlistForRelease</code> 任务的源码。通过任务名字，可以很快地定位到 <code>MultiDexTransform.java</code> 这个类里面来，以下是这个类在执行任务时候做的工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transform</span><span class="params">(@NonNull TransformInvocation invocation)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> IOException, TransformException, InterruptedException </span>&#123;</span><br><span class="line">    <span class="comment">// Re-direct the output to appropriate log levels, just like the official ProGuard task.</span></span><br><span class="line">    LoggingManager loggingManager = invocation.getContext().getLogging();</span><br><span class="line">    loggingManager.captureStandardOutput(LogLevel.INFO);</span><br><span class="line">    loggingManager.captureStandardError(LogLevel.WARN);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        File input = verifyInputs(invocation.getReferencedInputs());</span><br><span class="line">        shrinkWithProguard(input);</span><br><span class="line">        computeList(input);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException | ProcessException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TransformException(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，MultiDexTransform的主要工作是在<code>shrinkWithProguard</code>和<code>computeList</code>两个方法里面完成的。其中<code>shrinkWithProguard</code>的工作可以定位到ProGuard工具的<code>ProGuard#execute</code>方法里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    System.out.println(VERSION);</span><br><span class="line"></span><br><span class="line">    GPL.check();</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (configuration.dump != <span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        dump();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以定位到ProGuard最后执行的<code>dump()</code>方法里面，该方法生成了一个<code>dump.txt</code>文件，里面用文本的形式，记录了整个项目用到的所有类（混淆后的）的文件结构。查看任务的LOG信息以及<code>dump.txt</code>文件的内容，发现所有内容都正常生成，因此可以初步确定问题不是由于<code>shrinkWithProguard</code>引起的。</p>
+<p>接着看看<code>computeList</code>方法，这个方法可以定位到以下代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">createMainDexList</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        @NonNull File allClassesJarFile,</span></span></span><br><span class="line"><span class="function"><span class="params">        @NonNull File jarOfRoots,</span></span></span><br><span class="line"><span class="function"><span class="params">        @NonNull EnumSet&lt;MainDexListOption&gt; options)</span> <span class="keyword">throws</span> ProcessException </span>&#123;</span><br><span class="line"></span><br><span class="line">    BuildToolInfo buildToolInfo = mTargetInfo.getBuildTools();</span><br><span class="line">    ProcessInfoBuilder builder = <span class="keyword">new</span> ProcessInfoBuilder();</span><br><span class="line"></span><br><span class="line">    String dx = buildToolInfo.getPath(BuildToolInfo.PathId.DX_JAR);</span><br><span class="line">    <span class="keyword">if</span> (dx == <span class="keyword">null</span> || !<span class="keyword">new</span> File(dx).isFile()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"dx.jar is missing"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    builder.setClasspath(dx);</span><br><span class="line">    builder.setMain(<span class="string">"com.android.multidex.ClassReferenceListBuilder"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (options.contains(MainDexListOption.DISABLE_ANNOTATION_RESOLUTION_WORKAROUND)) &#123;</span><br><span class="line">        builder.addArgs(<span class="string">"--disable-annotation-resolution-workaround"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    builder.addArgs(jarOfRoots.getAbsolutePath());</span><br><span class="line">    builder.addArgs(allClassesJarFile.getAbsolutePath());</span><br><span class="line"></span><br><span class="line">    CachedProcessOutputHandler processOutputHandler = <span class="keyword">new</span> CachedProcessOutputHandler();</span><br><span class="line"></span><br><span class="line">    mJavaProcessExecutor.execute(builder.createJavaProcess(), processOutputHandler)</span><br><span class="line">            .rethrowFailure()</span><br><span class="line">            .assertNormalExitValue();</span><br><span class="line"></span><br><span class="line">    LineCollector lineCollector = <span class="keyword">new</span> LineCollector();</span><br><span class="line">    processOutputHandler.getProcessOutput().processStandardOutputLines(lineCollector);</span><br><span class="line">    <span class="keyword">return</span> ImmutableSet.copyOf(lineCollector.getResult());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从源码可以看出，这里调用了Android SDK里面的<code>dx.jar</code>工具，入口类是 <code>com.android.multidex.ClassReferenceListBuilder</code>，并传入了两个参数，分别是<code>jarOfRoots</code>文件和<code>allClassesJarFile</code>文件。</p>
+<p>② 定位到<code>dx.jar</code>工具里具体出问题的地方，通过上面的分析以及构建失败输出的LOG，可以看到Gradle插件调用了<code>dx.jar</code>并传入了<code>build/intermediates/multi-dex/release/componentClasses.jar</code>和<code>build/intermediates/transforms/proguard/release/jars/3/1f/main.jar</code>两个文件。直接调用该命令试试。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> com.android.dx.cf.iface.ParseException: name already added: string&#123;<span class="string">"a"</span>&#125;</span><br><span class="line">        at com.android.dx.cf.direct.AttributeListParser.parse(AttributeListParser.java:<span class="number">156</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AttributeListParser.parseIfNecessary(AttributeListParser.java:<span class="number">115</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AttributeListParser.getList(AttributeListParser.java:<span class="number">106</span>)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parse0(DirectClassFile.java:<span class="number">558</span>)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parse(DirectClassFile.java:<span class="number">406</span>)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.parseToEndIfNecessary(DirectClassFile.java:<span class="number">397</span>)</span><br><span class="line">        at com.android.dx.cf.direct.DirectClassFile.getAttributes(DirectClassFile.java:<span class="number">311</span>)</span><br><span class="line">        at com.android.multidex.MainDexListBuilder.hasRuntimeVisibleAnnotation(MainDexListBuilder.java:<span class="number">191</span>)</span><br><span class="line">        at com.android.multidex.MainDexListBuilder.keepAnnotated(MainDexListBuilder.java:<span class="number">167</span>)</span><br><span class="line">        at com.android.multidex.MainDexListBuilder.&lt;init&gt;(MainDexListBuilder.java:<span class="number">121</span>)</span><br><span class="line">        at com.android.multidex.MainDexListBuilder.main(MainDexListBuilder.java:<span class="number">91</span>)</span><br><span class="line">        at com.android.multidex.ClassReferenceListBuilder.main(ClassReferenceListBuilder.java:<span class="number">58</span>)</span><br><span class="line">Caused by: java.lang.IllegalArgumentException: name already added: string&#123;<span class="string">"a"</span>&#125;</span><br><span class="line">        at com.android.dx.rop.annotation.Annotation.add(Annotation.java:<span class="number">208</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AnnotationParser.parseAnnotation(AnnotationParser.java:<span class="number">264</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AnnotationParser.parseAnnotations(AnnotationParser.java:<span class="number">223</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AnnotationParser.parseAnnotationAttribute(AnnotationParser.java:<span class="number">152</span>)</span><br><span class="line">        at com.android.dx.cf.direct.StdAttributeFactory.runtimeInvisibleAnnotations(StdAttributeFactory.java:<span class="number">616</span>)</span><br><span class="line">        at com.android.dx.cf.direct.StdAttributeFactory.parse0(StdAttributeFactory.java:<span class="number">93</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AttributeFactory.parse(AttributeFactory.java:<span class="number">96</span>)</span><br><span class="line">        at com.android.dx.cf.direct.AttributeListParser.parse(AttributeListParser.java:<span class="number">142</span>)</span><br><span class="line">        ... <span class="number">11</span> more</span><br></pre></td></tr></table></figure>
+<p>从异常的堆栈可以直接看出，dx工具在执行<code>AnnotationParser#parseAnnotation</code>方法的时候出错了，原因是有两个相同的字段<code>a</code>，这也刚好印证了上面<code>mapping.txt</code>文件里面的错误信息。</p>
+<p>③ 最后定位到源码里具体出问题的地方，查看dx工具里的<code>com.android.dx.rop.annotation.Annotation.java</code>的源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> TreeMap&lt;CstString, NameValuePair&gt; elements;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Add an element to the set of (name, value) pairs for this instance.</span></span><br><span class="line"><span class="comment"> * It is an error to call this method if there is a preexisting element</span></span><br><span class="line"><span class="comment"> * with the same name.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> pair &#123;<span class="doctag">@code</span> non-null;&#125; the (name, value) pair to add to this instance</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(NameValuePair pair)</span> </span>&#123;</span><br><span class="line">    throwIfImmutable();</span><br><span class="line">    <span class="keyword">if</span> (pair == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"pair == null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    CstString name = pair.getName();</span><br><span class="line">    <span class="keyword">if</span> (elements.get(name) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"name already added: "</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">    elements.put(name, pair);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到此，<strong>从成功定位到产生异常的具体地方</strong>。</p>
+<p>④ 此外，从<code>:app:assembleRelease --debug --stacktrace</code>的异常堆栈里是无法直接看出具体出异常的地方的错误信息的，不过可以通过<code>:app:assembleRelease --full-stacktrace</code>命令输出更多的错误堆栈，从而直观地看出一些猫腻来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.android.ide.common.process.ProcessException: Error while executing java process with main class com.android.multidex.ClassReferenceListBuilder with arguments &#123;build/intermediates/multi-dex/release/componentClasses.jar build/intermediates/transforms/proguard/release/jars/3/1f/main.jar&#125;</span><br><span class="line">        at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:74)</span><br><span class="line">        at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:49)</span><br><span class="line">        at com.android.builder.core.AndroidBuilder.createMainDexList(AndroidBuilder.java:1384)</span><br><span class="line">        at com.android.build.gradle.internal.transforms.MultiDexTransform.callDx(MultiDexTransform.java:309)</span><br><span class="line">        at com.android.build.gradle.internal.transforms.MultiDexTransform.computeList(MultiDexTransform.java:265)</span><br><span class="line">        at com.android.build.gradle.internal.transforms.MultiDexTransform.transform(MultiDexTransform.java:186)</span><br></pre></td></tr></table></figure>
+<p>从上面的堆栈信息可以直接看出Gradle插件在调用dx工具的时候出现异常了（Process的返回值不是0，也就是Java程序里面调用了System.exit(0)之外的结束方法），对应的类为<code>ClassReferenceListBuilder</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> argIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">boolean</span> keepAnnotated = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">while</span> (argIndex &lt; args.length -<span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (args[argIndex].equals(DISABLE_ANNOTATION_RESOLUTION_WORKAROUND)) &#123;</span><br><span class="line">            keepAnnotated = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.err.println(<span class="string">"Invalid option "</span> + args[argIndex]);</span><br><span class="line">            printUsage();</span><br><span class="line">            System.exit(STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        argIndex++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (args.length - argIndex != <span class="number">2</span>) &#123;</span><br><span class="line">        printUsage();</span><br><span class="line">        System.exit(STATUS_ERROR);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MainDexListBuilder builder = <span class="keyword">new</span> MainDexListBuilder(keepAnnotated, args[argIndex],</span><br><span class="line">                args[argIndex + <span class="number">1</span>]);</span><br><span class="line">        Set&lt;String&gt; toKeep = builder.getMainDexList();</span><br><span class="line">        printList(toKeep);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        System.err.println(<span class="string">"A fatal error occurred: "</span> + e.getMessage());</span><br><span class="line">        System.exit(STATUS_ERROR);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由其中的 <code>MainDexListBuilder builder = new MainDexListBuilder(keepAnnotated, args[argIndex], args[argIndex + 1])</code> 也能进一步定位到上面的 <code>com.android.dx.rop.annotation.Annotation.java</code> 出问题的地方。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>推荐阅读 <a href="https://www.easydone.cn/2017/01/02/" target="_blank" rel="noopener">ProGuard在插件化里的应用</a>。</p>
+<p>著作信息：<br>本文章出自 <a href="http://www.kaedea.com/about" target="_blank" rel="noopener"><strong>Kaede</strong></a> 的博客，原创文章若无特别说明，均遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener"><strong>CC BY-NC 4.0</strong></a> 知识共享许可协议4.0（署名-非商用-相同方式共享），可以随意摘抄转载，但必须标明署名及原地址。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ProGuard/" rel="tag"># ProGuard</a>
+          
+            <a href="/tags/注解/" rel="tag"># 注解</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/01/tools/comment-formatter/" rel="next" title="IntelliJ Plugin Comment Formatter">
+                <i class="fa fa-chevron-left"></i> IntelliJ Plugin Comment Formatter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/21/android/naughty-proguard-tuduki/" rel="prev" title="震惊，西方的程序员跑得居然这么快">
+                震惊，西方的程序员跑得居然这么快 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
+          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
+          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/rurin" title="微博" target="_blank">
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
+                  
+                  HaoMoe
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
+                  
+                  Pixiv
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="/about/" title="友情链接">友情链接</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新闻发生时候的背景"><span class="nav-number">1.</span> <span class="nav-text">新闻发生时候的背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查过程"><span class="nav-number">2.</span> <span class="nav-text">问题排查过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些姿势"><span class="nav-number">3.</span> <span class="nav-text">一些姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'60%'}, 150);
+    </script>
+    
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <!-- update loading -->
+    
+    <script type="text/javascript">
+        $('.headband').animate({'width':'80%'}, 150);
+    </script>
+    
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'kidhaibara';
+      var disqus_identifier = '2017/03/20/android/naughty-proguard/';
+
+      var disqus_title = "ProGuard 又搞了个大新闻";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+
+  <!-- update loading -->
+  
+  <script type="text/javascript">
+      $('.headband').animate({'width':'100%'}, 150);
+  </script>
+  
+
+  <!-- pangu auto space -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
+  <script> pangu.spacingPage(); </script>
+
+</body>
+</html>
