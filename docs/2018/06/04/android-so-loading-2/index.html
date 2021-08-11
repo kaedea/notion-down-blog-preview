@@ -88,22 +88,22 @@
 
 
 
-<meta name="description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta name="description" content="总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。">
 <meta name="keywords" content="动态加载,插件化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
 <meta property="og:url" content="http://kaedea.com/2018/06/04/android-so-loading-2/index.html">
 <meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta property="og:description" content="总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://kaedea.com/assets/so_loading_flow_ee66c324_0375_41c9_a9d4_3643769fc9e9_untitled.png">
 <meta property="og:image" content="http://kaedea.com/assets/jni_separated_diagram_a2bb6b5e_bddc_4b24_849b_a353b653fe90_untitled.png">
 <meta property="og:image" content="http://kaedea.com/assets/jni_builtin_diagram_737587da_0307_42d4_a466_7ba877043376_untitled.png">
 <meta property="og:image" content="http://kaedea.com/assets/so_deps_screenshot_a3f75364_3ae6_42e5_9f9f_8e9c375f4ed6_untitled.png">
-<meta property="og:updated_time" content="2021-08-11T13:10:00.547Z">
+<meta property="og:updated_time" content="2021-08-11T14:22:12.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
-<meta name="twitter:description" content="动态下发 so 库在 Android APK 安装包瘦身方面的应用 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;需求价值 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;动态化需要解决的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 安全性问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;n">
+<meta name="twitter:description" content="总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。">
 <meta name="twitter:image" content="http://kaedea.com/assets/so_loading_flow_ee66c324_0375_41c9_a9d4_3643769fc9e9_untitled.png">
 
 
@@ -360,7 +360,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-11T13:10:00+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-11T14:22:12+00:00">
               2021-08-11
             </time>
             
@@ -427,31 +427,7 @@
       
 
       
-        <ul>
-<li><a href="# 动态下发 - so - 库在 - android-apk - 安装包瘦身方面的应用">动态下发 so 库在 Android APK 安装包瘦身方面的应用</a><ul>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 需求价值">需求价值</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 动态化需要解决的问题">动态化需要解决的问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1.- 安全性问题">1. 安全性问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.- 版本控制问题">2. 版本控制问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.-abi - 兼容性判断">3. abi 兼容性判断</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4.-system#load - 加载代码侵入问题">4. System#load 加载代码侵入问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 具体方案">具体方案</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1.- 系统加载 - so - 库的工作流程">1. 系统加载 so 库的工作流程</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.-jni - 代码隔离方案">2. JNI 代码隔离方案</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.-jni - 代码内置方案">3. JNI 代码内置方案</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4.- 处理 - dlopen - 问题">4. 处理 dlopen 问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#5.-so - 依赖分析工具">5. so 依赖分析工具</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 其他问题">其他问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 相关 - jni - 类污染问题">相关 JNI 类污染问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 代码后续维护成本">代码后续维护成本</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 持续集成、部署问题（ci/cd）">持续集成、部署问题（CI/CD）</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#play-store - 动态代码禁用问题">Play Store 动态代码禁用问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 尾巴">尾巴</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#references">References</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="动态下发-so-库在-Android-APK-安装包瘦身方面的应用"><a href="#动态下发-so-库在-Android-APK-安装包瘦身方面的应用" class="headerlink" title="动态下发 so 库在 Android APK 安装包瘦身方面的应用"></a>动态下发 so 库在 Android APK 安装包瘦身方面的应用</h1><p>总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
+        <p>总所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
 <a id="more"></a>
 <h2 id="需求价值"><a href="#需求价值" class="headerlink" title="需求价值"></a>需求价值</h2><p>一般来说，越是成熟的 Android 项目，Native 代码的贡献量就越多，以往 APK 体积的主要占比大都是资源文件，不过现在 Native 代码带来的 so 体积占比也很可观了，所以 so 动态化的价值越来越凸显。另一方面，现在支持 arm64 的 Android 项目也越来越多，Google Play 更是强制要求支持 arm64，所以有的 Android 项目需要内置两种甚至以上 abi 支持（比如 B 站客户端项目就同时支持 arm32/arm64/x86 三种，以往还支持 arm5），结果就是 so 体积成倍地上涨。因此，能不能将非主要的 abi 相关的 so 文件动态化，也成为了国内 Android 项目瘦身优化不得不优先考虑的问题。</p>
 <p>此外，一些第三方 SDK 库也自带了不少 so 库（比如腾讯视频 SDK，以前我在接入这个 SDK 的时候，项目本身才 15 MB 体积，而 SDK 自身 so 已经占了 17 MB），或许是为了精简第三方 SDK 带来的体积，或许是为了隔离第三方 SDK 的 API（项目只自身依赖自己定义的业务相关性 API，通过依赖注入的方式访问第三方 SDK 的实现，这样以后更换 SDK 的时候只需要切换依赖注入的形式即可），都需要具体的 so 动态化方案提供技术支撑。</p>
@@ -532,7 +508,7 @@
 </ol>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
-notion-down.revision = b'e4a8577'
+notion-down.revision = b'7822d5d'
 Title = 动态下发 so 库在 Android APK 安装包瘦身方面的应用
 Date = 2018-06-04
 Published = true
@@ -803,7 +779,7 @@ hexo.comments = true
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#动态下发-so-库在-Android-APK-安装包瘦身方面的应用"><span class="nav-number">1.</span> <span class="nav-text">动态下发 so 库在 Android APK 安装包瘦身方面的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求价值"><span class="nav-number">1.1.</span> <span class="nav-text">需求价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态化需要解决的问题"><span class="nav-number">1.2.</span> <span class="nav-text">动态化需要解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安全性问题"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 安全性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-版本控制问题"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 版本控制问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-abi-兼容性判断"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. abi 兼容性判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-System-load-加载代码侵入问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. System#load 加载代码侵入问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体方案"><span class="nav-number">1.3.</span> <span class="nav-text">具体方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-系统加载-so-库的工作流程"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 系统加载 so 库的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JNI-代码隔离方案"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. JNI 代码隔离方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JNI-代码内置方案"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. JNI 代码内置方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-处理-dlopen-问题"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 处理 dlopen 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-so-依赖分析工具"><span class="nav-number">1.3.5.</span> <span class="nav-text">5. so 依赖分析工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">1.4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关-JNI-类污染问题"><span class="nav-number">1.4.1.</span> <span class="nav-text">相关 JNI 类污染问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码后续维护成本"><span class="nav-number">1.4.2.</span> <span class="nav-text">代码后续维护成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续集成、部署问题（CI-CD）"><span class="nav-number">1.4.3.</span> <span class="nav-text">持续集成、部署问题（CI/CD）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Play-Store-动态代码禁用问题"><span class="nav-number">1.4.4.</span> <span class="nav-text">Play Store 动态代码禁用问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾巴"><span class="nav-number">1.5.</span> <span class="nav-text">尾巴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.6.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求价值"><span class="nav-number">1.</span> <span class="nav-text">需求价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态化需要解决的问题"><span class="nav-number">2.</span> <span class="nav-text">动态化需要解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安全性问题"><span class="nav-number">2.1.</span> <span class="nav-text">1. 安全性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-版本控制问题"><span class="nav-number">2.2.</span> <span class="nav-text">2. 版本控制问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-abi-兼容性判断"><span class="nav-number">2.3.</span> <span class="nav-text">3. abi 兼容性判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-System-load-加载代码侵入问题"><span class="nav-number">2.4.</span> <span class="nav-text">4. System#load 加载代码侵入问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体方案"><span class="nav-number">3.</span> <span class="nav-text">具体方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-系统加载-so-库的工作流程"><span class="nav-number">3.1.</span> <span class="nav-text">1. 系统加载 so 库的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JNI-代码隔离方案"><span class="nav-number">3.2.</span> <span class="nav-text">2. JNI 代码隔离方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JNI-代码内置方案"><span class="nav-number">3.3.</span> <span class="nav-text">3. JNI 代码内置方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-处理-dlopen-问题"><span class="nav-number">3.4.</span> <span class="nav-text">4. 处理 dlopen 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-so-依赖分析工具"><span class="nav-number">3.5.</span> <span class="nav-text">5. so 依赖分析工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">4.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关-JNI-类污染问题"><span class="nav-number">4.1.</span> <span class="nav-text">相关 JNI 类污染问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码后续维护成本"><span class="nav-number">4.2.</span> <span class="nav-text">代码后续维护成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持续集成、部署问题（CI-CD）"><span class="nav-number">4.3.</span> <span class="nav-text">持续集成、部署问题（CI/CD）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Play-Store-动态代码禁用问题"><span class="nav-number">4.4.</span> <span class="nav-text">Play Store 动态代码禁用问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾巴"><span class="nav-number">5.</span> <span class="nav-text">尾巴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>

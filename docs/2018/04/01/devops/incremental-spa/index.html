@@ -88,13 +88,13 @@
 
 
 
-<meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;名词解释 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;问题背景 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解决思路 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 如何让静态检查工具只检查出新增部分代码带来的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp">
+<meta name="description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
 <meta name="keywords" content="DevOps,SPA,自动化，静态检查">
 <meta property="og:type" content="article">
 <meta property="og:title" content="增量静态检查（SPA）在代码合入检查里的应用">
 <meta property="og:url" content="http://kaedea.com/2018/04/01/devops/incremental-spa/index.html">
 <meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;名词解释 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;问题背景 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解决思路 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 如何让静态检查工具只检查出新增部分代码带来的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp">
+<meta property="og:description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://kaedea.com/assets/man_git_diff_img_git_diff.png">
 <meta property="og:image" content="http://kaedea.com/assets/lint_gong_zuo_liu_cheng_shi_yi_tu_image_lint_workflow.png">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="http://kaedea.com/assets/checkincremental_time_consumde_image_demo_1.png">
 <meta property="og:image" content="http://kaedea.com/assets/mr_he_ru_jian_cha_pipelines_1579101129_18.png">
 <meta property="og:image" content="http://kaedea.com/assets/mr_dai_ma_zeng_liang_jian_cha_jie_guo_1579101164_53.png">
-<meta property="og:updated_time" content="2021-08-11T13:10:00.547Z">
+<meta property="og:updated_time" content="2021-08-11T14:22:12.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="增量静态检查（SPA）在代码合入检查里的应用">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;名词解释 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;问题背景 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解决思路 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 如何让静态检查工具只检查出新增部分代码带来的问题 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp">
+<meta name="twitter:description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
 <meta name="twitter:image" content="http://kaedea.com/assets/man_git_diff_img_git_diff.png">
 
 
@@ -364,7 +364,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-11T13:10:00+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-11T14:22:12+00:00">
               2021-08-11
             </time>
             
@@ -445,22 +445,6 @@ Android 静态代码扫描效率优化与实践 - 美团
 2. 多渠道
 3. 注释
 -->
-<ul>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 名词解释">名词解释</a><ul>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 问题背景">问题背景</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 解决思路">解决思路</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1.- 如何让静态检查工具只检查出新增部分代码带来的问题">1. 如何让静态检查工具只检查出新增部分代码带来的问题</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.- 如何提高静态检查的效率">2. 如何提高静态检查的效率</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#** 具体 ** 方案 ** 实现 **"><strong> 具体 </strong> 方案 <strong> 实现 </strong></a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#**1.- 通过 - git - 计算 ** 增量 ** 代码的信息 **"><strong>1. 通过 git 计算 </strong> 增量 <strong> 代码的信息 </strong></a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2.- 基于 - agp - 插件的 - lint - 增量检查方案">2. 基于 AGP 插件的 Lint 增量检查方案</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3**.- 整体 ** 工作 ** 流程图 **">3<strong>. 整体 </strong> 工作 <strong> 流程图 </strong></a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 结果沉淀">结果沉淀</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 尾巴">尾巴</a></li>
-<li>&nbsp;&nbsp;&nbsp;&nbsp;<a href="# 参考链接">参考链接</a></li>
-</ul>
-</li>
-</ul>
 <p>静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供的 References。</p>
 <a id="more"></a>
 <h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
@@ -612,7 +596,7 @@ Android 静态代码扫描效率优化与实践 - 美团
 </ol>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
-notion-down.revision = b'e4a8577'
+notion-down.revision = b'7822d5d'
 Title = 增量静态检查（SPA）在代码合入检查里的应用
 Date = 2018-04-01
 Published = true
