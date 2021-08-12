@@ -27,8 +27,14 @@ jobs:
       - run:
           name: Copy preview pages into kaedea.github.io
           command: |
+            echo "Copy preview pages into kaedea.github.io"
             cp -rv ~/job-deploy-homepages/docs/. deploy
             ls -l deploy
+            echo "Configure CNAME"
+            if [ -f "deploy/CNAME" ]; then
+                rm deploy/CNAME
+            fi
+            echo "www.kaedea.com" > deploy/docs/CNAME
       - run:
           name: Check files modification
           command: |
