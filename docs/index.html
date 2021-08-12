@@ -310,6 +310,180 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2021/05/20/devops/notion-to-markdown-file-automating-solution/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2021/05/20/devops/notion-to-markdown-file-automating-solution/" itemprop="url">
+                  基于 Notion 的笔记写作和博客分享自动化方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-05-20T00:00:00+00:00">
+              2021-05-20
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
+              2021-08-12
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DevOps/" itemprop="url" rel="index">
+                    <span itemprop="name">DevOps</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2021/05/20/devops/notion-to-markdown-file-automating-solution/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/05/20/devops/notion-to-markdown-file-automating-solution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2021/05/20/devops/notion-to-markdown-file-automating-solution/" class="leancloud_visitors" data-flag-title="基于 Notion 的笔记写作和博客分享自动化方案">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://www.notion.so/image/https%3A%252F%252Fwww.notion.so%252Fimages%252Fpage-cover%252Fwoodcuts_16.jpg" alt="Page Cover"></p>
+<!-- draft
+
+1. 背景
+1. Notion
+1. Solution & Workflows
+1. 流程图
+    1. refer：[https://github.com/soruly/trace.moe#overview](https://github.com/soruly/trace.moe#overview)
+1. NotionDown
+
+-->
+<p>个人认为，笔记（Note）、写作（Writing）和分享（Share）是 <code>个人知识管理</code> 重要的组成部分。笔记是知识元素，写作是知识汇总，分享是知识升华。固然每个人具体实践的方式会尽不相同，不过大家应该都或多或少能对体会其中存在的一些割裂感：</p>
+<p>其一，笔记存在多端同步编辑的刚需。不过随着云笔记解决方案越来越成熟后，这问题现在已经有许多解决方案。其二，笔记草稿和写作正文之间的同步存在许多机械的地方：同一篇文章经常需要在草稿和正文（终稿）之间来回修订，而大部分情况下这两者的同步是通过复制粘贴和人工比对来完成的，这个过场是写作体验主要的割裂感之一。其三，写作正文完成之后的文章分享（Publish）也是一个麻烦的流程，尽管现在许多静态博客可以通过自动化技术完成部署，不过文章正文内容和部署用的 MarkDown 源文件之间的数据同步也是个非常头疼的事情：如果正文和 MD 文件分开处理，两者之间只能手动同步；如果直接用 MD 文件来写正文，又不得不面临现在多数云笔记糟糕的 MD 文件编辑体验（而且 MD 文件能否导出还是个未知数）；如果干脆使用 gitbook 之类的方案来编辑 MD 文件，那基于 git 的笔记云同步方案体验也不会好到哪。</p>
+<p>自从改用静态博客代替 WordPress 来发表自己的文章、文档后，我不得已采用” 云笔记写草稿，MD 文件保存文章正文，手动在草稿和正文之间同步 “这样的 <code>原始</code> 的写作方案，以上说的几种割裂感也是一直以来我感到非常困扰的地方。</p>
+<p>几番苦寻更好的云笔记体验方案，未果。直到 ta 的出现：<code>Notion</code> 。<br>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2021/05/20/devops/notion-to-markdown-file-automating-solution/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://kaedea.com/2018/06/04/android-so-loading-2/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -358,7 +532,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -518,7 +692,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -692,7 +866,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -857,7 +1031,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1018,7 +1192,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1179,7 +1353,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1342,7 +1516,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1503,7 +1677,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1664,7 +1838,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
               2021-08-12
             </time>
             
@@ -1771,168 +1945,6 @@ Android 静态代码扫描效率优化与实践 - 美团
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/09/23/living/living-hackintosh-lh532/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/23/living/living-hackintosh-lh532/" itemprop="url">
-                  黑苹果初体验 - 富士通LH532
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-23T00:00:00+00:00">
-              2016-09-23
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T04:03:04+00:00">
-              2021-08-12
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Living/" itemprop="url" rel="index">
-                    <span itemprop="name">Living</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/23/living/living-hackintosh-lh532/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/09/23/living/living-hackintosh-lh532/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/09/23/living/living-hackintosh-lh532/" class="leancloud_visitors" data-flag-title="黑苹果初体验 - 富士通LH532">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/2016111315311feya-lh532.png" alt="2016111315311feya-lh532.png"></p>
-<p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
-<p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/23/living/living-hackintosh-lh532/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1976,7 +1988,7 @@ Android 静态代码扫描效率优化与实践 - 美团
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -1993,7 +2005,7 @@ Android 静态代码扫描效率优化与实践 - 美团
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
