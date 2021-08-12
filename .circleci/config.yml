@@ -1,0 +1,56 @@
+version: 2.1
+
+workflows:
+  version: 2.1
+  deploy-homepages:
+    jobs:
+      - deploy-homepages:
+          filters:
+            branches:
+              only: release/deploy
+
+jobs:
+  deploy-homepages:
+    docker:
+      - image: node:13
+    working_directory: ~/job-deploy-homepages
+    steps:
+      - checkout
+      - run:
+          name: Checkout kaedea.github.io
+          command: |
+            echo "Clone kaedea.github.io"
+            git clone -b circleci-bot https://github.com/kaedea/kaedea.github.io.git deploy
+            cd deploy
+            git config user.name "Kaede"
+            git config user.email "kidhaibara@gmail.com"
+      - run:
+          name: Copy preview pages into kaedea.github.io
+          command: |
+            cp -rv ~/job-deploy-homepages/docs/. deploy
+            ls -l deploy
+      - run:
+          name: Check files modification
+          command: |
+            pwd && cd deploy && ls -l 
+            ret=`git status`
+            echo "git status\n: ${ret}"
+            has_modified=true
+            if [[ $ret == *"nothing to commit"* ]]; then
+                has_modified=false
+            fi
+            echo "has_modified: ${has_modified}"
+            if [ "$has_modified" == false ]; then
+                echo "Nothing modified, abort jobs."
+                curl -X POST "https://circleci.com/api/v2/workflow/${CIRCLE_WORKFLOW_ID}/cancel" -H "Accept: application/json" -u "${CIRCLE_TOKEN}:"
+                # set -e && exit 1
+            fi
+      - run:
+          name: Git push kaedea.github.io
+          command: |
+            pwd && cd deploy && ls -l 
+            git add *
+            git status
+            git commit -a -m "Circleci-bot deploy homepages - ${CIRCLE_BUILD_NUM}"
+            git push --force --quiet "https://github.com/kaedea/kaedea.github.io.git"
+            echo "Deploy success 🍺"
