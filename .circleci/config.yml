@@ -34,7 +34,7 @@ jobs:
             if [ -f "deploy/CNAME" ]; then
                 rm deploy/CNAME
             fi
-            echo "www.kaedea.com" > deploy/docs/CNAME
+            echo "www.kaedea.com" > deploy/CNAME
       - run:
           name: Check files modification
           command: |
