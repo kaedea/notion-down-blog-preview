@@ -52,5 +52,5 @@ jobs:
             git add *
             git status
             git commit -a -m "Circleci-bot deploy homepages - ${CIRCLE_BUILD_NUM}"
-            git push --force --quiet "https://github.com/kaedea/kaedea.github.io.git"
+            git push --force --quiet "https://${GH_TOKEN}@github.com/kaedea/kaedea.github.io.git" circleci-bot:circleci-bot
             echo "Deploy success 🍺"
