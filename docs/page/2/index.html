@@ -310,6 +310,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/11/11/android/multidex-source-code/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/11/android/multidex-source-code/" itemprop="url">
+                  MultiDex工作原理分析和优化方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-11T00:00:00+00:00">
+              2016-11-11
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+              2021-08-20
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/11/android/multidex-source-code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/11/android/multidex-source-code/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/11/android/multidex-source-code/" class="leancloud_visitors" data-flag-title="MultiDex工作原理分析和优化方案">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
+<p>MultiDex是Google为了解决“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/11/android/multidex-source-code/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/10/02/android/log-utility/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -358,7 +519,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -500,7 +661,7 @@
               
                 
                 <a class="post-title-link" href="/2016/09/23/living/living-hackintosh-lh532/" itemprop="url">
-                  黑苹果初体验 - 富士通LH532
+                  黑苹果初体验 - 富士通 LH532
                 </a>
               
             
@@ -522,7 +683,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -537,8 +698,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Living/" itemprop="url" rel="index">
-                    <span itemprop="name">Living</span>
+                  <a href="/categories/Life/" itemprop="url" rel="index">
+                    <span itemprop="name">Life</span>
                   </a>
                 </span>
 
@@ -564,7 +725,7 @@
 
           
           
-             <span id="/2016/09/23/living/living-hackintosh-lh532/" class="leancloud_visitors" data-flag-title="黑苹果初体验 - 富士通LH532">
+             <span id="/2016/09/23/living/living-hackintosh-lh532/" class="leancloud_visitors" data-flag-title="黑苹果初体验 - 富士通 LH532">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -590,9 +751,9 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/2016111315311feya-lh532.png" alt="2016111315311feya-lh532.png"></p>
-<p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
-<p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
+          <p><img src="/assets/bb50f6df_4c0f_424a_b9b3_04870fa7b35c_untitled.png" alt></p>
+<p>高中开始折腾电脑 DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装 Windows 系统，玩腻了就折腾 Linux，到后来开始打算折腾 Mac。在普通 PC 上安装苹果的 OSX 系统（现在叫 MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起 Windows 和 Linux 实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
+<p>最近在公司开始正式切换到 Mac 系统上进行开发工作，但是回到家里就得用 WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是 Mac 上的快捷键和 Windows 大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/09/23/living/living-hackintosh-lh532/#more" rel="contents">
@@ -662,7 +823,7 @@
               
                 
                 <a class="post-title-link" href="/2016/09/17/front/front-hexo-theme-next/" itemprop="url">
-                  HEXO THEME NEXT
+                  Hexo 主题 NEXT
                 </a>
               
             
@@ -684,7 +845,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -699,8 +860,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FrontEnd/" itemprop="url" rel="index">
-                    <span itemprop="name">FrontEnd</span>
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
                   </a>
                 </span>
 
@@ -726,7 +887,7 @@
 
           
           
-             <span id="/2016/09/17/front/front-hexo-theme-next/" class="leancloud_visitors" data-flag-title="HEXO THEME NEXT">
+             <span id="/2016/09/17/front/front-hexo-theme-next/" class="leancloud_visitors" data-flag-title="Hexo 主题 NEXT">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -752,8 +913,10 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-9-17/86859476.jpg?imageView2/2/w/600/interlace/1" alt></p>
-<p>又到了折腾博客主题的时间了，好吧，我承认我用在主题上的时间远比用在写博客上的时间要多多了 (〃ﾉωﾉ)。这次用的是Hexo中最受欢迎的主题（没有之一）的<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">NEXT</a>。<br>
+          <p><img src="/assets/86859476.jpg" alt></p>
+<p>又到了折腾博客主题的时间了，好吧，我承认我用在主题上的时间远比用在写博客上的时间要多多了 (〃ﾉωﾉ)。这次用的是 Hexo 中最受欢迎的主题（没有之一）的 <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">NEXT</a>。</p>
+<!-- ColumnList start -->
+<!-- Column 0 start -->
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/09/17/front/front-hexo-theme-next/#more" rel="contents">
@@ -763,180 +926,7 @@
           <!--/noindex-->
         
       
-    </p></div>
-
-    <div>
-      
     </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/" itemprop="url">
-                  设计一个框架化框架 FRONTIA
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-10T00:00:00+00:00">
-              2016-07-10
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
-              2021-08-20
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/10/android-dynamical-loading-08-satrt-frontia/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/07/10/android-dynamical-loading-08-satrt-frontia/" class="leancloud_visitors" data-flag-title="设计一个框架化框架 FRONTIA">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-7-12/1819669.jpg?imageView2/2/w/600/interlace/1" alt></p>
-<p>结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&lt;ゝω·)☆”。<br>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
 
     <div>
       
@@ -1018,7 +1008,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -1087,31 +1077,31 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" rel="gallery_cksk9xu1q002g6xqhkw5xw16z" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" rel="gallery_cksk9xu1q002g6xqhkw5xw16z" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" rel="gallery_cksk9xu1q002g6xqhkw5xw16z" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" itemprop="contentUrl">
               </a>
             </div>
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" rel="gallery_cksk9xu1q002g6xqhkw5xw16z" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" rel="gallery_cksk9xu1q002g6xqhkw5xw16z" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" itemprop="contentUrl">
               </a>
             
@@ -1216,7 +1206,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -1231,8 +1221,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FrontEnd/" itemprop="url" rel="index">
-                    <span itemprop="name">FrontEnd</span>
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
                   </a>
                 </span>
 
@@ -1284,7 +1274,7 @@
 
       
         
-          <p>关于“是否应该在中文和英文之间加上空格”的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
+          <p>关于 “是否应该在中文和英文之间加上空格” 的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/06/26/front-auto-space/#more" rel="contents">
@@ -1375,7 +1365,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -1544,7 +1534,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -1725,7 +1715,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -1886,7 +1876,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
               2021-08-20
             </time>
             
@@ -2052,7 +2042,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2061,7 +2051,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
