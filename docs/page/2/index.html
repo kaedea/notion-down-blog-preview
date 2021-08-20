@@ -310,167 +310,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/11/11/android/multidex-source-code/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/11/android/multidex-source-code/" itemprop="url">
-                  MultiDex工作原理分析和优化方案
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-11T00:00:00+00:00">
-              2016-11-11
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
-              2021-08-20
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/11/android/multidex-source-code/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/11/android/multidex-source-code/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/11/android/multidex-source-code/" class="leancloud_visitors" data-flag-title="MultiDex工作原理分析和优化方案">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
-<p>MultiDex是Google为了解决“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/11/11/android/multidex-source-code/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/10/02/android/log-utility/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -519,7 +358,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -683,7 +522,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -845,7 +684,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -960,6 +799,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/" itemprop="url">
+                  设计一个框架化框架 Frontia
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-07-10T00:00:00+00:00">
+              2016-07-10
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
+              2021-08-20
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/10/android-dynamical-loading-08-satrt-frontia/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/10/android-dynamical-loading-08-satrt-frontia/" class="leancloud_visitors" data-flag-title="设计一个框架化框架 Frontia">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="/assets/4df27cf7_e064_4741_ae49_f4bca8a82724_untitled.png" alt></p>
+<p>结合动态加载系列文章的分析，现在开始设计并开发一个 Android 的插件化框架，命名为 Frontia。Frontia 有 “前端” 的意思，寓意着 Android 插件能像前端开发那样动态发版，同时，这一词出自 Macross 动画系列，有 “繁星” 的意思，“我们的征途是星辰大海 KIRA!!(&lt; ゝ ω・)☆”。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/07/01/living-cp18-pictures/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1008,7 +1008,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1077,31 +1077,31 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" rel="gallery_ckskc8ja600236zqkpqv5y3b9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/57295717.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" rel="gallery_ckskc8ja600236zqkpqv5y3b9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/2409459.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" rel="gallery_ckskc8ja600236zqkpqv5y3b9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/MG_0041.jpg" itemprop="contentUrl">
               </a>
             </div>
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" rel="gallery_ckskc8ja600236zqkpqv5y3b9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/72384345.jpg" itemprop="contentUrl">
               </a>
             
           
             
-              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" rel="gallery_ckskaycxx00206zmmgbukfzhc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" rel="gallery_ckskc8ja600236zqkpqv5y3b9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-30/92361087.jpg" itemprop="contentUrl">
               </a>
             
@@ -1206,7 +1206,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1274,7 +1274,12 @@
 
       
         
-          <p>关于 “是否应该在中文和英文之间加上空格” 的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
+          <!-- draft
+
+![](/assets/09924d84_d08c_4599_9470_492271d8f6b9_untitled.png)
+
+-->
+<p>关于 “是否应该在中文和英文之间加上空格” 的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/06/26/front-auto-space/#more" rel="contents">
@@ -1343,7 +1348,7 @@
             
               
               <a class="post-title-link post-title-link-external" target="_blank" href="https://github.com/kaedea/hexo-theme-themia" itemprop="url">
-                HEXO THEME THEMIA 1.7
+                Hexo 主题 Themia 1.7
                 <i class="fa fa-external-link"></i>
               </a>
             
@@ -1365,7 +1370,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1380,8 +1385,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FrontEnd/" itemprop="url" rel="index">
-                    <span itemprop="name">FrontEnd</span>
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
                   </a>
                 </span>
 
@@ -1407,7 +1412,7 @@
 
           
           
-             <span id="/2016/06/24/hexo-theme-themia-1.7/" class="leancloud_visitors" data-flag-title="HEXO THEME THEMIA 1.7">
+             <span id="/2016/06/24/hexo-theme-themia-1.7/" class="leancloud_visitors" data-flag-title="Hexo 主题 Themia 1.7">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1433,26 +1438,35 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-6-24/23334229.jpg" alt></p>
-<p><strong>Themia</strong> 是一个华丽的Hexo响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题<a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a>的基础上改造而来，<strong>大部分功能都是原有主题的</strong>，只是为了我自己的需求做了小部分的修改，主要是针对中文适配做的修改。</p>
-<p>特点</p>
+          
+            <p><img src="/assets/23334229.jpg" alt></p>
+<p><strong>Themia</strong> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，<strong> 大部分功能都是原有主题的 </strong>，只是为了我自己的需求做了小部分的修改，主要是针对中文适配做的修改。<br>特点</p>
 <ol>
-<li>增加1080P等大屏显示器下的SideBar样式；</li>
+<li>增加 1080P 等大屏显示器下的 SideBar 样式；</li>
 <li>调整文章的样式，比如字体、字体大小、对齐等；</li>
 <li>中英混排自动加入空格（参考 <a href="https://github.com/vinta/pangu.js" target="_blank" rel="noopener">pangu.js</a>）；</li>
 <li>同步更新至 TranquiPeak 1.7.1；</li>
 </ol>
-<p>将项目根目录的所有文件复制进一个文件夹，并把该文件夹复制进Hexo项目的themes目录下，再把Hexo的配置文件_config.yml中的theme标签的指改为该文件夹的名称即可。<br>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/24/hexo-theme-themia-1.7/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>将项目根目录的所有文件复制进一个文件夹，并把该文件夹复制进 Hexo 项目的 themes 目录下，再把 Hexo 的配置文件_config.yml 中的 theme 标签的指改为该文件夹的名称即可。</p>
+<!-- Generated by HexoWriter
+notion-down.version = 0.1.0
+notion-down.revision = b'4f02e9a'
+Title = Hexo 主题 Themia 1.7
+Date = 2016-06-24 00:00:00
+Published = true
+Category = Blog
+Tag = ['Blog', 'Hexo', '主题']
+FileLocate = 
+FileName = hexo-theme-themia-1.7
+hexo.comments = true
+hexo.link = https://github.com/kaedea/hexo-theme-themia
+hexo.metaAlignment = center
+-->
+
+          
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1512,7 +1526,7 @@
               
                 
                 <a class="post-title-link" href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/" itemprop="url">
-                  动态创建ACTIVITY模式
+                  动态创建 Activity 模式
                 </a>
               
             
@@ -1534,7 +1548,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1551,18 +1565,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index">
                     <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
                   </a>
                 </span>
 
@@ -1588,7 +1590,7 @@
 
           
           
-             <span id="/2016/06/14/android-dynamical-loading-07-dynamic-activity/" class="leancloud_visitors" data-flag-title="动态创建ACTIVITY模式">
+             <span id="/2016/06/14/android-dynamical-loading-07-dynamic-activity/" class="leancloud_visitors" data-flag-title="动态创建 Activity 模式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1614,16 +1616,16 @@
 
       
         
-          <p>还记得我们在代理Activity模式里谈到启动插件APK里的Activity的两个难题吗，由于插件里的Activity没在主项目的Manifest里面注册，所以无法经历系统Framework层级的一系列初始化过程，最终导致获得的Activity实例并没有生命周期和无法使用res资源。</p>
-<p>使用代理Activity能够解决这两个问题，但是有一些限制：</p>
+          <p>还记得我们在代理 Activity 模式里谈到启动插件 APK 里的 Activity 的两个难题吗，由于插件里的 Activity 没在主项目的 Manifest 里面注册，所以无法经历系统 Framework 层级的一系列初始化过程，最终导致获得的 Activity 实例并没有生命周期和无法使用 res 资源。</p>
+<p>使用代理 Activity 能够解决这两个问题，但是有一些限制：</p>
 <ul>
-<li>实际运行的Activity实例其实都是ProxyActivity，并不是真正想要启动的Activity；</li>
-<li>ProxyActivity只能指定一种LaunchMode，所以插件里的Activity无法自定义LaunchMode；</li>
-<li>不支持静态注册的BroadcastReceiver；</li>
-<li>往往不是所有的APK都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的”开发规范”；</li>
+<li>实际运行的 Activity 实例其实都是 ProxyActivity，并不是真正想要启动的 Activity；</li>
+<li>ProxyActivity 只能指定一种 LaunchMode，所以插件里的 Activity 无法自定义 LaunchMode；</li>
+<li>不支持静态注册的 BroadcastReceiver；</li>
+<li>往往不是所有的 APK 都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的 “开发规范”；</li>
 </ul>
-<p>特别是最后一个，无法直接把一个普通的APK作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通APP那样自由。</p>
-<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的APK安装包。这听起来好像是只有获得ROOT权限才能做到的事情，要不然随便写个空壳的APK加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成Activity类的方式。<br>
+<p>特别是最后一个，无法直接把一个普通的 APK 作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通 APP 那样自由。</p>
+<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的 APK 安装包。这听起来好像是只有获得 ROOT 权限才能做到的事情，要不然随便写个空壳的 APK 加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成 Activity 类的方式。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/#more" rel="contents">
@@ -1633,7 +1635,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1715,7 +1717,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1854,7 +1856,7 @@
               
                 
                 <a class="post-title-link" href="/2016/06/10/android-dynamical-loading-06-proxy-activity/" itemprop="url">
-                  代理ACTIVITY模式
+                  代理 Activity 模式
                 </a>
               
             
@@ -1876,7 +1878,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:01:36+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T12:37:31+00:00">
               2021-08-20
             </time>
             
@@ -1893,18 +1895,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index">
                     <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
                   </a>
                 </span>
 
@@ -1930,7 +1920,7 @@
 
           
           
-             <span id="/2016/06/10/android-dynamical-loading-06-proxy-activity/" class="leancloud_visitors" data-flag-title="代理ACTIVITY模式">
+             <span id="/2016/06/10/android-dynamical-loading-06-proxy-activity/" class="leancloud_visitors" data-flag-title="代理 Activity 模式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1956,7 +1946,7 @@
 
       
         
-          <p>简单模式中，使用ClassLoader加载外部的Dex或Apk文件，可以加载一些本地APP不存在的类（或者更新本地已存在的类），从而执行一些新的代码逻辑，但是使用这种方法却不能直接启动插件里的Activity等组件，也没办法使用res资源，如果不解决这两个问题，则使用插件化的方式开发Android业务会非常繁琐。<br>
+          <p>简单模式中，使用 ClassLoader 加载外部的 Dex 或 Apk 文件，可以加载一些本地 APP 不存在的类（或者更新本地已存在的类），从而执行一些新的代码逻辑，但是使用这种方法却不能直接启动插件里的 Activity 等组件，也没办法使用 res 资源，如果不解决这两个问题，则使用插件化的方式开发 Android 业务会非常繁琐。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/06/10/android-dynamical-loading-06-proxy-activity/#more" rel="contents">
@@ -1966,7 +1956,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -2051,7 +2041,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
