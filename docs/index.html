@@ -358,7 +358,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -523,7 +523,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -683,7 +683,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -857,7 +857,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1022,7 +1022,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1183,7 +1183,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1343,7 +1343,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1499,7 +1499,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
               
                 
                 <a class="post-title-link" href="/2016/11/22/android/pre-multidex/" itemprop="url">
-                  通过预安装给MultiDex加速
+                  通过预安装给 MultiDex 加速
                 </a>
               
             
@@ -1521,7 +1521,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1563,7 +1563,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
 
           
           
-             <span id="/2016/11/22/android/pre-multidex/" class="leancloud_visitors" data-flag-title="通过预安装给MultiDex加速">
+             <span id="/2016/11/22/android/pre-multidex/" class="leancloud_visitors" data-flag-title="通过预安装给 MultiDex 加速">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1589,11 +1589,172 @@ hexo.link = https://github.com/kaedea/comment-formatter
 
       
         
-          <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
-<p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
+          <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
+<p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/11/22/android/pre-multidex/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/" itemprop="url">
+                  MultiDex 工作原理分析和优化方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-11T00:00:00+00:00">
+              2016-11-11
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
+              2021-08-20
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/" class="leancloud_visitors" data-flag-title="MultiDex 工作原理分析和优化方案">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过 UP 主我并没有放弃治疗哈，相信在不就的未来就可以看到 “系统 Api Hook 模式” 和插件化框架 Frontia 的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是 dex 文件的加载。</p>
+<p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/11/multidex_gong_zuo_yuan_li_fen_xi_he_you_hua_fang_an/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1682,7 +1843,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:33:13+00:00">
               2021-08-20
             </time>
             
@@ -1786,170 +1947,6 @@ hexo.link = https://github.com/kaedea/comment-formatter
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/10/02/android/log-utility/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/02/android/log-utility/" itemprop="url">
-                  使用Log的正确姿势
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-02T00:00:00+00:00">
-              2016-10-02
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T11:02:54+00:00">
-              2021-08-20
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/02/android/log-utility/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/02/android/log-utility/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/10/02/android/log-utility/" class="leancloud_visitors" data-flag-title="使用Log的正确姿势">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://7xqmjb.com1.z0.glb.clouddn.com/2016121173207banner_blog.jpg" alt="2016121173207banner_blog.jpg"></p>
-<blockquote>
-<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 <code>Hello, World!</code>。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。</p>
-</blockquote>
-<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/02/android/log-utility/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1993,7 +1990,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -2010,7 +2007,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
