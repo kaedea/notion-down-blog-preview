@@ -96,16 +96,16 @@
 <meta property="og:site_name" content="中二病也要开发ANDROID">
 <meta property="og:description" content="Android MVP 模式[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，MVP 模式  的优势就充分显示出来了。MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/13126761.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/2114527.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/94032090.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/87960424.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/63555794.jpg">
-<meta property="og:updated_time" content="2021-08-23T13:50:58.181Z">
+<meta property="og:image" content="http://kaedea.com/assets/7de3a4f0_1313_4956_bc37_30e485d5ae15_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/0ceba239_aa37_467c_833a_bc592b9af988_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/5bcd272f_042d_4f4e_aca1_a5e111c45984_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/54a06952_d7bd_447d_b5d3_4206abed8fcb_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/c952bf4a_476f_40b6_bb0e_9416d6d1ed51_untitled.png">
+<meta property="og:updated_time" content="2021-08-23T17:03:55.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVP 模式简单易懂的介绍方式">
 <meta name="twitter:description" content="Android MVP 模式[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，MVP 模式  的优势就充分显示出来了。MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时">
-<meta name="twitter:image" content="http://kaedea.com/assets/13126761.jpg">
+<meta name="twitter:image" content="http://kaedea.com/assets/7de3a4f0_1313_4956_bc37_30e485d5ae15_untitled.png">
 
 
 
@@ -361,7 +361,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T17:03:55+00:00">
               2021-08-23
             </time>
             
@@ -437,7 +437,7 @@
 </ul>
 <p>MVP 模式（Model-View-Presenter）可以说是 MVC 模式（Model-View-Controller）在 Android 开发上的一种变种、进化模式。后者大家可能比较熟悉，就算不熟悉也可能或多或少地在自己的项目中用到过。要介绍 MVP 模式，就不得不先说说 MVC 模式。</p>
 <h2 id="MVC-模式"><a href="#MVC-模式" class="headerlink" title="MVC 模式"></a>MVC 模式</h2><p>MVC 模式的结构分为三部分，实体层的 Model，视图层的 View，以及控制层的 Controller。</p>
-<p><img src="/assets/13126761.jpg" alt></p>
+<p><img src="/assets/7de3a4f0_1313_4956_bc37_30e485d5ae15_untitled.png" alt></p>
 <ul>
 <li>其中 View 层其实就是程序的 UI 界面，用于向用户展示数据以及接收用户的输入</li>
 <li>而 Model 层就是 JavaBean 实体类，用于保存实例数据</li>
@@ -445,7 +445,7 @@
 </ul>
 <p>例如，View 层接受用户的输入，然后通过 Controller 修改对应的 Model 实例；同时，当 Model 实例的数据发生变化的时候，需要修改 UI 界面，可以通过 Controller 更新界面。（View 层也可以直接更新 Model 实例的数据，而不用每次都通过 Controller，这样对于一些简单的数据更新工作会变得方便许多。）<br>举个简单的例子，现在要实现一个飘雪的动态壁纸，可以给雪花定义一个实体类 Snow，里面存放 XY 轴坐标数据，View 层当然就是 SurfaceView（或者其他视图），为了实现雪花飘的效果，可以启动一个后台线程，在线程里不断更新 Snow 实例里的坐标值，这部分就是 Controller 的工作了，Controller 里还要定时更新 SurfaceView 上面的雪花。进一步的话，可以在 SurfaceView 上监听用户的点击，如果用户点击，只通过 Controller 对触摸点周围的 Snow 的坐标值进行调整，从而实现雪花在用户点击后出现弹开等效果。具体的 MVC 模式请自行 Google。</p>
 <h2 id="MVP-模式"><a href="#MVP-模式" class="headerlink" title="MVP 模式"></a>MVP 模式</h2><p>在 Android 项目中，Activity 和 Fragment 占据了大部分的开发工作。如果有一种设计模式（或者说代码结构）专门是为优化 Activity 和 Fragment 的代码而产生的，你说这种模式重要不？这就是 MVP 设计模式。<br>按照 MVC 的分层，Activity 和 Fragment（后面只说 Activity）应该属于 View 层，用于展示 UI 界面，以及接收用户的输入，此外还要承担一些生命周期的工作。Activity 是在 Android 开发中充当非常重要的角色，特别是 TA 的生命周期的功能，所以开发的时候我们经常把一些业务逻辑直接写在 Activity 里面，这非常直观方便，代价就是 Activity 会越来越臃肿，超过 1000 行代码是常有的事，而且如果是一些可以通用的业务逻辑（比如用户登录），写在具体的 Activity 里就意味着这个逻辑不能复用了。如果有进行代码重构经验的人，看到 1000 + 行的类肯定会有所顾虑。因此，Activity 不仅承担了 View 的角色，还承担了一部分的 Controller 角色，这样一来 V 和 C 就耦合在一起了，虽然这样写方便，但是如果业务调整的话，要维护起来就难了，而且在一个臃肿的 Activity 类查找业务逻辑的代码也会非常蛋疼，所以看起来有必要在 Activity 中，把 View 和 Controller 抽离开来，而这就是 MVP 模式的工作了。</p>
-<p><img src="/assets/2114527.jpg" alt></p>
+<p><img src="/assets/0ceba239_aa37_467c_833a_bc592b9af988_untitled.png" alt></p>
 <p>MVP 模式的核心思想</p>
 <blockquote>
 <p>MVP 把 Activity 中的 UI 逻辑抽象成 View 接口，把业务逻辑抽象成 Presenter 接口，Model 类还是原来的 Model。</p>
@@ -467,7 +467,7 @@
 <p>Java 一个强大的功能就是其虚拟机的内存回收机制，这个功能使得 Java 用户在设计代码的时候，不用像 C++ 用户那样考虑对象的回收问题。然而，Java 用户总是喜欢随便写一大堆对象，然后幻想着虚拟机能帮他们处理好内存的回收工作。可是虚拟机在回收内存的时候，只会回收那些没有被引用的对象，被引用着的对象因为还可能会被调用，所以不能回收。</p>
 </blockquote>
 <p>Activity 是有生命周期的，用户随时可能切换 Activity，当 APP 的内存不够用的时候，系统会回收处于后台的 Activity 的资源以避免 OOM。<br>采用传统的 MV 模式，一大堆异步任务和对 UI 的操作都放在 Activity 里面，比如你可能从网络下载一张图片，在下载成功的回调里把图片加载到 Activity 的 ImageView 里面，所以异步任务保留着对 Activity 的引用。这样一来，即使 Activity 已经被切换到后台（onDestroy 已经执行），这些异步任务仍然保留着对 Activity 实例的引用，所以系统就无法回收这个 Activity 实例了，结果就是 Activity Leak。Android 的组件中，Activity 对象往往是在堆（Java Heap）里占最多内存的，所以系统会优先回收 Activity 对象，如果有 Activity Leak，APP 很容易因为内存不够而 OOM。<br>采用 MVP 模式，只要在当前的 Activity 的 onDestroy 里，分离异步任务对 Activity 的引用，就能避免 Activity Leak。<br>说了这么多，没看懂？好吧，我自己都没看懂自己写的，我们还是直接看代码吧。</p>
-<h2 id="MVP-模式的使用"><a href="#MVP-模式的使用" class="headerlink" title="MVP 模式的使用"></a>MVP 模式的使用</h2><p><img src="/assets/94032090.jpg" alt></p>
+<h2 id="MVP-模式的使用"><a href="#MVP-模式的使用" class="headerlink" title="MVP 模式的使用"></a>MVP 模式的使用</h2><p><img src="/assets/5bcd272f_042d_4f4e_aca1_a5e111c45984_untitled.png" alt></p>
 <p>上面一张简单的 MVP 模式的 UML 图，从图中可以看出，使用 MVP，至少需要经历以下步骤：</p>
 <ol>
 <li>创建 IPresenter 接口，把所有业务逻辑的接口都放在这里，并创建它的实现 PresenterCompl（在这里可以方便地查看业务功能，由于接口可以有多种实现所以也方便写单元测试）</li>
@@ -480,9 +480,9 @@
 <p>Talk is cheap, let me show you the code!</p>
 </blockquote>
 <p>所以还是来写一下实际的项目吧。</p>
-<h2 id="MVP-模式简单实例"><a href="#MVP-模式简单实例" class="headerlink" title="MVP 模式简单实例"></a>MVP 模式简单实例</h2><p><img src="/assets/87960424.jpg" alt></p>
+<h2 id="MVP-模式简单实例"><a href="#MVP-模式简单实例" class="headerlink" title="MVP 模式简单实例"></a>MVP 模式简单实例</h2><p><img src="/assets/54a06952_d7bd_447d_b5d3_4206abed8fcb_untitled.png" alt></p>
 <p>一个简单的登录界面（实在想不到别的了╮(￣▽￣”)╭），点击 LOGIN 则进行账号密码验证，点击 CLEAR 则重置输入。</p>
-<p><img src="/assets/63555794.jpg" alt></p>
+<p><img src="/assets/c952bf4a_476f_40b6_bb0e_9416d6d1ed51_untitled.png" alt></p>
 <p>项目结构看起来像是这个样子的，MVP 的分层还是很清晰的。我的习惯是先按模块分 Package，在模块下面再去创建 <strong>model、view、presenter</strong> 的子 Package，当然也可以用 <strong>model、view、presenter</strong> 作为顶级的 Package，然后把所有的模块的 model、view、presenter 类都到这三个顶级 Package 中，就好像有人喜欢把项目里所有的 Activity、Fragment、Adapter 都放在一起一样。<br>首先来看看 LoginActivity <figure class="highlight plain"><figcaption><span>LoginActivity.java [https://github.com/kaedea](https://github.com/kaedea) GitHub</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> public class LoginActivity extends ActionBarActivity implements ILoginView, View.OnClickListener &#123;</span><br><span class="line"></span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure> 从代码可以看出 LoginActivity 只做了 findView 以及 setListener 的工作，而且包含了一个 ILoginPresenter，所有业务逻辑都是通过调用 ILoginPresenter 的具体接口来完成。所以 LoginActivity 的代码看起来很舒爽，甚至有点愉♂悦呢 (/ω＼*)。视力不错的你可能还看到了 ILoginView 接口的实现，如果不懂为什么要这样写的话，可以先往下看，这里只要记住 “LoginActivity 实现了 ILoginView 接口”。<br>再来看看 ILoginPresenter <figure class="highlight plain"><figcaption><span>ILoginPresenter.java [https://github.com/kaedea](https://github.com/kaedea) GitHub</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public interface ILoginPresenter &#123;void clear (); void doLogin (String name, String passwd); void setProgressBarVisiblity (int visiblity); &#125; </span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><figcaption><span>LoginPresenterCompl.java [https://github.com/kaedea](https://github.com/kaedea) GitHub</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> public class LoginPresenterCompl implements ILoginPresenter &#123; ILoginView iLoginView; IUser user; Handler handler;</span><br><span class="line"></span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure> 从代码可以看出，LoginPresenterCompl 保留了 ILoginView 的引用，因此在 LoginPresenterCompl 里就可以直接进行 UI 操作了，而不用在 Activity 里完成。这里使用了 ILoginView 引用，而不是直接使用 Activity，这样一来，如果在别的 Activity 里也需要用到相同的业务逻辑，就可以直接复用 LoginPresenterCompl 类了（一个 Activity 可以包含一个以上的 Presenter，总之，需要什么业务就 new 什么样的 Presenter，是不是很灵活（＠￣︶￣＠）），这也是 MVP 的核心思想</p>
 <blockquote>
@@ -498,7 +498,6 @@
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ul>
 <li>[1] : 我也纠结过 <strong>MVP 模式 </strong> 或者 <strong>MVP 结构 </strong> 的说法那个跟准确一点，国外普遍的叫法是直接叫 <strong>Android MVP</strong>，除此之外有叫 <strong>MVP Pattern</strong> 的也有叫 <strong>MVP Framework/Architecture</strong>，个人认为这应该算是一种代码风格（Code Style），在分类上应该比较类似设计模式（Design Pattern），所以现在我一般称为模式，不过这不是重点，不是吗。(˃◡˂)</li>
 </ul>
-<p>Some content has been disabled in this document</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
 notion-down.revision = b'349007a'

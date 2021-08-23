@@ -96,16 +96,16 @@
 <meta property="og:site_name" content="中二病也要开发ANDROID">
 <meta property="og:description" content="Android 中 JNI 的使用其实就包含了动态加载，APP 运行时动态加载 .so 库并通过 JNI 调用其封装好的方法。后者一般是使用 NDK 工具从 C/C++ 代码编译而成，运行在 Native 层，效率会比执行在虚拟机的 Java 代码高很多，所以 Android 中经常通过动态加载 .so 库来完成一些对性能比较有需求的工作（比如 T9 搜索、或者 Bitmap 的解码、图片高斯模糊">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/19622075.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/58498917.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/49457004.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/91753544.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/73725063.jpg">
-<meta property="og:updated_time" content="2021-08-23T13:50:58.181Z">
+<meta property="og:image" content="http://kaedea.com/assets/66da7c0b_69ef_4ffc_bbf3_5e471f6e2769_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/5f169376_bd56_4cba_8934_8d46731736db_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/2e82a32c_46f3_40bb_a90c_c972de1469e5_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/e74055b4_870b_42a3_a1cf_b108f04d5d2d_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/6b371f01_c608_4165_8f35_8a09f785b38e_untitled.png">
+<meta property="og:updated_time" content="2021-08-23T17:03:55.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何加载 SD 卡中的 so 库">
 <meta name="twitter:description" content="Android 中 JNI 的使用其实就包含了动态加载，APP 运行时动态加载 .so 库并通过 JNI 调用其封装好的方法。后者一般是使用 NDK 工具从 C/C++ 代码编译而成，运行在 Native 层，效率会比执行在虚拟机的 Java 代码高很多，所以 Android 中经常通过动态加载 .so 库来完成一些对性能比较有需求的工作（比如 T9 搜索、或者 Bitmap 的解码、图片高斯模糊">
-<meta name="twitter:image" content="http://kaedea.com/assets/19622075.jpg">
+<meta name="twitter:image" content="http://kaedea.com/assets/66da7c0b_69ef_4ffc_bbf3_5e471f6e2769_untitled.png">
 
 
 
@@ -361,7 +361,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T17:03:55+00:00">
               2021-08-23
             </time>
             
@@ -441,11 +441,11 @@
 <h2 id="一般的-SO-文件的使用姿势"><a href="#一般的-SO-文件的使用姿势" class="headerlink" title="一般的 SO 文件的使用姿势"></a>一般的 SO 文件的使用姿势</h2><p>以一个 “图片高斯模糊” 的功能为例，如果使用 Java 代码对图像 Bitmap 的每一个像素点进行计算，那整体耗时将会非常大，所以可以考虑使用 JNI。（详细的 JNI 使用教程网络上有许多，这里不赘述）<br>这里推荐一个开源的高斯模糊项目 <a href="https://github.com/kikoso/android-stackblur" target="_blank" rel="noopener">Android StackBlur</a><br>在命令行定位到 Android.mk 文件所在目录，运行 NDK 工具的</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ndk-build</span><br></pre></td></tr></table></figure>
 <p>命令就能编译出我们需要 SO 库</p>
-<p><img src="/assets/19622075.jpg" alt></p>
+<p><img src="/assets/66da7c0b_69ef_4ffc_bbf3_5e471f6e2769_untitled.png" alt></p>
 <p>再把 SO 库复制到 Android Studio 项目的</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jniLibs</span><br></pre></td></tr></table></figure>
 <p>目录中</p>
-<p><img src="/assets/58498917.jpg" alt></p>
+<p><img src="/assets/5f169376_bd56_4cba_8934_8d46731736db_untitled.png" alt></p>
 <p>（Android Studio 现在也支持直接编译 SO 库，但是有许多坑，这里我选择手动编译）<br>接着在 Java 中把 SO 库对应的模块加载进来</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// load so file from internal directorytry &#123;</span><br><span class="line">			System.loadLibrary(&quot;stackblur&quot;);</span><br><span class="line">			NativeBlurProcess.isLoadLibraryOk.set(true);</span><br><span class="line">			Log.i(&quot;MainActivity&quot;, &quot;loadLibrary success!&quot;);</span><br><span class="line">		&#125; catch (Throwable throwable) &#123;</span><br><span class="line">			Log.i(&quot;MainActivity&quot;, &quot;loadLibrary error!&quot; + throwable);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
 <p>加载成功后就可以直接使用 Native 方法了</p>
@@ -470,9 +470,9 @@
 <p>我勒个去，一上来就直接来到 doLoad 方法了，这证明我们的猜想可能是正确的，那么在实际项目中测试看看吧！<br>我们先把 SO 放在 Asset 里，然后再复制到内部存储，再使用 load 方法把其加载进来。</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">	@Override</span><br><span class="line">	protected void onCreate (Bundle savedInstanceState) &#123;super.onCreate (savedInstanceState);</span><br><span class="line">		setContentView (R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">		File dir = this.getDir (&quot;jniLibs&quot;, Activity.MODE_PRIVATE);</span><br><span class="line">		File distFile = new File (dir.getAbsolutePath () + File.separator + &quot;libstackblur.so&quot;);</span><br><span class="line"></span><br><span class="line">		if (copyFileFromAssets (this, &quot;libstackblur.so&quot;, distFile.getAbsolutePath ()))&#123;</span><br><span class="line">// 使用 load 方法加载内部储存的 SO 库</span><br><span class="line">			System.load (distFile.getAbsolutePath ());</span><br><span class="line">			NativeBlurProcess.isLoadLibraryOk.set (true);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void onDoBlur (View view)&#123;ImageView imageView = (ImageView) findViewById (R.id.iv_app);</span><br><span class="line">		Bitmap bitmap = BitmapFactory.decodeResource (getResources (), android.R.drawable.sym_def_app_icon);</span><br><span class="line">		Bitmap blur = NativeBlurProcess.blur (bitmap,20,false);</span><br><span class="line">		imageView.setImageBitmap (blur);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public static boolean copyFileFromAssets (Context context, String fileName, String path) &#123;</span><br><span class="line">		boolean copyIsFinish = false;</span><br><span class="line">		try &#123;InputStream is = context.getAssets ().open (fileName);</span><br><span class="line">			File file = new File (path);</span><br><span class="line">			file.createNewFile ();</span><br><span class="line">			FileOutputStream fos = new FileOutputStream (file);</span><br><span class="line">			byte [] temp = new byte [1024];</span><br><span class="line">			int i = 0;</span><br><span class="line">			while ((i = is.read (temp)) &gt; 0) &#123;fos.write (temp, 0, i);</span><br><span class="line">			&#125;</span><br><span class="line">			fos.close ();</span><br><span class="line">			is.close ();</span><br><span class="line">			copyIsFinish = true;</span><br><span class="line">		&#125; catch (IOException e) &#123;e.printStackTrace ();</span><br><span class="line">			Log.e (&quot;MainActivity&quot;, &quot;[copyFileFromAssets] IOException&quot;+e.toString ());</span><br><span class="line">		&#125;</span><br><span class="line">		return copyIsFinish;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>点击 onDoBlur 按钮，果然加载成功了！</p>
-<p><img src="/assets/49457004.jpg" alt></p>
+<p><img src="/assets/2e82a32c_46f3_40bb_a90c_c972de1469e5_untitled.png" alt></p>
 <p>那能不能直接加载外部存储上面的 SO 库呢，把 SO 库拷贝到 SD 卡上面试试。</p>
-<p><img src="/assets/91753544.jpg" alt></p>
+<p><img src="/assets/e74055b4_870b_42a3_a1cf_b108f04d5d2d_untitled.png" alt></p>
 <p>看起来是不可以的样子，Permission denied！</p>
 <blockquote>
 <p>java.lang.UnsatisfiedLinkError: dlopen failed: couldn’t map “/storage/emulated/0/libstackblur.so” segment 1: Permission denied</p>
@@ -484,8 +484,8 @@
 <p>The SD Card is mounted noexec, so I’m not sure this will work. Moreover, using the SD Card as a storage location is a really bad idea, since any other application can modify/delete/corrupt it easily. Try downloading the library to your application’s data directory instead, and load it from here.</p>
 </blockquote>
 <p>这也容易理解，SD 卡等外部存储路径是一种可拆卸的（mounted）不可执行（noexec）的储存媒介，不能直接用来作为可执行文件的运行目录，使用前应该把可执行文件复制到 APP 内部存储再运行。<br>最后，我们也可以看看官方的 API 文档</p>
-<p><img src="/assets/73725063.jpg" alt></p>
-<p>看来 load 方法的用途和我们理解的一致，文档里说的 shared library 就是指 SO 库（shared object），至此，我们就可以把 SO 文件移动到外部存储了，或者从网络下载都行。<br>Some content has been disabled in this document</p>
+<p><img src="/assets/6b371f01_c608_4165_8f35_8a09f785b38e_untitled.png" alt></p>
+<p>看来 load 方法的用途和我们理解的一致，文档里说的 shared library 就是指 SO 库（shared object），至此，我们就可以把 SO 文件移动到外部存储了，或者从网络下载都行。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
 notion-down.revision = b'349007a'
