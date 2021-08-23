@@ -336,7 +336,7 @@
               
                 
                 <a class="post-title-link" href="/2016/02/07/android-dynamical-loading-02-classloader/" itemprop="url">
-                  CLASSLOADER的工作机制
+                  ClassLoader 的工作机制
                 </a>
               
             
@@ -358,8 +358,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -375,18 +375,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index">
                     <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
                   </a>
                 </span>
 
@@ -412,7 +400,7 @@
 
           
           
-             <span id="/2016/02/07/android-dynamical-loading-02-classloader/" class="leancloud_visitors" data-flag-title="CLASSLOADER的工作机制">
+             <span id="/2016/02/07/android-dynamical-loading-02-classloader/" class="leancloud_visitors" data-flag-title="ClassLoader 的工作机制">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -438,7 +426,7 @@
 
       
         
-          <p>早期使用过Eclipse等Java编写的软件的同学可能比较熟悉，Eclipse可以加载许多第三方的插件（或者叫扩展），这就是动态加载。这些插件大多是一些Jar包，而使用插件其实就是动态加载Jar包里的Class进行工作。这其实非常好理解，Java代码都是写在Class里面的，程序运行在虚拟机上时，虚拟机需要把需要的Class加载进来才能创建实例对象并工作，而完成这一个加载工作的角色就是ClassLoader。<br>
+          <p>早期使用过 Eclipse 等 Java 编写的软件的同学可能比较熟悉，Eclipse 可以加载许多第三方的插件（或者叫扩展），这就是动态加载。这些插件大多是一些 Jar 包，而使用插件其实就是动态加载 Jar 包里的 Class 进行工作。这其实非常好理解，Java 代码都是写在 Class 里面的，程序运行在虚拟机上时，虚拟机需要把需要的 Class 加载进来才能创建实例对象并工作，而完成这一个加载工作的角色就是 ClassLoader。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/02/07/android-dynamical-loading-02-classloader/#more" rel="contents">
@@ -448,7 +436,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -508,7 +496,7 @@
               
                 
                 <a class="post-title-link" href="/2016/02/06/android-dynamical-loading-01-introduction/" itemprop="url">
-                  ANDROID动态加载简单易懂的介绍方式
+                  Android 动态加载简单易懂的介绍方式
                 </a>
               
             
@@ -530,8 +518,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -547,18 +535,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index">
                     <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
                   </a>
                 </span>
 
@@ -584,7 +560,7 @@
 
           
           
-             <span id="/2016/02/06/android-dynamical-loading-01-introduction/" class="leancloud_visitors" data-flag-title="ANDROID动态加载简单易懂的介绍方式">
+             <span id="/2016/02/06/android-dynamical-loading-01-introduction/" class="leancloud_visitors" data-flag-title="Android 动态加载简单易懂的介绍方式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -610,8 +586,8 @@
 
       
         
-          <p>我们很早开始就在Android项目中采用了动态加载技术，主要目的是为了达到让用户不用重新安装APK就能升级应用的功能（特别是 SDK项目），这样一来不但可以大大提高应用新版本的覆盖率，也减少了服务器对旧版本接口兼容的压力，同时如果也可以快速修复一些线上的BUG。</p>
-<p>这种技术并不是常规的Android开发方式，早期并没有完善的解决方案。从“不明觉厉”到稳定投入生产，一直以来我总想对此编写一些文档，这也是这篇日志的由来，没想到前前后后竟然拖沓着编辑了一年多，所以日志里有的地方思路可能有点衔接得不是很好，如果有修正建议请直接回复。<br>
+          <p>我们很早开始就在 Android 项目中采用了动态加载技术，主要目的是为了达到让用户不用重新安装 APK 就能升级应用的功能（特别是 SDK 项目），这样一来不但可以大大提高应用新版本的覆盖率，也减少了服务器对旧版本接口兼容的压力，同时如果也可以快速修复一些线上的 BUG。</p>
+<p>这种技术并不是常规的 Android 开发方式，早期并没有完善的解决方案。从 “不明觉厉” 到稳定投入生产，一直以来我总想对此编写一些文档，这也是这篇日志的由来，没想到前前后后竟然拖沓着编辑了一年多，所以日志里有的地方思路可能有点衔接得不是很好，如果有修正建议请直接回复。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/02/06/android-dynamical-loading-01-introduction/#more" rel="contents">
@@ -621,7 +597,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -681,7 +657,7 @@
               
                 
                 <a class="post-title-link" href="/2016/02/05/android-dynamical-loading-00-index/" itemprop="url">
-                  ANDROID动态加载系列索引
+                  Android 动态加载系列索引
                 </a>
               
             
@@ -703,8 +679,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -720,18 +696,6 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Android/" itemprop="url" rel="index">
                     <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/动态加载/" itemprop="url" rel="index">
-                    <span itemprop="name">动态加载</span>
                   </a>
                 </span>
 
@@ -757,7 +721,7 @@
 
           
           
-             <span id="/2016/02/05/android-dynamical-loading-00-index/" class="leancloud_visitors" data-flag-title="ANDROID动态加载系列索引">
+             <span id="/2016/02/05/android-dynamical-loading-00-index/" class="leancloud_visitors" data-flag-title="Android 动态加载系列索引">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -783,10 +747,8 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-7-24/31121599.jpg?imageView2/2/w/600/interlace/1" alt></p>
-<p>说到动态加载，我们经常使用“插件化”、“热修复”、“热部署”等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
-<p>在Android开发中采用动态加载技术，可以达到不安装新的APK就升级APP功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急BUG。</p>
-<p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在Android项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。<br>
+          <p><img src="/assets/31121599.jpg" alt></p>
+<p>说到动态加载，我们经常使用 “插件化”、“热修复”、“热部署” 等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。<br>在 Android 开发中采用动态加载技术，可以达到不安装新的 APK 就升级 APP 功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急 BUG。<br>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在 Android 项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/02/05/android-dynamical-loading-00-index/#more" rel="contents">
@@ -796,7 +758,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -856,7 +818,7 @@
               
                 
                 <a class="post-title-link" href="/2015/12/23/android-set-onclicklistener-in-xml/" itemprop="url">
-                  在XML布局里给VIEW设置点击事件
+                  在 XML 布局里给 View 设置点击事件
                 </a>
               
             
@@ -878,8 +840,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -920,7 +882,7 @@
 
           
           
-             <span id="/2015/12/23/android-set-onclicklistener-in-xml/" class="leancloud_visitors" data-flag-title="在XML布局里给VIEW设置点击事件">
+             <span id="/2015/12/23/android-set-onclicklistener-in-xml/" class="leancloud_visitors" data-flag-title="在 XML 布局里给 View 设置点击事件">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -946,7 +908,7 @@
 
       
         
-          <p>Android开发中，可以在Java代码里给View设置点击事件，也可以直接在XML布局里通过<code>android:onClick</code>属性设置回调，这篇日志注意是从源码角度分析后者的实现方式。<br>
+          <p>Android 开发中，可以在 Java 代码里给 View 设置点击事件，也可以直接在 XML 布局里通过 <code>android:onClick</code> 属性设置回调，这篇日志注意是从源码角度分析后者的实现方式。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/12/23/android-set-onclicklistener-in-xml/#more" rel="contents">
@@ -956,7 +918,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1016,7 +978,7 @@
               
                 
                 <a class="post-title-link" href="/2015/12/05/whisper-change-job/" itemprop="url">
-                  吐槽・年轻人换工作不频繁难道换女票频繁么
+                  年轻人换工作不频繁难道换女票频繁么
                 </a>
               
             
@@ -1038,8 +1000,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1053,8 +1015,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Living/" itemprop="url" rel="index">
-                    <span itemprop="name">Living</span>
+                  <a href="/categories/Life/" itemprop="url" rel="index">
+                    <span itemprop="name">Life</span>
                   </a>
                 </span>
 
@@ -1080,7 +1042,7 @@
 
           
           
-             <span id="/2015/12/05/whisper-change-job/" class="leancloud_visitors" data-flag-title="吐槽・年轻人换工作不频繁难道换女票频繁么">
+             <span id="/2015/12/05/whisper-change-job/" class="leancloud_visitors" data-flag-title="年轻人换工作不频繁难道换女票频繁么">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1107,8 +1069,8 @@
       
         
           <p>如果无法改变客观环境，我们可以改变主观心情？去你麻痹的鸡汤。</p>
-<p>之前收到了日本某家画画公司的Android职位的视频面试邀请，虽然由于网络的关系，Skype链接断了好几次很尴尬，但是总算是完成面试。日本企业面试似乎不太关心技术问题，更多是一些职场上常见的问题，比如“为什么打算换工作”、“你对自己在上分工作的评价”、“如果换工作后发现新的工作没有想象中好会怎么处理”之类的，而且一般被问及的人也会按照惯用的答案进行回答，这类东西叫做“世辞”。</p>
-<p>本来以为日本公司的面试气氛会非常严肃，而且我平时日语用的少（日常使用大多是内心的吐槽和自我对话），更糟糕的是，一直以来对职场日语的练习甚少，平时使用大多是非常随便的日常式语句，如果面试过程中突然随口爆出几句“お(▼▼；)σ ｵﾏｴ”、“(#ﾟДﾟ)ﾀﾞﾏﾚ!!”之类的口癖就真的完了。加之，我也不知道日本公司APP开发部门的程序员日常用的术语是怎么样的，像“服务器炸了”、“产品改需求”之类的话实在很难期待对方的电波能对得上。<br>
+<p>之前收到了日本某家画画公司的 Android 职位的视频面试邀请，虽然由于网络的关系，Skype 链接断了好几次很尴尬，但是总算是完成面试。日本企业面试似乎不太关心技术问题，更多是一些职场上常见的问题，比如 “为什么打算换工作”、“你对自己在上分工作的评价”、“如果换工作后发现新的工作没有想象中好会怎么处理” 之类的，而且一般被问及的人也会按照惯用的答案进行回答，这类东西叫做 “世辞”。</p>
+<p>本来以为日本公司的面试气氛会非常严肃，而且我平时日语用的少（日常使用大多是内心的吐槽和自我对话），更糟糕的是，一直以来对职场日语的练习甚少，平时使用大多是非常随便的日常式语句，如果面试过程中突然随口爆出几句 “お (▼▼；)σ ｵﾏｴ”、“(#ﾟДﾟ)ﾀﾞﾏﾚ!!” 之类的口癖就真的完了。加之，我也不知道日本公司 APP 开发部门的程序员日常用的术语是怎么样的，像 “服务器炸了”、“产品改需求” 之类的话实在很难期待对方的电波能对得上。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/12/05/whisper-change-job/#more" rel="contents">
@@ -1118,7 +1080,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1178,7 +1140,7 @@
               
                 
                 <a class="post-title-link" href="/2015/11/12/android-best-performance-points/" itemprop="url">
-                  性能调优・技术优化点
+                  Android 性能调优的技术优化点
                 </a>
               
             
@@ -1200,8 +1162,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1242,7 +1204,7 @@
 
           
           
-             <span id="/2015/11/12/android-best-performance-points/" class="leancloud_visitors" data-flag-title="性能调优・技术优化点">
+             <span id="/2015/11/12/android-best-performance-points/" class="leancloud_visitors" data-flag-title="Android 性能调优的技术优化点">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1268,10 +1230,9 @@
 
       
         
-          <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的“有坏味道”的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是“千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的Code Review，最好的做法是把“性能优化”的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。</p>
-<p>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong>这个贴的目的在于想骗一些高质量的干货</strong>（我从未见过如此厚颜无耻之人+脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个DEMO之类的放到Github骗骗粉之类的。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/15-11-8/98999837.jpg" alt="为了方便一些脑洞比较小的同学，特意找来一张"></p>
-<p>请大家补充要点啊，我一并处理。以下只是一时想到写的笔记，详细的分析还需要一点时间。<br>
+          <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong> 这个贴的目的在于想骗一些高质量的干货 </strong>（我从未见过如此厚颜无耻之人 + 脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个 DEMO 之类的放到 Github 骗骗粉之类的。</p>
+<p><img src="/assets/98999837.jpg" alt></p>
+<p>请大家补充要点啊，我一并处理。以下只是一时想到写的笔记，详细的分析还需要一点时间。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/11/12/android-best-performance-points/#more" rel="contents">
@@ -1281,7 +1242,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1341,7 +1302,7 @@
               
                 
                 <a class="post-title-link" href="/2015/11/11/android-best-performance-whisper/" itemprop="url">
-                  性能调优・一本正经的胡说八道
+                  Android 性能调优到底是调个啥
                 </a>
               
             
@@ -1363,8 +1324,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1405,7 +1366,7 @@
 
           
           
-             <span id="/2015/11/11/android-best-performance-whisper/" class="leancloud_visitors" data-flag-title="性能调优・一本正经的胡说八道">
+             <span id="/2015/11/11/android-best-performance-whisper/" class="leancloud_visitors" data-flag-title="Android 性能调优到底是调个啥">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1431,9 +1392,7 @@
 
       
         
-          <p>“一本正经地胡说八道”用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？</p>
-<p>一直以来都想对Android APP开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。</p>
-<p>“APP卡顿”是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为“如何定位APP中的性能问题”和“提高性能需要注意哪些点”这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。<br>
+          <p>“一本正经地胡说八道” 用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？<br>一直以来都想对 Android APP 开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。<br>“APP 卡顿” 是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为 “如何定位 APP 中的性能问题” 和 “提高性能需要注意哪些点” 这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/11/11/android-best-performance-whisper/#more" rel="contents">
@@ -1443,7 +1402,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1503,7 +1462,7 @@
               
                 
                 <a class="post-title-link" href="/2015/11/08/android-fresco-demo/" itemprop="url">
-                  图片加载库FRESCO的一个DEMO
+                  Facebook 开源图片加载库 Fresco Demo
                 </a>
               
             
@@ -1525,8 +1484,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1567,7 +1526,7 @@
 
           
           
-             <span id="/2015/11/08/android-fresco-demo/" class="leancloud_visitors" data-flag-title="图片加载库FRESCO的一个DEMO">
+             <span id="/2015/11/08/android-fresco-demo/" class="leancloud_visitors" data-flag-title="Facebook 开源图片加载库 Fresco Demo">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1593,7 +1552,8 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/15-10-25/90791990.jpg?imageView2/2/w/600/interlace/1" alt="02"><br>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco使用起来非常简单，也容易扩展，然而这并不是我喜欢Fresco的主要原因。<br>
+          <p><img src="/assets/90791990.jpg" alt></p>
+<p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/11/08/android-fresco-demo/#more" rel="contents">
@@ -1603,7 +1563,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1663,7 +1623,7 @@
               
                 
                 <a class="post-title-link" href="/2015/10/11/android-mvp-pattern/" itemprop="url">
-                  MVP模式简单易懂的介绍方式
+                  MVP 模式简单易懂的介绍方式
                 </a>
               
             
@@ -1685,8 +1645,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1727,7 +1687,7 @@
 
           
           
-             <span id="/2015/10/11/android-mvp-pattern/" class="leancloud_visitors" data-flag-title="MVP模式简单易懂的介绍方式">
+             <span id="/2015/10/11/android-mvp-pattern/" class="leancloud_visitors" data-flag-title="MVP 模式简单易懂的介绍方式">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1753,8 +1713,7 @@
 
       
         
-          <p>Android <strong>MVP模式</strong><sup>[1]</sup>也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP模式</strong> 的优势就充分显示出来了。</p>
-<p>MVP模式是MVC模式在Android上的一种变体，要介绍MVP就得先介绍MVC。在MVC模式中，Activity应该是属于View这一层。而实质上，它既承担了View，同时也包含一些Controller的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把Activity的View和Controller抽离出来就变成了View和Presenter，这就是MVP模式.。<br>
+          <p>Android <strong>MVP 模式</strong>[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP 模式 </strong> 的优势就充分显示出来了。<br>MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时也包含一些 Controller 的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把 Activity 的 View 和 Controller 抽离出来就变成了 View 和 Presenter，这就是 MVP 模式。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/10/11/android-mvp-pattern/#more" rel="contents">
@@ -1764,7 +1723,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -1824,7 +1783,7 @@
               
                 
                 <a class="post-title-link" href="/2015/10/05/themia-demo-using-thmia/" itemprop="url">
-                  HEXO响应式主题・THEMIA
+                  Hexo 响应式主题 Themia
                 </a>
               
             
@@ -1846,8 +1805,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -1861,8 +1820,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FrontEnd/" itemprop="url" rel="index">
-                    <span itemprop="name">FrontEnd</span>
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
                   </a>
                 </span>
 
@@ -1888,7 +1847,7 @@
 
           
           
-             <span id="/2015/10/05/themia-demo-using-thmia/" class="leancloud_visitors" data-flag-title="HEXO响应式主题・THEMIA">
+             <span id="/2015/10/05/themia-demo-using-thmia/" class="leancloud_visitors" data-flag-title="Hexo 响应式主题 Themia">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1914,10 +1873,8 @@
 
       
         
-          <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/15-10-8/37832013.jpg?imageView2/2/w/600/interlace/1" alt></p>
-<p>重新启动博客后，第一件事就是要选主题。<br>无论是空间时代、Wordpress时代，还是现在换成Hexo，每次我都要折腾好几天选一个喜欢的主题。</p>
-<p>到目前为止，最喜欢的主题是<a href="http://www.moesora.com" target="_blank" rel="noopener">萌の空</a>的响应式WP主题，但是如今Soma已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的Hexo主题翻了个边，连Fork的主题都没放过，发现最满意的还是TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。</p>
-<p><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a>是一个华丽的Hexo响应式主题，由<strong>LouisBarranqueiro</strong>开发的主题<a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a>的基础上改造而来，<strong>大部分功能都是原有主题的</strong>，只是为了我自己的需求做了小部分的修改。<br>
+          <p><img src="/assets/37832013.jpg" alt></p>
+<p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress 时代，还是现在换成 Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是 <a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a> 的响应式 WP 主题，但是如今 Soma 已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的 Hexo 主题翻了个边，连 Fork 的主题都没放过，发现最满意的还是 TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，<strong> 大部分功能都是原有主题的 </strong>，只是为了我自己的需求做了小部分的修改。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/10/05/themia-demo-using-thmia/#more" rel="contents">
@@ -1927,7 +1884,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     <div>
       
@@ -2003,7 +1960,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2012,7 +1969,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

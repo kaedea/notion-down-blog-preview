@@ -96,12 +96,12 @@
 <meta property="og:site_name" content="中二病也要开发ANDROID">
 <meta property="og:description" content="简单模式中，使用 ClassLoader 加载外部的 Dex 或 Apk 文件，可以加载一些本地 APP 不存在的类（或者更新本地已存在的类），从而执行一些新的代码逻辑，但是使用这种方法却不能直接启动插件里的 Activity 等组件，也没办法使用 res 资源，如果不解决这两个问题，则使用插件化的方式开发 Android 业务会非常繁琐。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/2875300.jpg">
-<meta property="og:updated_time" content="2021-08-20T13:31:36.408Z">
+<meta property="og:image" content="http://kaedea.com/assets/a20b2dc8_5144_4987_a46b_55b20b792f90_untitled.png">
+<meta property="og:updated_time" content="2021-08-23T13:50:58.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理 Activity 模式">
 <meta name="twitter:description" content="简单模式中，使用 ClassLoader 加载外部的 Dex 或 Apk 文件，可以加载一些本地 APP 不存在的类（或者更新本地已存在的类），从而执行一些新的代码逻辑，但是使用这种方法却不能直接启动插件里的 Activity 等组件，也没办法使用 res 资源，如果不解决这两个问题，则使用插件化的方式开发 Android 业务会非常繁琐。">
-<meta name="twitter:image" content="http://kaedea.com/assets/2875300.jpg">
+<meta name="twitter:image" content="http://kaedea.com/assets/a20b2dc8_5144_4987_a46b_55b20b792f90_untitled.png">
 
 
 
@@ -357,8 +357,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -490,8 +490,8 @@
 <h2 id="是热部署，还是插件化？"><a href="#是热部署，还是插件化？" class="headerlink" title="是热部署，还是插件化？"></a>是热部署，还是插件化？</h2><p>这一部分作为补充说明，如果不太熟悉动态加载的使用姿势，可能不是那么容易理解。<br>谈到动态加载的时候我们经常说到 “热部署” 和 “插件化” 这些名词，它们虽然都和动态加载有关，但是还是有一点区别，这个问题涉及到主项目与插件项目的 <strong> 交互方式 </strong>。前面我们说到，动态加载方式，可以在 “项目层级” 做到代码分离，按道理我们希望是主项目和插件项目不要有任何交互行为，实际上也应该如此！这样做不仅能确保项目的安全性，也能简化开发工作，所以一般的做法是：</p>
 <h3 id="1-只有在用户使用到的时候才加载插件"><a href="#1-只有在用户使用到的时候才加载插件" class="headerlink" title="1. 只有在用户使用到的时候才加载插件"></a>1. 只有在用户使用到的时候才加载插件</h3><p>主项目还是像常规 Android 项目那样开发，只有用户使用插件 APK 的功能时才动态加载插件并运行，插件一旦运行后，与主项目没有任何交互逻辑，只有在主项目启动插件的时候才触发一次调用插件的行为。比如，我们的主项目里有几款推广的游戏，平时在用户使用主项目的功能时，可以先静默把游戏（其实就是一个插件 APK）下载好，当用户点击游戏入口时，以动态加载的方式启动游戏，游戏只运行插件 APK 里的代码逻辑，结束后返回主项目界面。</p>
 <h3 id="2-一启动主项目就加载插件"><a href="#2-一启动主项目就加载插件" class="headerlink" title="2. 一启动主项目就加载插件"></a>2. 一启动主项目就加载插件</h3><p>另外一种完全相反的情形是，主项目只提供一个启动的入口，以及从服务器下载最新插件的更新逻辑，这两部分的代码都是长期保持不变的，应用一启动就动态加载插件，所有业务逻辑的代码都在插件里实现。比如现在一些游戏市场都要求开发者接入其 SDK 项目，如果 SDK 项目采用这种开发方式，先提供一个空壳的 SDK 给开发者，空壳 SDK 能从服务器下载最新的插件再运行插件里的逻辑，就能保证开发者开发的游戏每次启动的时候都能运行最新的代码逻辑，而不用让开发者在 SDK 有新版本的时候重新更换 SDK 并构建新的游戏 APK。</p>
-<h3 id="3-让插件使用主项目的功能"><a href="#3-让插件使用主项目的功能" class="headerlink" title="3. 让插件使用主项目的功能"></a>3. 让插件使用主项目的功能</h3><p>有些时候，比如，主项目里有一个成熟的图片加载框架 ImageLoader，而插件里也有一个 ImageLoader。如果一个应用同时运行两套 ImageLoader，那会有许多额外的性能开销，如果能让插件也用主项目的 ImageLoader 就好了。另外，如果在插件里需要用到用户登录功能，我们总不希望用户使用主项目时进行一次登录，进入插件时由来一次登录，如果能在插件里使用主项目的登录状态就好了。<br>因此，有些时候我们希望插件项目能调用主项目的功能。怎么处理好呢，由于插件项目与主项目是分开的，我们在开发插件的时候，怎么调用主项目的代码啊？这里需要稍微了解一下 Android 项目间的依赖方式。<br>想想一个普通的 APK 是怎么构建和运行的，Android SDK 提供了许多系统类（如 Activity、Fragment 等，一般我们也喜欢在这里查看源码），我们的 Android 项目依赖 Android SDK 项目并使用这些类进行开发，那构建 APK 的时候会把这些类打包进来吗？不会，要是每个 APK 都打包一份，那得有多少冗余啊。所以 Android 项目至少有两种依赖的方式，一种构建时会把被依赖的项目（Library）的类打包进来，一种不会。<br>在 Android Studio 打开项目的 Project Structure，找到具体 Module 的 Dependencies 选项卡</p>
-<p><img src="/assets/2875300.jpg" alt></p>
+<h3 id="3-让插件使用主项目的功能"><a href="#3-让插件使用主项目的功能" class="headerlink" title="3. 让插件使用主项目的功能"></a>3. 让插件使用主项目的功能</h3><p>有些时候，比如，主项目里有一个成熟的图片加载框架 ImageLoader，而插件里也有一个 ImageLoader。如果一个应用同时运行两套 ImageLoader，那会有许多额外的性能开销，如果能让插件也用主项目的 ImageLoader 就好了。另外，如果在插件里需要用到用户登录功能，我们总不希望用户使用主项目时进行一次登录，进入插件时由来一次登录，如果能在插件里使用主项目的登录状态就好了。<br>因此，有些时候我们希望插件项目能调用主项目的功能。怎么处理好呢，由于插件项目与主项目是分开的，我们在开发插件的时候，怎么调用主项目的代码啊？这里需要稍微了解一下 Android 项目间的依赖方式。<br>想想一个普通的 APK 是怎么构建和运行的，Android SDK 提供了许多系统类（如 Activity、Fragment 等，一般我们也喜欢在这里查看源码），我们的 Android 项目依赖 Android SDK 项目并使用这些类进行开发，那构建 APK 的时候会把这些类打包进来吗？不会，要是每个 APK 都打包一份，那得有多少冗余啊。所以 Android 项目至少有两种依赖的方式，一种构建时会把被依赖的项目（Library）的类打包进来，一种不会。<br>在 Android Studio 打开项目的 Project Structure，找到具体 Module 的 Dependencies 选项卡。</p>
+<p><img src="/assets/a20b2dc8_5144_4987_a46b_55b20b792f90_untitled.png" alt></p>
 <p>可以看到 Library 项目有个 Scope 属性，这里的 Compile 模式就是会把 Library 的类打包进来，而 Provided 模式就不会。<br>注意，使用 Provided 模式的 Library 只能是 jar 文件，而不能是一个 Android Library 模块（如 appcompat-v7），因为 Provided 模式只需要依赖 Library 的 API，Android Library 模块可能自带了一些 res 资源，这些资源无法一并塞进标准的 jar 文件里面。到这里我们明白，Android SDK 的代码其实是打包进系统 ROM（俗称 Framework 层级）里面的，我们开发 Android 项目的时候，只是以 Provided 模式引用 android.jar，从这个角度也佐证了上面谈到的 “为什么 APP 实际运行时 AssetManager 类的逻辑会与 Android SDK 里的源码不一样”。<br>现在好办了，如果要在插件里使用主项目的 ImageLoader，我们可以把 ImageLoader 的相关代码抽离成一个 Android Libary 项目，主项目以 Compile 模式引用这个 Libary，而插件项目以 Provided 模式引用这个 Library（编译出来的 jar），这样能实现两者之间的交互了，当然代价也是明显的。</p>
 <ol>
 <li>我们应该只给插件开放一些必要的接口，不然会有安全性问题；</li>
@@ -501,7 +501,7 @@
 <p>最后我们再说说 “热部署” 和 “插件化” 的区别，一般我们把独立运行的插件 APK 叫热部署，而需要依赖主项目的环境运行的插件 APK 叫做插件化。<br>Some content has been disabled in this document</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
-notion-down.revision = b'4f02e9a'
+notion-down.revision = b'349007a'
 Title = 代理 Activity 模式
 Date = 2016-06-10 00:00:00
 Published = true
@@ -639,7 +639,7 @@ hexo.metaAlignment = center
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -648,7 +648,7 @@ hexo.metaAlignment = center
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

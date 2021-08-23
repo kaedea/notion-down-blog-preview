@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="性能调优,MultiDex,">
+  <meta name="keywords" content="Android,MultiDex,">
 
 
 
@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
-<meta name="keywords" content="性能调优,MultiDex">
+<meta name="description" content="App 启动 MultiDex 主要是为了解决 “65535 方法数超标” 以及 “INSTALL_FAILED_DEXOPT” 问题，就目前来说，对于使用 Android Studio 的朋友来说，MultiDex 这个术语应该不陌生。而对于那些从早期使用 Eclipse 开发 Android 的人来说，这个词语则更加再熟悉不过了，因为用 Eclipse 开启 MultiDex 功能实在是太坑爹">
+<meta name="keywords" content="Android,MultiDex">
 <meta property="og:type" content="article">
-<meta property="og:title" content="给App启用MultiDex功能">
+<meta property="og:title" content="给 Android App 启用 MultiDex 功能">
 <meta property="og:url" content="http://kaedea.com/2015/09/02/android/enable-multidex/index.html">
 <meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
+<meta property="og:description" content="App 启动 MultiDex 主要是为了解决 “65535 方法数超标” 以及 “INSTALL_FAILED_DEXOPT” 问题，就目前来说，对于使用 Android Studio 的朋友来说，MultiDex 这个术语应该不陌生。而对于那些从早期使用 Eclipse 开发 Android 的人来说，这个词语则更加再熟悉不过了，因为用 Eclipse 开启 MultiDex 功能实在是太坑爹">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-08-20T13:31:36.408Z">
+<meta property="og:updated_time" content="2021-08-23T13:50:58.181Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="给App启用MultiDex功能">
-<meta name="twitter:description" content="App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。">
+<meta name="twitter:title" content="给 Android App 启用 MultiDex 功能">
+<meta name="twitter:description" content="App 启动 MultiDex 主要是为了解决 “65535 方法数超标” 以及 “INSTALL_FAILED_DEXOPT” 问题，就目前来说，对于使用 Android Studio 的朋友来说，MultiDex 这个术语应该不陌生。而对于那些从早期使用 Eclipse 开发 Android 的人来说，这个词语则更加再熟悉不过了，因为用 Eclipse 开启 MultiDex 功能实在是太坑爹">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <title> 给App启用MultiDex功能 | 中二病也要开发ANDROID </title>
+  <title> 给 Android App 启用 MultiDex 功能 | 中二病也要开发ANDROID </title>
 </head>
 
 <!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
@@ -334,7 +334,7 @@
             
             
               
-                给App启用MultiDex功能
+                给 Android App 启用 MultiDex 功能
               
             
           </h1>
@@ -355,8 +355,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-20T13:31:36+00:00">
-              2021-08-20
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T13:50:58+00:00">
+              2021-08-23
             </time>
             
           </span>
@@ -397,7 +397,7 @@
 
           
           
-             <span id="/2015/09/02/android/enable-multidex/" class="leancloud_visitors" data-flag-title="给App启用MultiDex功能">
+             <span id="/2015/09/02/android/enable-multidex/" class="leancloud_visitors" data-flag-title="给 Android App 启用 MultiDex 功能">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -422,40 +422,48 @@
       
 
       
-        <p>App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。</p>
+        <p>App 启动 MultiDex 主要是为了解决 “65535 方法数超标” 以及 “INSTALL_FAILED_DEXOPT” 问题，就目前来说，对于使用 Android Studio 的朋友来说，MultiDex 这个术语应该不陌生。而对于那些从早期使用 Eclipse 开发 Android 的人来说，这个词语则更加再熟悉不过了，因为用 Eclipse 开启 MultiDex 功能实在是太坑爹了（默默给 Eclipse 加一把土）。</p>
 <a id="more"></a>
-<h2 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h2><h3 id="65535问题"><a href="#65535问题" class="headerlink" title="65535问题"></a>65535问题</h3><p>当App的功能越来越丰富、使用的库越来越多时，其包含的Java方法总数也越来越多，这时候就会出现65535问题。</p>
-<p>在构建apk的时候限制了一个dex文件能包含的方法数，其总数不能超过65535（则64K，1K = 2^10 = 1024 , 64 * 1024 = 65535）。MultiDex, 顾名思义，是指多dex实现，大多数App，解压其apk后，一般只有一个classes.dex文件，采用MultiDex的App解压后可以看到有classes.dex，classes2.dex，… classes(N).dex，这样每个dex都可以最大承载64k个方法，很大限度地缓解了单dex方法数限制。</p>
-<p>（2016-10-1 具体原因分析可以参考<a href="http://www.jayfeng.com/2016/03/10/%E7%94%B1Android-65K%E6%96%B9%E6%B3%95%E6%95%B0%E9%99%90%E5%88%B6%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank" rel="noopener">由Android-65K方法数限制引发的思考</a>）</p>
-<h3 id="LinearAlloc问题"><a href="#LinearAlloc问题" class="headerlink" title="LinearAlloc问题"></a>LinearAlloc问题</h3><p>现在这个问题已经不常见了，它多发生在2.x版本的设备上，安装时会提示INSTALL_FAILED_DEXOPT。这个问题发生在安装期间，在使用Dalvik虚拟机的设备上安装APK时，会通过DexOpt工具将Dex文件优化为odex文件，即Optimized Dex，这样可以提高执行效率(不同的设备需要不同的odex格式，所以这个过程只能安装apk后进行)。</p>
-<p>LinearAlloc是一个固定大小的缓冲区，dexopt使用LinearAlloc来存储应用的方法信息，在Android的不同版本中有4M/5M/8M/16M等不同大小，目前主流4.x系统上都已到8MB或16MB，但是在Gingerbread或以下系统（2.2和2.3）LinearAlloc分配空间只有5M大小的。当应用的方法信息过多导致超出缓冲区大小时，会造成dexopt崩溃，造成INSTALL_FAILED_DEXOPT错误。</p>
-<h2 id="启用MultiDex解决问题"><a href="#启用MultiDex解决问题" class="headerlink" title="启用MultiDex解决问题"></a>启用MultiDex解决问题</h2><p>直接忽视Eclipse，在Android Studio中，可以通过以下方式来启用MultiDex。</p>
+<h2 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h2><h3 id="65535-问题"><a href="#65535-问题" class="headerlink" title="65535 问题"></a>65535 问题</h3><p>当 App 的功能越来越丰富、使用的库越来越多时，其包含的 Java 方法总数也越来越多，这时候就会出现 65535 问题。<br>在构建 apk 的时候限制了一个 dex 文件能包含的方法数，其总数不能超过 65535（则 64K，1K = 2^10 = 1024 , 64 * 1024 = 65535）。MultiDex, 顾名思义，是指多 dex 实现，大多数 App，解压其 apk 后，一般只有一个 classes.dex 文件，采用 MultiDex 的 App 解压后可以看到有 classes.dex，classes2.dex，… classes (N).dex，这样每个 dex 都可以最大承载 64k 个方法，很大限度地缓解了单 dex 方法数限制。<br>（2016-10-1 具体原因分析可以参考 <a href="http://www.jayfeng.com/2016/03/10/% E7%94% B1Android-65K% E6%96% B9% E6% B3%95% E6%95% B0% E9%99%90% E5%88% B6% E5% BC%95% E5%8F%91% E7%9A%84% E6%80%9D% E8%80%83/" target="_blank" rel="noopener">由 Android-65K 方法数限制引发的思考</a>）</p>
+<h3 id="LinearAlloc-问题"><a href="#LinearAlloc-问题" class="headerlink" title="LinearAlloc 问题"></a>LinearAlloc 问题</h3><p>现在这个问题已经不常见了，它多发生在 2.x 版本的设备上，安装时会提示 INSTALL_FAILED_DEXOPT。这个问题发生在安装期间，在使用 Dalvik 虚拟机的设备上安装 APK 时，会通过 DexOpt 工具将 Dex 文件优化为 odex 文件，即 Optimized Dex，这样可以提高执行效率 (不同的设备需要不同的 odex 格式，所以这个过程只能安装 apk 后进行)。<br>LinearAlloc 是一个固定大小的缓冲区，dexopt 使用 LinearAlloc 来存储应用的方法信息，在 Android 的不同版本中有 4M/5M/8M/16M 等不同大小，目前主流 4.x 系统上都已到 8MB 或 16MB，但是在 Gingerbread 或以下系统（2.2 和 2.3）LinearAlloc 分配空间只有 5M 大小的。当应用的方法信息过多导致超出缓冲区大小时，会造成 dexopt 崩溃，造成 INSTALL_FAILED_DEXOPT 错误。</p>
+<h2 id="启用-MultiDex-解决问题"><a href="#启用-MultiDex-解决问题" class="headerlink" title="启用 MultiDex 解决问题"></a>启用 MultiDex 解决问题</h2><p>直接忽视 Eclipse，在 Android Studio 中，可以通过以下方式来启用 MultiDex。</p>
 <h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ul>
-<li>使用 Android Studio 开发工具；</li>
+<li>使用 Android Studio 开发工具；<ul>
 <li>Android SDK Build Tools &gt;= 21.1；</li>
-<li>使用 Support Repository 中的 multidex (刚出来时是0.1版本，目前已有有1.0.0和1.0.1)；</li>
 </ul>
-<h3 id="配置build-gradle"><a href="#配置build-gradle" class="headerlink" title="配置build.gradle"></a>配置build.gradle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">21</span></span><br><span class="line">    buildToolsVersion <span class="string">"21.1.0"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">        minSdkVersion <span class="number">14</span></span><br><span class="line">        targetSdkVersion <span class="number">21</span></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        multiDexEnabled <span class="keyword">true</span> <span class="comment">// Enable MultiDex.</span></span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile <span class="string">'com.android.support:multidex:1.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="在代码里启动MultiDex"><a href="#在代码里启动MultiDex" class="headerlink" title="在代码里启动MultiDex"></a>在代码里启动MultiDex</h3><p>最后，在Java代码里启动MultiDex，有两种方式可以搞定。</p>
-<p>方式一，使用MultiDexApplication。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">"xxx"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.support.multidex.MultiDexApplication"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>方式二，在自己的Application#attachBaseContext(Context)方法里添加以下代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">attachBaseContext</span><span class="params">(Context base)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.attachBaseContext(base);</span><br><span class="line">		MultiDex.install(<span class="keyword">this</span>); <span class="comment">// Enable MultiDex.</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>MultiDex并不是万全的方案，Google貌似不太热衷于旧版本的兼容工作，通过阅读MultiDex Support库的源码，我们也能发现其代码写得貌似没有那么严谨。</p>
-<p>目前来说，使用MultiDex可能存在以下问题。</p>
-<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>如果你在调用MultiDex#install(Context)做了别的工作，而这些工作需要用到的类却存在于别的dex文件里面（Secondary Dexes），就会出现类找不到的运行时异常。</p>
-<p>正确的做法是把这些需要用到的类标记在multidex.keep清单文件里面，再在build.gradle里面启用该清单文件。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">  defaultConfig &#123;</span><br><span class="line">    multiDexEnabled <span class="keyword">true</span></span><br><span class="line">    <span class="function">multiDexKeepProguard <span class="title">file</span><span class="params">(<span class="string">'multidex.pro'</span>)</span></span></span><br><span class="line"><span class="function">   &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">dependencies </span>&#123;</span><br><span class="line">  compile<span class="string">'com.android.support:multidex:1.0.1'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>multiDexKeepProguard</code>使用的是类似于混淆文件的过滤规则，出了这个配置项之外还有<code>multiDexKeepFile</code>，这个要求你在清单文件里把所有的类都罗列出来。</p>
-<h3 id="卡顿问题"><a href="#卡顿问题" class="headerlink" title="卡顿问题"></a>卡顿问题</h3><p>通过阅读源码，我们可以看出，目前Android 5.0以上的设备已经自身支持了MultiDex功能，也就是说在安装apk的时候，系统已经会帮我们把apk里面的所有dex文件都做好Optimize处理，所以不需要我们在代码里启用MultiDex了。但是对于Android 5.0以下的设置，则依然要求我们启用MultiDex。而这些系统的设备在第一次运行App的时候，需要对所有的Secondary Dexes文件都进行一次解压以及Optimize处理（生成odex文件），这段时间会有明显的耗时（大概5000毫秒左右，dex越多越大越明显），所有会产生明显的卡顿现象。</p>
-<p>不过好在，在Application#attachBaseContext(Context)中，UI线程的阻塞是不会引发ANR的，只不过这段长时间的卡顿（白屏）还是会影响用户体验，解决方案能想到的有两种。</p>
-<p>第一种，在安装一个新的apk的时候，先在Worker线程里做好MultiDex的Optimize工作，安装apk并启动后，直接使用之前Optimize产生的odex文件，这样就可以避免第一次启动时候的Optimize工作。</p>
-<p>第二种，启动App的时候，先显示一个简单的Splash闪屏界面，然后启动Worker线程执行MultiDex#install(Context)工作，就可以避免UI线程阻塞。不过要确保启动以及启动MultiDex#install(Context)所需要的类都在Main Dex里面。</p>
-<h3 id="多进程同步"><a href="#多进程同步" class="headerlink" title="多进程同步"></a>多进程同步</h3><p>参考Google的MultiDex的源码，可以发现Google并没有考虑多进程同步的问题，如果App是多进程的，并且刚好同时有两个进程出发了MultiDex#install(Context)工作，可以会有多进程冲突的风险。</p>
-<p>如果你采用了上面解决卡顿问题时说到的第二种方法，你也应该考虑多进程的问题，因为这种方法并不是在进程一启动就在主线程里面去做MultiDex初始化了，可能存在同步问题的风险。</p>
-<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p>早期在使用MultiDex的时候，Android Studio会出现apk编译后无法安装的问题，然而使用命令行编译出来的apk文件又可以安装了，这个问题现在基本没有出现了，不再追究原因了。</p>
-<p>参考资料：</p>
+</li>
+<li>使用 Support Repository 中的 multidex (刚出来时是 0.1 版本，目前已有有 1.0.0 和 1.0.1)；</li>
+</ul>
+<h3 id="配置-build-gradle"><a href="#配置-build-gradle" class="headerlink" title="配置 build.gradle"></a>配置 build.gradle</h3><figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 21</span><br><span class="line">    buildToolsVersion &quot;21.1.0&quot;</span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">        minSdkVersion 14</span><br><span class="line">        targetSdkVersion 21</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        multiDexEnabled true// Enable MultiDex.</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile &apos;com.android.support:multidex:1.0.1&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在代码里启动-MultiDex"><a href="#在代码里启动-MultiDex" class="headerlink" title="在代码里启动 MultiDex"></a>在代码里启动 MultiDex</h3><p>最后，在 Java 代码里启动 MultiDex，有两种方式可以搞定。<br>方式一，使用 MultiDexApplication。</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    package=&quot;xxx&quot;&gt;</span><br><span class="line">    &lt;application</span><br><span class="line">        ...</span><br><span class="line">        android:name=&quot;android.support.multidex.MultiDexApplication&quot;&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
+<p>方式二，在自己的 Application#attachBaseContext (Context) 方法里添加以下代码。</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MyApplication extends Application &#123;</span><br><span class="line">	protected void attachBaseContext(Context base) &#123;</span><br><span class="line">		super.attachBaseContext(base);</span><br><span class="line">		MultiDex.install(this);// Enable MultiDex.</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>MultiDex 并不是万全的方案，Google 貌似不太热衷于旧版本的兼容工作，通过阅读 MultiDex Support 库的源码，我们也能发现其代码写得貌似没有那么严谨。<br>目前来说，使用 MultiDex 可能存在以下问题。</p>
+<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>如果你在调用 MultiDex#install (Context) 做了别的工作，而这些工作需要用到的类却存在于别的 dex 文件里面（Secondary Dexes），就会出现类找不到的运行时异常。<br>正确的做法是把这些需要用到的类标记在 multidex.keep 清单文件里面，再在 build.gradle 里面启用该清单文件。</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">  defaultConfig &#123;</span><br><span class="line">    multiDexEnabled true</span><br><span class="line">    multiDexKeepProguard file(&apos;multidex.pro&apos;)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile&apos;com.android.support:multidex:1.0.1&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>multiDexKeepProguard</code> 使用的是类似于混淆文件的过滤规则，出了这个配置项之外还有 <code>multiDexKeepFile</code>，这个要求你在清单文件里把所有的类都罗列出来。</p>
+<h3 id="卡顿问题"><a href="#卡顿问题" class="headerlink" title="卡顿问题"></a>卡顿问题</h3><p>通过阅读源码，我们可以看出，目前 Android 5.0 以上的设备已经自身支持了 MultiDex 功能，也就是说在安装 apk 的时候，系统已经会帮我们把 apk 里面的所有 dex 文件都做好 Optimize 处理，所以不需要我们在代码里启用 MultiDex 了。但是对于 Android 5.0 以下的设置，则依然要求我们启用 MultiDex。而这些系统的设备在第一次运行 App 的时候，需要对所有的 Secondary Dexes 文件都进行一次解压以及 Optimize 处理（生成 odex 文件），这段时间会有明显的耗时（大概 5000 毫秒左右，dex 越多越大越明显），所有会产生明显的卡顿现象。<br>不过好在，在 Application#attachBaseContext (Context) 中，UI 线程的阻塞是不会引发 ANR 的，只不过这段长时间的卡顿（白屏）还是会影响用户体验，解决方案能想到的有两种。<br>第一种，在安装一个新的 apk 的时候，先在 Worker 线程里做好 MultiDex 的 Optimize 工作，安装 apk 并启动后，直接使用之前 Optimize 产生的 odex 文件，这样就可以避免第一次启动时候的 Optimize 工作。<br>第二种，启动 App 的时候，先显示一个简单的 Splash 闪屏界面，然后启动 Worker 线程执行 MultiDex#install (Context) 工作，就可以避免 UI 线程阻塞。不过要确保启动以及启动 MultiDex#install (Context) 所需要的类都在 Main Dex 里面。</p>
+<h3 id="多进程同步"><a href="#多进程同步" class="headerlink" title="多进程同步"></a>多进程同步</h3><p>参考 Google 的 MultiDex 的源码，可以发现 Google 并没有考虑多进程同步的问题，如果 App 是多进程的，并且刚好同时有两个进程出发了 MultiDex#install (Context) 工作，可以会有多进程冲突的风险。<br>如果你采用了上面解决卡顿问题时说到的第二种方法，你也应该考虑多进程的问题，因为这种方法并不是在进程一启动就在主线程里面去做 MultiDex 初始化了，可能存在同步问题的风险。</p>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p>早期在使用 MultiDex 的时候，Android Studio 会出现 apk 编译后无法安装的问题，然而使用命令行编译出来的 apk 文件又可以安装了，这个问题现在基本没有出现了，不再追究原因了。<br>参考资料：</p>
 <ul>
-<li><a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="noopener">Configure Apps with Over 64K Methods</a></li>
-<li><a href="http://blog.csdn.net/t12x3456/article/details/40837287" target="_blank" rel="noopener">Android 使用android-support-multidex解决Dex超出方法数的限制问题,让你的应用不再爆棚</a></li>
+<li><a href="https://developer.android.com/studio/build/multidex.html" target="_blank" rel="noopener">Configure Apps with Over 64K Methods</a><ul>
+<li><a href="http://blog.csdn.net/t12x3456/article/details/40837287" target="_blank" rel="noopener">Android 使用 android-support-multidex 解决 Dex 超出方法数的限制问题，让你的应用不再爆棚</a></li>
 </ul>
+</li>
+</ul>
+<!-- Generated by HexoWriter
+notion-down.version = 0.1.0
+notion-down.revision = b'349007a'
+Title = 给 Android App 启用 MultiDex 功能
+Date = 2015-09-02 00:00:00
+Published = true
+Category = Android
+Tag = ['Android', 'MultiDex']
+FileLocate = android
+FileName = enable-multidex
+hexo.comments = true
+-->
 
       
     </div>
@@ -479,7 +487,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/性能调优/" rel="tag"># 性能调优</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
             <a href="/tags/MultiDex/" rel="tag"># MultiDex</a>
           
@@ -490,8 +498,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/19/android-smooth-emulator-for-develop/" rel="next" title="流畅的ANDROID模拟器">
-                <i class="fa fa-chevron-left"></i> 流畅的ANDROID模拟器
+              <a href="/2015/08/19/android-smooth-emulator-for-develop/" rel="next" title="流畅的 Android 模拟器">
+                <i class="fa fa-chevron-left"></i> 流畅的 Android 模拟器
               </a>
             
           </div>
@@ -500,8 +508,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/05/themia-demo-using-thmia/" rel="prev" title="HEXO响应式主题・THEMIA">
-                HEXO响应式主题・THEMIA <i class="fa fa-chevron-right"></i>
+              <a href="/2015/10/05/themia-demo-using-thmia/" rel="prev" title="Hexo 响应式主题 Themia">
+                Hexo 响应式主题 Themia <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -583,7 +591,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -592,7 +600,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -721,7 +729,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题"><span class="nav-number">1.</span> <span class="nav-text">出现的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#65535问题"><span class="nav-number">1.1.</span> <span class="nav-text">65535问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinearAlloc问题"><span class="nav-number">1.2.</span> <span class="nav-text">LinearAlloc问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用MultiDex解决问题"><span class="nav-number">2.</span> <span class="nav-text">启用MultiDex解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境要求"><span class="nav-number">2.1.</span> <span class="nav-text">环境要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置build-gradle"><span class="nav-number">2.2.</span> <span class="nav-text">配置build.gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在代码里启动MultiDex"><span class="nav-number">2.3.</span> <span class="nav-text">在代码里启动MultiDex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存在的问题"><span class="nav-number">3.</span> <span class="nav-text">存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError"><span class="nav-number">3.1.</span> <span class="nav-text">NoClassDefFoundError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卡顿问题"><span class="nav-number">3.2.</span> <span class="nav-text">卡顿问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程同步"><span class="nav-number">3.3.</span> <span class="nav-text">多进程同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">3.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#出现的问题"><span class="nav-number">1.</span> <span class="nav-text">出现的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#65535-问题"><span class="nav-number">1.1.</span> <span class="nav-text">65535 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinearAlloc-问题"><span class="nav-number">1.2.</span> <span class="nav-text">LinearAlloc 问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用-MultiDex-解决问题"><span class="nav-number">2.</span> <span class="nav-text">启用 MultiDex 解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境要求"><span class="nav-number">2.1.</span> <span class="nav-text">环境要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-build-gradle"><span class="nav-number">2.2.</span> <span class="nav-text">配置 build.gradle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在代码里启动-MultiDex"><span class="nav-number">2.3.</span> <span class="nav-text">在代码里启动 MultiDex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存在的问题"><span class="nav-number">3.</span> <span class="nav-text">存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoClassDefFoundError"><span class="nav-number">3.1.</span> <span class="nav-text">NoClassDefFoundError</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卡顿问题"><span class="nav-number">3.2.</span> <span class="nav-text">卡顿问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程同步"><span class="nav-number">3.3.</span> <span class="nav-text">多进程同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">3.4.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -847,7 +855,7 @@
       var disqus_shortname = 'kidhaibara';
       var disqus_identifier = '2015/09/02/android/enable-multidex/';
 
-      var disqus_title = "给App启用MultiDex功能";
+      var disqus_title = "给 Android App 启用 MultiDex 功能";
 
 
       function run_disqus_script(disqus_script) {
