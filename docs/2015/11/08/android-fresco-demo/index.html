@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://kaedea.com/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png">
 <meta property="og:image" content="http://kaedea.com/assets/55c526dd_43d6_44ec_89a1_57d8dabb389a_untitled.png">
 <meta property="og:image" content="http://kaedea.com/assets/4836a887_8427_4574_93ad_73a5c6965846_untitled.png">
-<meta property="og:updated_time" content="2021-08-23T17:03:55.037Z">
+<meta property="og:updated_time" content="2021-08-24T13:19:43.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Facebook 开源图片加载库 Fresco Demo">
 <meta name="twitter:description" content="现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。">
@@ -359,8 +359,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-23T17:03:55+00:00">
-              2021-08-23
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T13:19:43+00:00">
+              2021-08-24
             </time>
             
           </span>
@@ -429,8 +429,13 @@
         <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt></p>
 <p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。</p>
 <a id="more"></a>
-<h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><p>GitHub : <a href="https://github.com/kaedea/Fresco-Sample-Usage" target="_blank" rel="noopener">Fresco Sample Usage</a> 作者 : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a> 参考 : <a href="https://github.com/facebook/fresco" target="_blank" rel="noopener">fresco</a> <a href="https://github.com/06peng/FrescoDemo" target="_blank" rel="noopener">06peng</a> <a href="http://frescolib.org/" target="_blank" rel="noopener">frescolib.org</a></p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>关于图片加载框架，我用过许多轮子，也有自己写过。目前项目在使用的是一个我基于 Volley 修改而来的 ImageLoader ，但是由于产品天花乱坠的需求，现在已经渐渐改得面目全非了，于是打算换成一个新的轮子，在 Glide 和 Fresco 纠结一段时间后，打算先尝试 Fresco 。<br>图片加载框架如果不处理好 Bitmap 的缓存问题就容易引发 Bitmap 泄露，Bitmap 泄露是 Android 内存泄露的一大原因，而内存泄露又是 OOM 的主要原因。<br>Bitmap 是非常占用内存的，比普通的 Java 对象大多了，不释放的话很快就 OOM 了；如果释放过早，如果有 ImageView 还用着被释放的 Bitmap，当这个 ImageView 被重绘的时候就会抛 IllegalState 异常。OOM 和 IllegalState 可是为我项目的崩溃率贡献了好多数据。<br>Android 3.0 (Honeycomb) 之前，系统把 Bitmap 的像素数据放在 Native 层，所以图片加载框架必须手动做好这些 Bitmap 的释放工作，Honeycomb 之后这些放在虚拟机 Heap 里，虚拟机会帮我们回收，所以可以不用手动释放。但是由于 Bitmap 本身非常占用虚拟机的内存，虚拟机的内存很快就不够用了，所以会频繁触发虚拟机的 GC (Garbage Collector)，然而 GC 是非常耗性能的工作，因此也会造成 APP 的卡顿。好在，Android 5.0 (Lollipop) 已经妥善解决这个问题了。<br>对于 Honeycomb 之前的 Bitmap 缓存问题，目前我项目的轮子使用的处理方式是 Google 推荐的方案，简单说一下就是：设置一个 count，如果一个 Bitmap 被 set 进一个 ImageView 就 + 1，remove 放就 - 1，定期检查这些 Bitmap，如果 count&lt;=0 就回收掉。这个方法能通过测试妹子 “机の宝库” 的考验，无奈在用户的崩溃日志上看起来还是有导致 OOM 和 IllegalState 的情况（天朝水深火日的生态啊），而且这一方法并不能解决 Lollipop 之前频繁 GC 造成的卡顿问题。<br>之所以想换 Fresco 最主要的原因是</p>
+<h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><p>GitHub : <a href="https://github.com/kaedea/Fresco-Sample-Usage" target="_blank" rel="noopener">Fresco Sample Usage</a><br>作者 : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a><br>参考 : <a href="https://github.com/facebook/fresco" target="_blank" rel="noopener">fresco</a> <a href="https://github.com/06peng/FrescoDemo" target="_blank" rel="noopener">06peng</a> <a href="http://frescolib.org/" target="_blank" rel="noopener">frescolib.org</a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>关于图片加载框架，我用过许多轮子，也有自己写过。目前项目在使用的是一个我基于 Volley 修改而来的 ImageLoader ，但是由于产品天花乱坠的需求，现在已经渐渐改得面目全非了，于是打算换成一个新的轮子，在 Glide 和 Fresco 纠结一段时间后，打算先尝试 Fresco 。</p>
+<p>图片加载框架如果不处理好 Bitmap 的缓存问题就容易引发 Bitmap 泄露，Bitmap 泄露是 Android 内存泄露的一大原因，而内存泄露又是 OOM 的主要原因。</p>
+<p>Bitmap 是非常占用内存的，比普通的 Java 对象大多了，不释放的话很快就 OOM 了；如果释放过早，如果有 ImageView 还用着被释放的 Bitmap，当这个 ImageView 被重绘的时候就会抛 IllegalState 异常。OOM 和 IllegalState 可是为我项目的崩溃率贡献了好多数据。</p>
+<p>Android 3.0 (Honeycomb) 之前，系统把 Bitmap 的像素数据放在 Native 层，所以图片加载框架必须手动做好这些 Bitmap 的释放工作，Honeycomb 之后这些放在虚拟机 Heap 里，虚拟机会帮我们回收，所以可以不用手动释放。但是由于 Bitmap 本身非常占用虚拟机的内存，虚拟机的内存很快就不够用了，所以会频繁触发虚拟机的 GC (Garbage Collector)，然而 GC 是非常耗性能的工作，因此也会造成 APP 的卡顿。好在，Android 5.0 (Lollipop) 已经妥善解决这个问题了。</p>
+<p>对于 Honeycomb 之前的 Bitmap 缓存问题，目前我项目的轮子使用的处理方式是 Google 推荐的方案，简单说一下就是：设置一个 count，如果一个 Bitmap 被 set 进一个 ImageView 就 + 1，remove 放就 - 1，定期检查这些 Bitmap，如果 count&lt;=0 就回收掉。这个方法能通过测试妹子 “机の宝库” 的考验，无奈在用户的崩溃日志上看起来还是有导致 OOM 和 IllegalState 的情况（天朝水深火日的生态啊），而且这一方法并不能解决 Lollipop 之前频繁 GC 造成的卡顿问题。</p>
+<p>之所以想换 Fresco 最主要的原因是：</p>
 <blockquote>
 <p>Fresco 会在 Lollipop 之前，把 Bitmap 放在 Ashmem（系统匿名共享内存），在图片不显示的时候，占用的内存会自动被释放，不需要手动释放，也不会频繁触发 GC！这会使得 APP 更加流畅，减少因图片内存占用而引发的 OOM，也能有效避免 IllegalState，而且在 Honeycomb 之前的 Android 版本的表现也同样优秀（官方宣称）。</p>
 </blockquote>
