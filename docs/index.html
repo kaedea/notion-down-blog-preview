@@ -310,6 +310,206 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2021/08/14/android-apm-battery-stats-opt/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Kaede Akatsuki">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="中二病也要开发ANDROID">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2021/08/14/android-apm-battery-stats-opt/" itemprop="url">
+                  Android App 电量统计原理与优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-08-14T00:00:00+00:00">
+              2021-08-14
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
+              2021-08-24
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2021/08/14/android-apm-battery-stats-opt/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/08/14/android-apm-battery-stats-opt/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2021/08/14/android-apm-battery-stats-opt/" class="leancloud_visitors" data-flag-title="Android App 电量统计原理与优化">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">Visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- changelog
+2021-07-27
+修订 2
+Add: 
+
+1. 项目使用效果
+
+2021-07-21
+修订 1
+Add: 
+
+1. 拓展阅读
+
+2021-07-20
+初稿
+-->
+<!-- draft
+
+1. 背景
+1. 耗电问题表现
+1. 耗电统计原理
+1. 计算公式
+1. Android 硬件模块电量统计
+    1. BatteryStatsService
+1. Matrix BatteryCanary
+    1. ProcStat
+1. 线程池
+1. UI 线程、Looper 线程
+    1. EventSlice
+    1. StackTrace
+1. 案例
+1. 其他耗电指标
+1. 拓展阅读
+    1. Benchmarks
+1. 竞品
+
+-->
+<h2 id="App-“耗电综合征”"><a href="#App-“耗电综合征”" class="headerlink" title="App “耗电综合征”"></a>App “耗电综合征”</h2><p>当我们说一个 App 耗电的时候我们在说什么？</p>
+<p>我们可能是指 App 吃 CPU 导致系统掉电快，也可能是在说系统告警 App 后台扫描频繁消耗电量，还可能是在说使用 App 时手机发烫严重…… 是的，相对于 Crash、ANR 等常见的 APM 指标，Android App 电量优化更像是一个综合性的问题。</p>
+<p>一方面，造成 App 耗电的原因是多种多样的，比如 CPU/GPU Load、屏幕、传感器以及其他硬件开销等，每个分类的排查思路是大相径庭的，再加上 AOSP 没有 “官方” 的耗电异常检测框架，各个 OEM 厂商自家系统对 App 耗电的监控方案又各不相同（且没有充分的公开文档），所以检测方案需要结合具体 App 项目实际和用户反馈状况，针对具体的耗电类型做出考量和取舍。另一方面，耗电问题也经常是比较 “主观” 的，比如用户感觉 App 新版本掉电比较快了，或者在户外气温比较高的环境使用 App 时感觉设备发烫了，又或只是单纯的因为使用时间变长了导致系统耗电排行靠前了等等，这些通常都是一些比较微妙的主观感受，难以量化问题。</p>
+<p>因此，<strong> 如何检测各种类型的耗电异常，以及如何提炼耗电问题的规则（划红线）是优化电量指标的关键所在 </strong>。微信 Android 项目在与 App 耗电异常这项 “疑难杂症” 日常斗智斗勇的过程中，产出了一些比较实用的工具和优化思路。本文针对 Anroid App 的耗电问题，具体分为 “App 电量统计原理”、“耗电异常监控方案”、以及相关的 “优化案例” 三部分进行解析和分享。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2021/08/14/android-apm-battery-stats-opt/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://kaedea.com/2021/05/20/devops/notion-to-markdown-file-automating-solution/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -358,7 +558,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -523,7 +723,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -683,7 +883,7 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -857,7 +1057,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1022,7 +1222,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1183,7 +1383,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1343,7 +1543,7 @@ Android 静态代码扫描效率优化与实践 - 美团
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1521,7 +1721,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1682,7 +1882,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
               2021-08-24
             </time>
             
@@ -1786,169 +1986,6 @@ hexo.link = https://github.com/kaedea/comment-formatter
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/10/02/android/log-utility/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/02/android/log-utility/" itemprop="url">
-                  Android Logging 的正确姿势
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-02T00:00:00+00:00">
-              2016-10-02
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:22:07+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/02/android/log-utility/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/02/android/log-utility/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/10/02/android/log-utility/" class="leancloud_visitors" data-flag-title="Android Logging 的正确姿势">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。</p>
-</blockquote>
-<p>LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项目里面都包含着大量的 Log 相关代码。不过，或许是因为 Log 实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
-          <!--noindex-->
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/02/android/log-utility/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1992,7 +2029,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -2000,7 +2037,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2009,7 +2046,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
