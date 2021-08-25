@@ -17,7 +17,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Checkout kaedea.github.io
+          name: Checkout HEAD
+          command: |
+            echo "Checkout HEAD"
+            git reset --hard origin/main
+      - run:
+          name: Clone kaedea.github.io
           command: |
             echo "Clone kaedea.github.io"
             git clone -b circleci-bot https://github.com/kaedea/kaedea.github.io.git deploy
