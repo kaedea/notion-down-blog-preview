@@ -132,6 +132,8 @@ Add:
 <p>一方面，造成 App 耗电的原因是多种多样的，比如 CPU/GPU Load、屏幕、传感器以及其他硬件开销等，每个分类的排查思路是大相径庭的，再加上 AOSP 没有 “官方” 的耗电异常检测框架，各个 OEM 厂商自家系统对 App 耗电的监控方案又各不相同（且没有充分的公开文档），所以检测方案需要结合具体 App 项目实际和用户反馈状况，针对具体的耗电类型做出考量和取舍。另一方面，耗电问题也经常是比较 “主观” 的，比如用户感觉 App 新版本掉电比较快了，或者在户外气温比较高的环境使用 App 时感觉设备发烫了，又或只是单纯的因为使用时间变长了导致系统耗电排行靠前了等等，这些通常都是一些比较微妙的主观感受，难以量化问题。</p>
 <p>因此，** 如何检测各种类型的耗电异常，以及如何提炼耗电问题的规则（划红线）是优化电量指标的关键所在 **。微信 Android 项目在与 App 耗电异常这项 “疑难杂症” 日常斗智斗勇的过程中，产出了一些比较实用的工具和优化思路。本文针对 Anroid App 的耗电问题，具体分为 “App 电量统计原理”、“耗电异常监控方案”、以及相关的 “优化案例” 三部分进行解析和分享。</p>
         
+          <p><a class="excerpt-btn" href="2021/08/14/android-apm-battery-stats-opt/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -216,6 +218,8 @@ Add:
 <p>自从改用静态博客代替 WordPress 来发表自己的文章、文档后，我不得已采用” 云笔记写草稿，MD 文件保存文章正文，手动在草稿和正文之间同步 “这样的 <code>原始</code> 的写作方案，以上说的几种割裂感也是一直以来我感到非常困扰的地方。</p>
 <p>几番苦寻更好的云笔记体验方案，未果。直到 ta 的出现：<code>Notion</code> 。</p>
         
+          <p><a class="excerpt-btn" href="2021/05/20/devops/notion-to-markdown-file-automating-solution/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -284,6 +288,8 @@ Add:
     <div class="entry">
       
         <p>众所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
+        
+          <p><a class="excerpt-btn" href="2018/06/04/android-so-loading-2/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -371,6 +377,8 @@ Android 静态代码扫描效率优化与实践 - 美团
 
 <p>静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供的 References。</p>
         
+          <p><a class="excerpt-btn" href="2018/04/01/devops/incremental-spa/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -445,6 +453,8 @@ Android 静态代码扫描效率优化与实践 - 美团
 <p>没毛病，扎心了。App 运行的时候，肯定是存在至少一个 Application 实例的。同时，Context 我们再熟悉不过了，写代码的时候经常需要使用到 Context 实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过 attach 方法传递进我们需要用到的类。Context 实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然 App 运行的时候，Application 实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取 Context 实例，这样以来就不需要上面那些繁琐的传递方式。</p>
 <p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。</p>
         
+          <p><a class="excerpt-btn" href="2017/04/09/android/global-accessing-context/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -515,6 +525,8 @@ Android 静态代码扫描效率优化与实践 - 美团
         <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard 又搞了个大新闻</a>），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 <code>.dex</code> 文件的时候报错。</p>
 <p>本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java 源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
         
+          <p><a class="excerpt-btn" href="2017/03/21/android/naughty-proguard-tuduki/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -584,6 +596,8 @@ Android 静态代码扫描效率优化与实践 - 美团
       
         <p>一般情况下，Android 项目经常开启 ProGuard 功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简 Java API 的名字来减少代码的总量，从而精简应用编译后的体积。</p>
 <p>ProGuard 有个比较坑爹的问题。在开发阶段，我们一般不启用 ProGuard，只有在构建 Release 包的时候才开启。因此，如果有一些 API 被混淆了会出现 BUG，那么在开发阶段我们往往无法察觉 BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。<br>不过今天被 ProGuard 坑的不是混淆 API 导致的 BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
+        
+          <p><a class="excerpt-btn" href="2017/03/20/android/naughty-proguard/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -748,6 +762,8 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 **” 以及 “</strong>INSTALL_FAILED_DEXOPT**” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
 <p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
         
+          <p><a class="excerpt-btn" href="2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
+        
       
     </div>
 
@@ -817,6 +833,8 @@ hexo.link = https://github.com/kaedea/comment-formatter
       
         <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过 UP 主我并没有放弃治疗哈，相信在不就的未来就可以看到 “系统 Api Hook 模式” 和插件化框架 Frontia 的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是 dex 文件的加载。</p>
 <p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 **” 以及 “</strong>INSTALL_FAILED_DEXOPT**” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
+        
+          <p><a class="excerpt-btn" href="2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
         
       
     </div>
