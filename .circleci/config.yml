@@ -40,6 +40,10 @@ jobs:
                 rm deploy/CNAME
             fi
             echo "www.kaedea.com" > deploy/CNAME
+            echo "Configure robots.txt"
+            if [ -f "deploy/robots.txt" ]; then
+                rm deploy/robots.txt
+            fi
       - run:
           name: Check files modification
           command: |
