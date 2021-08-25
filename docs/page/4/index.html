@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>第 4 页 | Kaede Akatsuki | 中二病也要开发 Android</title>
@@ -21,16 +21,16 @@
 
   
 
-  <meta property="og:site_name" content="Kaede Akatsuki">
+  <meta property="og:site_name" content="Kaede Akatsuki"/>
 
   
-  <meta property="og:image" content="/favicon.ico">
+  <meta property="og:image" content="/favicon.ico"/>
   
 
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 
 <body>
@@ -226,7 +226,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="/assets/9228cd65_dd51_4de4_a55a_a5f0cf0226bc_untitled.png" alt></p>
+        <p><img src="/assets/9228cd65_dd51_4de4_a55a_a5f0cf0226bc_untitled.png" alt=""></p>
 <p>说到动态加载，我们经常使用 “插件化”、“热修复”、“热部署” 等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
 <p>在 Android 开发中采用动态加载技术，可以达到不安装新的 APK 就升级 APP 功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急 BUG。</p>
 <p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在 Android 项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
@@ -367,8 +367,8 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong> 这个贴的目的在于想骗一些高质量的干货 </strong>（我从未见过如此厚颜无耻之人 + 脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个 DEMO 之类的放到 Github 骗骗粉之类的。</p>
-<p><img src="/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png" alt></p>
+        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，** 这个贴的目的在于想骗一些高质量的干货 **（我从未见过如此厚颜无耻之人 + 脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个 DEMO 之类的放到 Github 骗骗粉之类的。</p>
+<p><img src="/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png" alt=""></p>
 <p>请大家补充要点啊，我一并处理。以下只是一时想到写的笔记，详细的分析还需要一点时间。</p>
         
       
@@ -507,7 +507,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt></p>
+        <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt=""></p>
 <p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。</p>
         
       
@@ -577,7 +577,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Android <strong>MVP 模式</strong>[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP 模式 </strong> 的优势就充分显示出来了。<br>MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时也包含一些 Controller 的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把 Activity 的 View 和 Controller 抽离出来就变成了 View 和 Presenter，这就是 MVP 模式。</p>
+        <p>Android <strong>MVP 模式</strong>[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，*<em>MVP 模式 *</em> 的优势就充分显示出来了。<br>MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时也包含一些 Controller 的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把 Activity 的 View 和 Controller 抽离出来就变成了 View 和 Presenter，这就是 MVP 模式。</p>
         
       
     </div>
@@ -646,8 +646,8 @@
   <div class="article-content">
     <div class="entry">
       
-        <p><img src="/assets/27f9ca87_2f0c_4ae0_ae1e_1c18feb424b1_untitled.png" alt></p>
-<p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress 时代，还是现在换成 Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是 <a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a> 的响应式 WP 主题，但是如今 Soma 已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的 Hexo 主题翻了个边，连 Fork 的主题都没放过，发现最满意的还是 TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，<strong> 大部分功能都是原有主题的 </strong>，只是为了我自己的需求做了小部分的修改。</p>
+        <p><img src="/assets/27f9ca87_2f0c_4ae0_ae1e_1c18feb424b1_untitled.png" alt=""></p>
+<p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress 时代，还是现在换成 Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是 <a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a> 的响应式 WP 主题，但是如今 Soma 已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的 Hexo 主题翻了个边，连 Fork 的主题都没放过，发现最满意的还是 TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，** 大部分功能都是原有主题的 **，只是为了我自己的需求做了小部分的修改。</p>
         
       
     </div>
