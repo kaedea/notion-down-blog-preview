@@ -88,26 +88,26 @@
 
 
 
-<meta name="description" content="前面吐槽了 有没有必要阅读Android源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android每个系统版本的源码都会有变动，而且代码中时不时Java和Native互相穿插，追求完全看透源码意义不大，把目的定在“理解代码设计的思路，弄清各个生命周期方法调用的顺序”比较实际。">
+<meta name="description" content="前面吐槽了 有没有必要阅读 Android 源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android 每个系统版本的源码都会有变动，而且代码中时不时 Java 和 Native 互相穿插，追求完全看透源码意义不大，把目的定在 “理解代码设计的思路，弄清各个生命周期方法调用的顺序” 比较实际。">
 <meta name="keywords" content="Android,源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阅读ANDROID源码的一些姿势">
+<meta property="og:title" content="阅读 Android 源码的一些姿势">
 <meta property="og:url" content="http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/index.html">
 <meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="前面吐槽了 有没有必要阅读Android源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android每个系统版本的源码都会有变动，而且代码中时不时Java和Native互相穿插，追求完全看透源码意义不大，把目的定在“理解代码设计的思路，弄清各个生命周期方法调用的顺序”比较实际。">
+<meta property="og:description" content="前面吐槽了 有没有必要阅读 Android 源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android 每个系统版本的源码都会有变动，而且代码中时不时 Java 和 Native 互相穿插，追求完全看透源码意义不大，把目的定在 “理解代码设计的思路，弄清各个生命周期方法调用的顺序” 比较实际。">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/47582414.jpg?imageView2/2/w/600/interlace/1">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/89744598.jpg">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/89825596.jpg">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/53056079.jpg">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/70376864.jpg">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/73121661.jpg">
-<meta property="og:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/2827740.jpg">
-<meta property="og:updated_time" content="2021-08-12T09:51:38.339Z">
+<meta property="og:image" content="http://kaedea.com/assets/302de811_18fd_4467_a307_86ef09076d7a_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/1fc1b5a1_1160_449e_ae32_f5ad9c273e12_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/ee5b0454_052e_469b_89a1_c096d126a502_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/c55b808d_413f_4f78_b273_5d01077915c3_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/ddd76633_7006_47eb_88b6_debfdd4259d0_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/e81f708f_99e3_4ec6_8173_6a9c669b7e27_untitled.png">
+<meta property="og:image" content="http://kaedea.com/assets/816f96d4_27e9_421c_bca9_6787d4d7490d_untitled.png">
+<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阅读ANDROID源码的一些姿势">
-<meta name="twitter:description" content="前面吐槽了 有没有必要阅读Android源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android每个系统版本的源码都会有变动，而且代码中时不时Java和Native互相穿插，追求完全看透源码意义不大，把目的定在“理解代码设计的思路，弄清各个生命周期方法调用的顺序”比较实际。">
-<meta name="twitter:image" content="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/47582414.jpg?imageView2/2/w/600/interlace/1">
+<meta name="twitter:title" content="阅读 Android 源码的一些姿势">
+<meta name="twitter:description" content="前面吐槽了 有没有必要阅读 Android 源码，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android 每个系统版本的源码都会有变动，而且代码中时不时 Java 和 Native 互相穿插，追求完全看透源码意义不大，把目的定在 “理解代码设计的思路，弄清各个生命周期方法调用的顺序” 比较实际。">
+<meta name="twitter:image" content="http://kaedea.com/assets/302de811_18fd_4467_a307_86ef09076d7a_untitled.png">
 
 
 
@@ -141,7 +141,7 @@
 
 
 
-  <title> 阅读ANDROID源码的一些姿势 | 中二病也要开发ANDROID </title>
+  <title> 阅读 Android 源码的一些姿势 | 中二病也要开发ANDROID </title>
 </head>
 
 <!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
@@ -342,7 +342,7 @@
             
             
               
-                阅读ANDROID源码的一些姿势
+                阅读 Android 源码的一些姿势
               
             
           </h1>
@@ -363,8 +363,8 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-check-o"></i>
             </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-12T09:51:38+00:00">
-              2021-08-12
+            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
+              2021-08-24
             </time>
             
           </span>
@@ -405,7 +405,7 @@
 
           
           
-             <span id="/2016/02/09/android-about-source-code-how-to-read/" class="leancloud_visitors" data-flag-title="阅读ANDROID源码的一些姿势">
+             <span id="/2016/02/09/android-about-source-code-how-to-read/" class="leancloud_visitors" data-flag-title="阅读 Android 源码的一些姿势">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -430,68 +430,55 @@
       
 
       
-        <p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/47582414.jpg?imageView2/2/w/600/interlace/1" alt></p>
-<p>前面吐槽了 <a href="http://kaedea.com/2016/02/08/android-about-source-code/">有没有必要阅读Android源码</a>，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android每个系统版本的源码都会有变动，而且代码中时不时Java和Native互相穿插，追求完全看透源码意义不大，把目的定在“理解代码设计的思路，弄清各个生命周期方法调用的顺序”比较实际。<br><a id="more"></a></p>
-<h2 id="日常开发中怎么阅读源码"><a href="#日常开发中怎么阅读源码" class="headerlink" title="日常开发中怎么阅读源码"></a>日常开发中怎么阅读源码</h2><h3 id="找到正确的源码"><a href="#找到正确的源码" class="headerlink" title="找到正确的源码"></a>找到正确的源码</h3><p>IDE是日常经常用的东西，Eclipse就不说了，直接从Android Studio（基于IntelliJ Community版本改造）开始。</p>
-<p>我们平时的Android项目，都是要依赖Android SDK里对应API Level的android.jar包（而且是以Provided的形式依赖），这样才能使用Android提供的API。在IntelliJ中，当想要看具体类的源码的时候，如果Android SDK里对应API Level的Source包有下载的话，IDE会打开对应的Source包；如果还没有下载，IDE会把对应API Level的android.jar包反编译成Java代码，这个规则对于一些第三方的开源项目也一样。推荐下载Source源码，毕竟反编译的Java代码不可能完全和源码的时候一样，有时候反编译出来的代码的执行逻辑可能完全等价，但是可阅读性下降了不好，而且也少了一些重要的注释。</p>
-<p>定位具体源码的时候，可以通过“Ctrl+鼠标左键”来查看，也可以通过“双击Shift”，在查找框里输入目标类的名字来定位。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/89744598.jpg" alt></p>
-<p>如上图，第一个类就是API23的NinePatchDrawable的源码，第二个就是通过android.jar反编译而来的，这里记得把“Include non-project items”勾上。</p>
-<h3 id="关于SDK自带的源码和隐藏API"><a href="#关于SDK自带的源码和隐藏API" class="headerlink" title="关于SDK自带的源码和隐藏API"></a>关于SDK自带的源码和隐藏API</h3><p>Android SDK自带的Source源码包很小，并没有包括所有的Android Framework的源码，仅仅提供给应用开发参考用，一些比较少用的系统类的源码并没有给出，所以有时候你会看到如下。</p>
+        <p><img src="/assets/302de811_18fd_4467_a307_86ef09076d7a_untitled.png" alt></p>
+<p>前面吐槽了 <a href="http://kaedea.com/2016/02/08/android-about-source-code/">有没有必要阅读 Android 源码</a>，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android 每个系统版本的源码都会有变动，而且代码中时不时 Java 和 Native 互相穿插，追求完全看透源码意义不大，把目的定在 “理解代码设计的思路，弄清各个生命周期方法调用的顺序” 比较实际。</p>
+<a id="more"></a>
+<h2 id="日常开发中怎么阅读源码"><a href="#日常开发中怎么阅读源码" class="headerlink" title="日常开发中怎么阅读源码"></a>日常开发中怎么阅读源码</h2><h3 id="找到正确的源码"><a href="#找到正确的源码" class="headerlink" title="找到正确的源码"></a>找到正确的源码</h3><p>IDE 是日常经常用的东西，Eclipse 就不说了，直接从 Android Studio（基于 IntelliJ Community 版本改造）开始。<br>我们平时的 Android 项目，都是要依赖 Android SDK 里对应 API Level 的 android.jar 包（而且是以 Provided 的形式依赖），这样才能使用 Android 提供的 API。在 IntelliJ 中，当想要看具体类的源码的时候，如果 Android SDK 里对应 API Level 的 Source 包有下载的话，IDE 会打开对应的 Source 包；如果还没有下载，IDE 会把对应 API Level 的 android.jar 包反编译成 Java 代码，这个规则对于一些第三方的开源项目也一样。推荐下载 Source 源码，毕竟反编译的 Java 代码不可能完全和源码的时候一样，有时候反编译出来的代码的执行逻辑可能完全等价，但是可阅读性下降了不好，而且也少了一些重要的注释。<br>定位具体源码的时候，可以通过 “Ctrl + 鼠标左键” 来查看，也可以通过 “双击 Shift”，在查找框里输入目标类的名字来定位。</p>
+<p><img src="/assets/1fc1b5a1_1160_449e_ae32_f5ad9c273e12_untitled.png" alt></p>
+<p>如上图，第一个类就是 API23 的 NinePatchDrawable 的源码，第二个就是通过 android.jar 反编译而来的，这里记得把 “Include non-project items” 勾上。</p>
+<h3 id="关于-SDK-自带的源码和隐藏-API"><a href="#关于-SDK-自带的源码和隐藏-API" class="headerlink" title="关于 SDK 自带的源码和隐藏 API"></a>关于 SDK 自带的源码和隐藏 API</h3><p>Android SDK 自带的 Source 源码包很小，并没有包括所有的 Android Framework 的源码，仅仅提供给应用开发参考用，一些比较少用的系统类的源码并没有给出，所以有时候你会看到如下。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseDexClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseDexClassLoader</span><span class="params">(String dexPath, File optimizedDirectory, String libraryPath, ClassLoader parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> URL <span class="title">findResource</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>“RuntimeException(“Stub!”)”表示实际运行时的逻辑会由Android ROM里面相同的类代替执行。</p>
-<p>此外，在IDE里看源码的时候，有时候一些方法或者类会出现报红（找不到）的情况，如下。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/89825596.jpg" alt></p>
-<p>这是因为这些方法或者类是被Android SDK隐藏的，出于安全或者某些原因，这些API不能暴露给应用层的开发者，所以编译完成的android.jar包里会把这些API隐藏掉，而我们的Android项目是依赖android.jar的，查看源码的时候，IDE会自动去android.jar找对应的API，自然会找不到。当然，这些API在ROM中是实际存在的，有些开发者发现了一些可以修改系统行为的隐藏API，在应用层通过反射的方式强行调用这些API执行系统功能，这种手段也是一种HACK。</p>
-<h3 id="Google的AOSP项目"><a href="#Google的AOSP项目" class="headerlink" title="Google的AOSP项目"></a>Google的AOSP项目</h3><p>当你需要的源码在Android SDK Source中找不到的时候，就有必要去<a href="https://android.googlesource.com/?format=HTML" target="_blank" rel="noopener">AOSP</a>（Android Open Source Project）项目里面找了。</p>
-<p>不过AOSP项目包括整个Android所有开源的东西，实在是太庞大了，对于一般开发者来说，我们只需要接触Framework层次的东西就够了，这里包括了base、build-tools、support包甚至Volley项目的源码。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/53056079.jpg" alt></p>
-<p>以base为例，进入base目录，能看到base项目的git仓库，左边是其所有的分支。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/70376864.jpg" alt></p>
-<p>进入“master/core/java/android/”路径就能看到熟悉的Package目录了，其他分支以及项目都类似。有必要的时候可以把整个AOSP项目Clone下来，大概20G左右，可以把项目导入到IDE里面，这样就更方便查看源码了，另外可以可是试着编译自己的Android ROM，只需要部署能够跑MakeFile命令的环境就好。</p>
-<h3 id="一些辅助阅读的工具"><a href="#一些辅助阅读的工具" class="headerlink" title="一些辅助阅读的工具"></a>一些辅助阅读的工具</h3><h4 id="Chrome扩展"><a href="#Chrome扩展" class="headerlink" title="Chrome扩展"></a>Chrome扩展</h4><p>Android SDK Search<br><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/73121661.jpg" alt></p>
-<p>相信平时到 <a href="http://developer.android.com/reference/classes.html" target="_blank" rel="noopener">Android开发者官网</a> 查看API说明的人不少，这个扩展可以在API类名旁边显示一个跳转链接，用于跳转到AOSP中对应的类的源码，方便查看源码。</p>
-<h4 id="Source-Insight"><a href="#Source-Insight" class="headerlink" title="Source Insight"></a>Source Insight</h4><p>在这个工具帮助下，你才可以驾驭巨大数量的Android 源码，你可以从容在Java，C++,C代码间遨游，你可以很快找到你需要的继承和调用关系。</p>
-<h4 id="VPN梯子"><a href="#VPN梯子" class="headerlink" title="VPN梯子"></a>VPN梯子</h4><p>善用梯子是开发者基本的自我修养之一，如果你不想做“面向百度编程”的话。</p>
-<p>我在一开始是使用免费的GoAgent和WallProxy，但是经常要更新，而且最近还要经常替换IP才能工作，所以后来我换成了收费的ShadowSocks，各个平台都有客户端，非常方便，我也在手机上常态用起了Google的全家桶，只不过最近老是更换服务器地址，而且部分服务器不稳定，非常担心商家是否准备捞一笔然后跑路，23333。</p>
-<p>我觉得比起折腾找免费的低速、不稳定的梯子，还是用一些稳定的收费的的梯子比较划算。至于具体的用梯子的姿势，请诸位自行搜索，这里随便贴个介绍 <a href="http://weibo.com/2491729875/CcNaY2Rbt?from=page_1005052491729875_profile&amp;wvr=6&amp;mod=weibotime&amp;type=comment#_rnd1431747713302" target="_blank" rel="noopener">梯子使用总结</a>。</p>
-<h2 id="推荐阅读的源码"><a href="#推荐阅读的源码" class="headerlink" title="推荐阅读的源码"></a>推荐阅读的源码</h2><p>AOSP项目这么庞大，就算是Framework部分也有够看上一阵子的，所以推荐从常用的看起，由浅及深，同时向横向和纵向深入阅读。</p>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p><strong>Handler-Message-Looper</strong><br>Handler被称为“异步提交器”，是Android开发入门教程必定谈及的东西，这也是Activity等组件的工作机制需要用到的东西，是“数据驱动”框架的重要组成，作为阅读源码的入门最适合不过。</p>
-<p><strong>Activity和Service</strong><br>作为经常使用到的组件，阅读其源码的花费和带来的技术提高的性价比肯定是最高的，Service可以不看，但是Activity总不能少吧。</p>
-<p><strong>Fragment</strong><br>还在认为Fragment是一个视图吗，还在认为FragmentActivity的界面有多个Fragment组成吗，看看Fragment和FragmentManager吧，了解下生命周期的本质到底是什么。</p>
-<p><strong>View</strong><br>想自定义高级的View类吗，那总得知道onMeasure/onLayout/onDraw这些方法是怎么被调用的，了解LayoutParams是怎么工作的，知道调用requestLayout和Invalidate的时候有什么区别。</p>
-<p><strong>MotionEvent</strong><br>在懂的怎么自定义高级的View后，只能向用户显示界面，还得知道怎么与用户交互才能做出华丽的UI。所以必须知道TouchEvent的分发和拦截的工作机制，起码也得知道其特点，才不会一直在困扰“为什么无法监听用户的触摸事件”、“View之间的触摸事件冲突了”或者“View的滑动与点击事件冲突了”之类的问题。</p>
-<p><strong>LayoutInflator</strong><br>布局渲染器也是开发Android UI的时候经常用到的，不过LayoutInflator实例的创建方式有好几种，你至少得知道其之间的区别。还有，LayoutInflator在渲染指定布局的时候，有container和attachToRoot等参数，阅读源码后很快能了解其区别。</p>
-<p><strong>SurfaceView和TextureView</strong><br>阅读完View的工作机制后，就能理解为什么View在绘制复杂的UI效果时效率这么低，这时候就需要SurfaceView和TextureView了。理解双缓冲对UI更新效率的帮助，了解SurfaceView在视图叠加的时候的缺陷，了解TextureView在Android Lollipop之前的内容窜台BUG，才能用正确姿势使用这俩。</p>
-<p><strong>AsyncTask</strong><br>异步任务也是Android开发经常遇到的问题，相比自己从Thread和Handler写起，被称为“异步任务大师”的AsyncTask类自然更受到许多小伙伴的喜欢。不过AsyncTask在早期的Android版本中差别甚大，需要做大量的适配工作，而且特别容易引起异步任务引用着组件的实例导致内存泄露从而引发OOM问题，所以不推荐直接使用AsyncTask类，不过强烈推荐阅读AsyncTask的源码学习Google优秀的异步任务设计理念。此外，如果真的要使用AsyncTask，不要直接使用系统提供的AsyncTask类，AsyncTask本身就是一个单一的Java类，没有耦合其他系统类，推荐自己从最新的Android版本中复制一份AsyncTask类的代码，自己维护，在项目中当做Support包一样使用，以规避其兼容性问题。</p>
-<p><strong>Volley</strong><br>这个强烈推荐，是Google官方的异步任务框架，没有随Android发布，需要自己在Framework里下载代码。Volley的中文意思就是“并发”，阅读其源码能让你见识到原来异步任务框架也能写得这么低耦合和高扩扩展，其用“生产者-消费者”模式来处理异步请求的框架会让人拍案叫绝。此外，Volley框架是用于处理Http任务和Image加载任务，但是其优秀的异步控制思想也能运用与File、Sqlite等耗时任务的处理，当你能够自己写出类似Volley框架的代码时，说明你的Android技术已经有所突破。</p>
-<p><strong>android.util.*</strong><br>“android.util.*” 包名下有许多优秀的实用类，大多是作为Java自带类的补充，比如数据结构类的SparseArray、ArrayMap、ArraySet，用于加密的Base64，用于处理屏幕分辨率自适应的DisplayMetrics和TypedValue，用于时间换算的TimeUtils，以及用于内存缓存的LruCache，熟悉这些类对Android开发非常有帮助，也会让代码显得成熟。</p>
-<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p><strong>Context</strong><br>阅读Context源码能帮助我们了解其工作机制，了解Google是怎么在Java代码上添加Android特性的，了解Android是怎么保存和获取res资源的，了解ContextWrapper和Activity这些Context有什么区别，了解Context设计的装饰者模式（Description Pattern）。</p>
-<p><strong>ClassLoader</strong><br>类加载器ClassLoader是Android虚拟机工作的基础，了解其“双亲代理模式”能让你更好的了解系统的类和你写的类是怎么工作的。Multi-Dex和ART模式也和ClassLoader的工作机制息息相关。</p>
-<p><strong>Binder</strong><br>Binder是Android上RPC（Remote Procedure Call Protocol）的实现，Android系统许多功能就是居于Binder实现的，平时应用层对Binder的使用大多是在于和Service通讯的时候，不过，当我们需要使用AIDL功能的时候，就需要接触到Binder了。（推荐阅读原理即可，反正C++驱动层我是看不下去了）</p>
-<p><strong>WMS，AMS，PMS，NMS，IMS等系统Service</strong><br>SystemServer是Android的Framework层工作的核心，Android系统启动过程包含从Linux内核加载到Home应用程序启动的整个过程。SystemServer是Zygnote孵化的第一个进程，这个进程会启动许多Framework层功能需要用到的线程，比如用于管理窗口的WindowManagerService，用于管理Activity的ActivityManagerService，用于管理APK包信息的PackageManagerService，用于管理网络的NetworkManager，用于处理用户触摸的InputManagerService等，这些系统Service提供了APP运行时需要的大多系统功能，大多使用“stub-server”的模式进行交互，而且有大量的JNI的调用。这部分的源码比较适合从事ROM开发的人阅读，应用层的开发基本不会用到，但是这方面的只是能让我们对Android Framework层的工作机制有个大抵的认识。（非常惭愧，这部分我自己看了几次，还是没能产生融会贯通的感觉，整体的认识还是比较模糊，希望继续跟着老罗的博客，捡捡肉吃）</p>
-<h3 id="第三方开源项目"><a href="#第三方开源项目" class="headerlink" title="第三方开源项目"></a>第三方开源项目</h3><p><strong>EventBus</strong><br>Android上的一个“订阅者-发布者”模式的实现框架，非常适合业务多而且经常变动的项目，能够有效预防“接口爆炸”，现在基本上中型以上的项目都会采用类似的框架。</p>
-<p><strong>OTTO</strong><br>同上，只不过实现的具体方案不一样，而且OTTO相比EventBus来，比较小巧，代码也比较简练，非常适合处女座的开发者食用。</p>
-<p><strong>RxJava</strong><br>相比起上面两个，RxJava可以说是把异步的思想发挥到了极致，RxJava的兴起代表了Android开发中响应式编程的崛起，同样非常适合业务多而且经常变动的项目，只不过相比传统的基于接口的开发方式，RxJava框架的开发方式会有点难以适应，特别是团队开发的时候。</p>
-<p><strong>Guava</strong><br>这个其实也是Google自己开源的，提供了许多优秀的Java工具类，比如“one to one mapping”的Bimap，有时候一些工具类Android或Java自带的库没有提供，或许我们可以先参考Guava的。</p>
-<p>以上是我自己个人推荐阅读的源码，不过每个开发者自身的兴趣和侧重点都不一样，有兴趣的参考着看就是。同时，如果有一些有趣的系统类，随时欢迎推荐给我。</p>
-<h2 id="站在巨人的肩膀上阅读"><a href="#站在巨人的肩膀上阅读" class="headerlink" title="站在巨人的肩膀上阅读"></a>站在巨人的肩膀上阅读</h2><p>学习一个系统最好的方法就是“Read The Fucking Source Code”，坏消息是AOSP项目是在太庞大太难消化了，好消息就是现在已经有不少先驱，我们或许可以站在他们的肩膀上阅读。</p>
-<p><a href="https://source.android.com/source/index.html" target="_blank" rel="noopener">AOSP官方的介绍</a><br>项目介绍, 代码下载, 环境搭建, 刷机方法, Eclipse配置都在这里，这是一切的基础。</p>
-<p><a href="https://developer.android.com/training/index.html" target="_blank" rel="noopener">官方教程</a> 和 <a href="http://android-developers.blogspot.jp/" target="_blank" rel="noopener">官方博客</a><br>这个其实是给App开发者看的，但是里面也有不少关于系统机制的介绍, 值得细读。而官方博客经常有一些开发者容易疏忽的姿势的讨论，比如“Bitmap数据的回收问题”，推荐阅读。</p>
-<p><a href="http://code.google.com/p/android/issues/list" target="_blank" rel="noopener">Android Issues</a><br>Android官方Issue列表，记录一些系统BUG，别掉坑里了。</p>
-<p><a href="http://blog.csdn.net/luoshengyang" target="_blank" rel="noopener">老罗的Android之旅</a><br>此老罗非彼老罗,罗升阳老师的博客非常有营养,基本可以作为指引你开始阅读AOSP源码的教程。你可以按照博客的时间顺序一篇篇挑需要的看。但这个系列的博客有些问题：早期的博客是基于旧版本的Android;<br>大量的代码流程追踪。读文章时你一定要清楚你在看的东西在整个系统处于什么样的位置。</p>
-<p><img src="http://7xih5c.com1.z0.glb.clouddn.com/16-2-9/2827740.jpg" alt></p>
-<p>同时推荐老罗的这本书，平时看博客就可以，无聊的时候，比如在动车上可以把这本书翻翻。（非常优秀的书，不过据本人描述，这本书稿费还抵不会出版费）</p>
-<p><a href="http://blog.csdn.net/innost" target="_blank" rel="noopener">Innost的专栏</a><br>邓凡平老师也是为Android大牛, 博客同样很有营养。但是不像罗升阳老师的那么系统， 更多的是一些技术点的深入探讨。</p>
-<h2 id="阅读时的姿势"><a href="#阅读时的姿势" class="headerlink" title="阅读时的姿势"></a>阅读时的姿势</h2><p>现在的问题是：当你拿到一份几G的源码，该从哪里开始呢？</p>
+<p>“RuntimeException (“Stub!”)” 表示实际运行时的逻辑会由 Android ROM 里面相同的类代替执行。<br>此外，在 IDE 里看源码的时候，有时候一些方法或者类会出现报红（找不到）的情况，如下。</p>
+<p><img src="/assets/ee5b0454_052e_469b_89a1_c096d126a502_untitled.png" alt></p>
+<p>这是因为这些方法或者类是被 Android SDK 隐藏的，出于安全或者某些原因，这些 API 不能暴露给应用层的开发者，所以编译完成的 android.jar 包里会把这些 API 隐藏掉，而我们的 Android 项目是依赖 android.jar 的，查看源码的时候，IDE 会自动去 android.jar 找对应的 API，自然会找不到。当然，这些 API 在 ROM 中是实际存在的，有些开发者发现了一些可以修改系统行为的隐藏 API，在应用层通过反射的方式强行调用这些 API 执行系统功能，这种手段也是一种 HACK。</p>
+<h3 id="Google-的-AOSP-项目"><a href="#Google-的-AOSP-项目" class="headerlink" title="Google 的 AOSP 项目"></a>Google 的 AOSP 项目</h3><p>当你需要的源码在 Android SDK Source 中找不到的时候，就有必要去 <a href="https://android.googlesource.com/?format=HTML" target="_blank" rel="noopener">AOSP</a>（Android Open Source Project）项目里面找了。<br>不过 AOSP 项目包括整个 Android 所有开源的东西，实在是太庞大了，对于一般开发者来说，我们只需要接触 Framework 层次的东西就够了，这里包括了 base、build-tools、support 包甚至 Volley 项目的源码。</p>
+<p><img src="/assets/c55b808d_413f_4f78_b273_5d01077915c3_untitled.png" alt></p>
+<p>以 base 为例，进入 base 目录，能看到 base 项目的 git 仓库，左边是其所有的分支。</p>
+<p><img src="/assets/ddd76633_7006_47eb_88b6_debfdd4259d0_untitled.png" alt></p>
+<p>进入 “master/core/java/android/” 路径就能看到熟悉的 Package 目录了，其他分支以及项目都类似。有必要的时候可以把整个 AOSP 项目 Clone 下来，大概 20G 左右，可以把项目导入到 IDE 里面，这样就更方便查看源码了，另外可以可是试着编译自己的 Android ROM，只需要部署能够跑 MakeFile 命令的环境就好。</p>
+<h3 id="一些辅助阅读的工具"><a href="#一些辅助阅读的工具" class="headerlink" title="一些辅助阅读的工具"></a>一些辅助阅读的工具</h3><h3 id="Chrome-扩展"><a href="#Chrome-扩展" class="headerlink" title="Chrome 扩展"></a>Chrome 扩展</h3><p>Android SDK Search</p>
+<p><img src="/assets/e81f708f_99e3_4ec6_8173_6a9c669b7e27_untitled.png" alt></p>
+<p>相信平时到 <a href="http://developer.android.com/reference/classes.html" target="_blank" rel="noopener">Android 开发者官网</a> 查看 API 说明的人不少，这个扩展可以在 API 类名旁边显示一个跳转链接，用于跳转到 AOSP 中对应的类的源码，方便查看源码。</p>
+<h3 id="Source-Insight"><a href="#Source-Insight" class="headerlink" title="Source Insight"></a>Source Insight</h3><p>在这个工具帮助下，你才可以驾驭巨大数量的 Android 源码，你可以从容在 Java，C++,C 代码间遨游，你可以很快找到你需要的继承和调用关系。</p>
+<h3 id="VPN-梯子"><a href="#VPN-梯子" class="headerlink" title="VPN 梯子"></a>VPN 梯子</h3><p>善用梯子是开发者基本的自我修养之一，如果你不想做 “面向百度编程” 的话。<br>我在一开始是使用免费的 GoAgent 和 WallProxy，但是经常要更新，而且最近还要经常替换 IP 才能工作，所以后来我换成了收费的 ShadowSocks，各个平台都有客户端，非常方便，我也在手机上常态用起了 Google 的全家桶，只不过最近老是更换服务器地址，而且部分服务器不稳定，非常担心商家是否准备捞一笔然后跑路，23333。<br>我觉得比起折腾找免费的低速、不稳定的梯子，还是用一些稳定的收费的的梯子比较划算。至于具体的用梯子的姿势，请诸位自行搜索，这里随便贴个介绍 <a href="http://weibo.com/2491729875/CcNaY2Rbt?from=page_1005052491729875_profile&amp;wvr=6&amp;mod=weibotime&amp;type=comment#_rnd1431747713302" target="_blank" rel="noopener">梯子使用总结</a>。</p>
+<h2 id="推荐阅读的源码"><a href="#推荐阅读的源码" class="headerlink" title="推荐阅读的源码"></a>推荐阅读的源码</h2><p>AOSP 项目这么庞大，就算是 Framework 部分也有够看上一阵子的，所以推荐从常用的看起，由浅及深，同时向横向和纵向深入阅读。</p>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p><strong>Handler-Message-Looper</strong> Handler 被称为 “异步提交器”，是 Android 开发入门教程必定谈及的东西，这也是 Activity 等组件的工作机制需要用到的东西，是 “数据驱动” 框架的重要组成，作为阅读源码的入门最适合不过。<br><strong>Activity 和 Service</strong> 作为经常使用到的组件，阅读其源码的花费和带来的技术提高的性价比肯定是最高的，Service 可以不看，但是 Activity 总不能少吧。<br><strong>Fragment</strong> 还在认为 Fragment 是一个视图吗，还在认为 FragmentActivity 的界面有多个 Fragment 组成吗，看看 Fragment 和 FragmentManager 吧，了解下生命周期的本质到底是什么。<br><strong>View</strong> 想自定义高级的 View 类吗，那总得知道 onMeasure/onLayout/onDraw 这些方法是怎么被调用的，了解 LayoutParams 是怎么工作的，知道调用 requestLayout 和 Invalidate 的时候有什么区别。<br><strong>MotionEvent</strong> 在懂的怎么自定义高级的 View 后，只能向用户显示界面，还得知道怎么与用户交互才能做出华丽的 UI。所以必须知道 TouchEvent 的分发和拦截的工作机制，起码也得知道其特点，才不会一直在困扰 “为什么无法监听用户的触摸事件”、“View 之间的触摸事件冲突了” 或者 “View 的滑动与点击事件冲突了” 之类的问题。<br><strong>LayoutInflator</strong> 布局渲染器也是开发 Android UI 的时候经常用到的，不过 LayoutInflator 实例的创建方式有好几种，你至少得知道其之间的区别。还有，LayoutInflator 在渲染指定布局的时候，有 container 和 attachToRoot 等参数，阅读源码后很快能了解其区别。<br><strong>SurfaceView 和 TextureView</strong> 阅读完 View 的工作机制后，就能理解为什么 View 在绘制复杂的 UI 效果时效率这么低，这时候就需要 SurfaceView 和 TextureView 了。理解双缓冲对 UI 更新效率的帮助，了解 SurfaceView 在视图叠加的时候的缺陷，了解 TextureView 在 Android Lollipop 之前的内容窜台 BUG，才能用正确姿势使用这俩。<br><strong>AsyncTask</strong> 异步任务也是 Android 开发经常遇到的问题，相比自己从 Thread 和 Handler 写起，被称为 “异步任务大师” 的 AsyncTask 类自然更受到许多小伙伴的喜欢。不过 AsyncTask 在早期的 Android 版本中差别甚大，需要做大量的适配工作，而且特别容易引起异步任务引用着组件的实例导致内存泄露从而引发 OOM 问题，所以不推荐直接使用 AsyncTask 类，不过强烈推荐阅读 AsyncTask 的源码学习 Google 优秀的异步任务设计理念。此外，如果真的要使用 AsyncTask，不要直接使用系统提供的 AsyncTask 类，AsyncTask 本身就是一个单一的 Java 类，没有耦合其他系统类，推荐自己从最新的 Android 版本中复制一份 AsyncTask 类的代码，自己维护，在项目中当做 Support 包一样使用，以规避其兼容性问题。<br><strong>Volley</strong> 这个强烈推荐，是 Google 官方的异步任务框架，没有随 Android 发布，需要自己在 Framework 里下载代码。Volley 的中文意思就是 “并发”，阅读其源码能让你见识到原来异步任务框架也能写得这么低耦合和高扩扩展，其用 “生产者 - 消费者” 模式来处理异步请求的框架会让人拍案叫绝。此外，Volley 框架是用于处理 Http 任务和 Image 加载任务，但是其优秀的异步控制思想也能运用与 File、Sqlite 等耗时任务的处理，当你能够自己写出类似 Volley 框架的代码时，说明你的 Android 技术已经有所突破。<br><strong>android.util.</strong><em> “android.util.</em>” 包名下有许多优秀的实用类，大多是作为 Java 自带类的补充，比如数据结构类的 SparseArray、ArrayMap、ArraySet，用于加密的 Base64，用于处理屏幕分辨率自适应的 DisplayMetrics 和 TypedValue，用于时间换算的 TimeUtils，以及用于内存缓存的 LruCache，熟悉这些类对 Android 开发非常有帮助，也会让代码显得成熟。</p>
+<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p><strong>Context</strong> 阅读 Context 源码能帮助我们了解其工作机制，了解 Google 是怎么在 Java 代码上添加 Android 特性的，了解 Android 是怎么保存和获取 res 资源的，了解 ContextWrapper 和 Activity 这些 Context 有什么区别，了解 Context 设计的装饰者模式（Description Pattern）。<br><strong>ClassLoader</strong> 类加载器 ClassLoader 是 Android 虚拟机工作的基础，了解其 “双亲代理模式” 能让你更好的了解系统的类和你写的类是怎么工作的。Multi-Dex 和 ART 模式也和 ClassLoader 的工作机制息息相关。<br><strong>Binder</strong> Binder 是 Android 上 RPC（Remote Procedure Call Protocol）的实现，Android 系统许多功能就是居于 Binder 实现的，平时应用层对 Binder 的使用大多是在于和 Service 通讯的时候，不过，当我们需要使用 AIDL 功能的时候，就需要接触到 Binder 了。（推荐阅读原理即可，反正 C++ 驱动层我是看不下去了）<br><strong>WMS，AMS，PMS，NMS，IMS 等系统 Service</strong> SystemServer 是 Android 的 Framework 层工作的核心，Android 系统启动过程包含从 Linux 内核加载到 Home 应用程序启动的整个过程。SystemServer 是 Zygnote 孵化的第一个进程，这个进程会启动许多 Framework 层功能需要用到的线程，比如用于管理窗口的 WindowManagerService，用于管理 Activity 的 ActivityManagerService，用于管理 APK 包信息的 PackageManagerService，用于管理网络的 NetworkManager，用于处理用户触摸的 InputManagerService 等，这些系统 Service 提供了 APP 运行时需要的大多系统功能，大多使用 “stub-server” 的模式进行交互，而且有大量的 JNI 的调用。这部分的源码比较适合从事 ROM 开发的人阅读，应用层的开发基本不会用到，但是这方面的只是能让我们对 Android Framework 层的工作机制有个大抵的认识。（非常惭愧，这部分我自己看了几次，还是没能产生融会贯通的感觉，整体的认识还是比较模糊，希望继续跟着老罗的博客，捡捡肉吃）</p>
+<h3 id="第三方开源项目"><a href="#第三方开源项目" class="headerlink" title="第三方开源项目"></a>第三方开源项目</h3><p><strong>EventBus</strong> Android 上的一个 “订阅者 - 发布者” 模式的实现框架，非常适合业务多而且经常变动的项目，能够有效预防 “接口爆炸”，现在基本上中型以上的项目都会采用类似的框架。<br><strong>OTTO</strong> 同上，只不过实现的具体方案不一样，而且 OTTO 相比 EventBus 来，比较小巧，代码也比较简练，非常适合处女座的开发者食用。<br><strong>RxJava</strong> 相比起上面两个，RxJava 可以说是把异步的思想发挥到了极致，RxJava 的兴起代表了 Android 开发中响应式编程的崛起，同样非常适合业务多而且经常变动的项目，只不过相比传统的基于接口的开发方式，RxJava 框架的开发方式会有点难以适应，特别是团队开发的时候。<br><strong>Guava</strong> 这个其实也是 Google 自己开源的，提供了许多优秀的 Java 工具类，比如 “one to one mapping” 的 Bimap，有时候一些工具类 Android 或 Java 自带的库没有提供，或许我们可以先参考 Guava 的。<br>以上是我自己个人推荐阅读的源码，不过每个开发者自身的兴趣和侧重点都不一样，有兴趣的参考着看就是。同时，如果有一些有趣的系统类，随时欢迎推荐给我。</p>
+<h2 id="站在巨人的肩膀上阅读"><a href="#站在巨人的肩膀上阅读" class="headerlink" title="站在巨人的肩膀上阅读"></a>站在巨人的肩膀上阅读</h2><p>学习一个系统最好的方法就是 “Read The Fucking Source Code”，坏消息是 AOSP 项目是在太庞大太难消化了，好消息就是现在已经有不少先驱，我们或许可以站在他们的肩膀上阅读。<br><a href="https://source.android.com/source/index.html" target="_blank" rel="noopener">AOSP 官方的介绍</a> 项目介绍，代码下载，环境搭建，刷机方法，Eclipse 配置都在这里，这是一切的基础。<br><a href="https://developer.android.com/training/index.html" target="_blank" rel="noopener">官方教程</a> 和 <a href="http://android-developers.blogspot.jp/" target="_blank" rel="noopener">官方博客</a> 这个其实是给 App 开发者看的，但是里面也有不少关于系统机制的介绍，值得细读。而官方博客经常有一些开发者容易疏忽的姿势的讨论，比如 “Bitmap 数据的回收问题”，推荐阅读。<br><a href="http://code.google.com/p/android/issues/list" target="_blank" rel="noopener">Android Issues</a> Android 官方 Issue 列表，记录一些系统 BUG，别掉坑里了。<br><a href="http://blog.csdn.net/luoshengyang" target="_blank" rel="noopener">老罗的 Android 之旅</a> 此老罗非彼老罗，罗升阳老师的博客非常有营养，基本可以作为指引你开始阅读 AOSP 源码的教程。你可以按照博客的时间顺序一篇篇挑需要的看。但这个系列的博客有些问题：早期的博客是基于旧版本的 Android; 大量的代码流程追踪。读文章时你一定要清楚你在看的东西在整个系统处于什么样的位置。</p>
+<p><img src="/assets/816f96d4_27e9_421c_bca9_6787d4d7490d_untitled.png" alt></p>
+<p>同时推荐老罗的这本书，平时看博客就可以，无聊的时候，比如在动车上可以把这本书翻翻。（非常优秀的书，不过据本人描述，这本书稿费还抵不会出版费）<br><a href="http://blog.csdn.net/innost" target="_blank" rel="noopener">Innost 的专栏</a> 邓凡平老师也是为 Android 大牛，博客同样很有营养。但是不像罗升阳老师的那么系统， 更多的是一些技术点的深入探讨。</p>
+<h2 id="阅读时的姿势"><a href="#阅读时的姿势" class="headerlink" title="阅读时的姿势"></a>阅读时的姿势</h2><p>现在的问题是：当你拿到一份几 G 的源码，该从哪里开始呢？</p>
 <blockquote>
-<p>著作权归作者所有。<br>商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：墨小西<br>链接：<a href="https://www.zhihu.com/question/19759722/answer/17019083" target="_blank" rel="noopener">https://www.zhihu.com/question/19759722/answer/17019083</a><br>来源：知乎</p>
+<p>著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。 作者：墨小西 链接：<a href="https://www.zhihu.com/question/19759722/answer/17019083" target="_blank" rel="noopener">https://www.zhihu.com/question/19759722/answer/17019083</a> 来源：知乎</p>
 </blockquote>
-<h3 id="宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。"><a href="#宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。" class="headerlink" title="宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。"></a>宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。</h3><p>在阅读源码时需要把握好着两个思路。譬如你需要研究音频系统的实现原理，纵向：你需要从一个音乐的开始播放追踪，一路下来，你发现解码库的调用，共享内存的创建和使用，路由的切换，音频输入设备的开启，音频流的开始。譬如你要看音频系统包括哪些内容，横向：通过Framework的接口，你会发现，音频系统主要包括：放音，录音，路由切换，音效处理等。</p>
-<h3 id="Android的功能模块绝大部分是C-S架构"><a href="#Android的功能模块绝大部分是C-S架构" class="headerlink" title="Android的功能模块绝大部分是C/S架构"></a>Android的功能模块绝大部分是C/S架构</h3><p>你心里一定需要有这个层级关系，你需要思路清晰地找到Server的位置，它才是你需要攻破的城，上面的libraries是不是很亲切的样子？看完它长成啥样后，然后你才能发现HAL和Kernel一层层地剥离。很多研究源码的同学兜兜转转，始终在JAVA层上，这是不科学的，要知道libraries才是它的精髓啊。</p>
-<h3 id="Android的底层是Linux-Kernel。"><a href="#Android的底层是Linux-Kernel。" class="headerlink" title="Android的底层是Linux Kernel。"></a>Android的底层是Linux Kernel。</h3><p>在理解上面两点之后，还是需要对Kernel部分有个简单的理解，起码你要熟悉kernel的基础协议吧！你要能看懂电路图吧！你要熟悉设备的开启和关闭吧！你要熟悉调寄存器了吧！这方面的书太多了，我建议根据实例去阅读，它并不复杂，不需要一本本厚书来铺垫。在libraries和kernel间，可能还会有个HAL的东东，其实它是对kernel层的封装，方便各个硬件的接口统一。这样，如果我换个硬件，不用跑了长得很复杂的libraries里面改了，kernel调试好了后，改改HAL就好了。</p>
-<p>好了，你现在是不是跃跃欲试准备去找个突破口准备进攻了，但是好像每个宝库的入口都挺难找了我大概在三个月前阅读完Android UI系统的源码，这是Android最复杂的部分，我要简单说下过程。我需要先找宝库入口，我要研究UI，首先要找什么和UI有亲戚关系吧！View大神跳出来了，沿着它往下找找看，发现它在贴图在画各种形状，但是它在哪里画呢，马良也要纸吧？很明显它就是某个宝藏，但是世人只是向我们描述了它有多美，却无人知在哪里？我们需要找一张地图罗。开发Android的同学逃不掉Activity吧！它有个setcontentview的方法，从这个名字看好像它是把view和activity结合的地方。赶紧看它的实现和被调用，然后我们就发现了Window，ViewRoot和WindowManager的身影，沿着WM和WMS我们就惊喜会发现了Surface，以及draw的函数，它居然在一个DeCorView上画东西哈。借助Source Insight， UI Java层的横向静态图呼之欲出了。完成这个静态UML，我觉得我可以开始功能实现上追踪了，这部分主要是C++的代码（这也是我坚定劝阻的放弃Eclipse的原因），我沿着draw函数，看到了各个层级的关系，SurfaceSession的控制和事务处理，SharedBuffer读写控制，彪悍的SurfaceFlinger主宰一切，OpenGL ES的神笔马良。FrameBuffer和FrameBufferDevice的图像输出，LCD设备打开后，开始接收FBD发过来的一帧帧图像，神奇吧。</p>
+<h3 id="宏观上看，Android-源码分为功能实现上的纵向，和功能拓展上的横向。"><a href="#宏观上看，Android-源码分为功能实现上的纵向，和功能拓展上的横向。" class="headerlink" title="宏观上看，Android 源码分为功能实现上的纵向，和功能拓展上的横向。"></a>宏观上看，Android 源码分为功能实现上的纵向，和功能拓展上的横向。</h3><p>在阅读源码时需要把握好着两个思路。譬如你需要研究音频系统的实现原理，纵向：你需要从一个音乐的开始播放追踪，一路下来，你发现解码库的调用，共享内存的创建和使用，路由的切换，音频输入设备的开启，音频流的开始。譬如你要看音频系统包括哪些内容，横向：通过 Framework 的接口，你会发现，音频系统主要包括：放音，录音，路由切换，音效处理等。</p>
+<h3 id="Android-的功能模块绝大部分是-C-S-架构"><a href="#Android-的功能模块绝大部分是-C-S-架构" class="headerlink" title="Android 的功能模块绝大部分是 C/S 架构"></a>Android 的功能模块绝大部分是 C/S 架构</h3><p>你心里一定需要有这个层级关系，你需要思路清晰地找到 Server 的位置，它才是你需要攻破的城，上面的 libraries 是不是很亲切的样子？看完它长成啥样后，然后你才能发现 HAL 和 Kernel 一层层地剥离。很多研究源码的同学兜兜转转，始终在 JAVA 层上，这是不科学的，要知道 libraries 才是它的精髓啊。</p>
+<h3 id="Android-的底层是-Linux-Kernel。"><a href="#Android-的底层是-Linux-Kernel。" class="headerlink" title="Android 的底层是 Linux Kernel。"></a>Android 的底层是 Linux Kernel。</h3><p>在理解上面两点之后，还是需要对 Kernel 部分有个简单的理解，起码你要熟悉 kernel 的基础协议吧！你要能看懂电路图吧！你要熟悉设备的开启和关闭吧！你要熟悉调寄存器了吧！这方面的书太多了，我建议根据实例去阅读，它并不复杂，不需要一本本厚书来铺垫。在 libraries 和 kernel 间，可能还会有个 HAL 的东东，其实它是对 kernel 层的封装，方便各个硬件的接口统一。这样，如果我换个硬件，不用跑了长得很复杂的 libraries 里面改了，kernel 调试好了后，改改 HAL 就好了。<br>好了，你现在是不是跃跃欲试准备去找个突破口准备进攻了，但是好像每个宝库的入口都挺难找了我大概在三个月前阅读完 Android UI 系统的源码，这是 Android 最复杂的部分，我要简单说下过程。我需要先找宝库入口，我要研究 UI，首先要找什么和 UI 有亲戚关系吧！View 大神跳出来了，沿着它往下找找看，发现它在贴图在画各种形状，但是它在哪里画呢，马良也要纸吧？很明显它就是某个宝藏，但是世人只是向我们描述了它有多美，却无人知在哪里？我们需要找一张地图罗。开发 Android 的同学逃不掉 Activity 吧！它有个 setcontentview 的方法，从这个名字看好像它是把 view 和 activity 结合的地方。赶紧看它的实现和被调用，然后我们就发现了 Window，ViewRoot 和 WindowManager 的身影，沿着 WM 和 WMS 我们就惊喜会发现了 Surface，以及 draw 的函数，它居然在一个 DeCorView 上画东西哈。借助 Source Insight， UI Java 层的横向静态图呼之欲出了。完成这个静态 UML，我觉得我可以开始功能实现上追踪了，这部分主要是 C++ 的代码（这也是我坚定劝阻的放弃 Eclipse 的原因），我沿着 draw 函数，看到了各个层级的关系，SurfaceSession 的控制和事务处理，SharedBuffer 读写控制，彪悍的 SurfaceFlinger 主宰一切，OpenGL ES 的神笔马良。FrameBuffer 和 FrameBufferDevice 的图像输出，LCD 设备打开后，开始接收 FBD 发过来的一帧帧图像，神奇吧。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.zhihu.com/question/19759722" target="_blank" rel="noopener">知乎：大牛们是怎么阅读 Android 系统源码的？</a></p>
+<!-- Generated by HexoWriter
+notion-down.version = 0.1.0
+notion-down.revision = b'349007a'
+Title = 阅读 Android 源码的一些姿势
+Date = 2016-2-9 17:44:55
+Published = true
+Category = Android
+Tag = ['Android', '源码分析']
+FileLocate = 
+FileName = android-about-source-code-how-to-read
+hexo.comments = true
+hexo.metaAlignment = center
+-->
 
       
     </div>
@@ -526,8 +513,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/08/android-about-source-code/" rel="next" title="有没有必要阅读ANDROID源码">
-                <i class="fa fa-chevron-left"></i> 有没有必要阅读ANDROID源码
+              <a href="/2016/02/08/android-about-source-code/" rel="next" title="有没有必要阅读 Android 源码">
+                <i class="fa fa-chevron-left"></i> 有没有必要阅读 Android 源码
               </a>
             
           </div>
@@ -628,7 +615,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -757,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#日常开发中怎么阅读源码"><span class="nav-number">1.</span> <span class="nav-text">日常开发中怎么阅读源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#找到正确的源码"><span class="nav-number">1.1.</span> <span class="nav-text">找到正确的源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于SDK自带的源码和隐藏API"><span class="nav-number">1.2.</span> <span class="nav-text">关于SDK自带的源码和隐藏API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google的AOSP项目"><span class="nav-number">1.3.</span> <span class="nav-text">Google的AOSP项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些辅助阅读的工具"><span class="nav-number">1.4.</span> <span class="nav-text">一些辅助阅读的工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Chrome扩展"><span class="nav-number">1.4.1.</span> <span class="nav-text">Chrome扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Source-Insight"><span class="nav-number">1.4.2.</span> <span class="nav-text">Source Insight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VPN梯子"><span class="nav-number">1.4.3.</span> <span class="nav-text">VPN梯子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读的源码"><span class="nav-number">2.</span> <span class="nav-text">推荐阅读的源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始"><span class="nav-number">2.1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进阶"><span class="nav-number">2.2.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方开源项目"><span class="nav-number">2.3.</span> <span class="nav-text">第三方开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站在巨人的肩膀上阅读"><span class="nav-number">3.</span> <span class="nav-text">站在巨人的肩膀上阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读时的姿势"><span class="nav-number">4.</span> <span class="nav-text">阅读时的姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。"><span class="nav-number">4.1.</span> <span class="nav-text">宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android的功能模块绝大部分是C-S架构"><span class="nav-number">4.2.</span> <span class="nav-text">Android的功能模块绝大部分是C/S架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android的底层是Linux-Kernel。"><span class="nav-number">4.3.</span> <span class="nav-text">Android的底层是Linux Kernel。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#日常开发中怎么阅读源码"><span class="nav-number">1.</span> <span class="nav-text">日常开发中怎么阅读源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#找到正确的源码"><span class="nav-number">1.1.</span> <span class="nav-text">找到正确的源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于-SDK-自带的源码和隐藏-API"><span class="nav-number">1.2.</span> <span class="nav-text">关于 SDK 自带的源码和隐藏 API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-的-AOSP-项目"><span class="nav-number">1.3.</span> <span class="nav-text">Google 的 AOSP 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些辅助阅读的工具"><span class="nav-number">1.4.</span> <span class="nav-text">一些辅助阅读的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome-扩展"><span class="nav-number">1.5.</span> <span class="nav-text">Chrome 扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-Insight"><span class="nav-number">1.6.</span> <span class="nav-text">Source Insight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPN-梯子"><span class="nav-number">1.7.</span> <span class="nav-text">VPN 梯子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐阅读的源码"><span class="nav-number">2.</span> <span class="nav-text">推荐阅读的源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始"><span class="nav-number">2.1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进阶"><span class="nav-number">2.2.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三方开源项目"><span class="nav-number">2.3.</span> <span class="nav-text">第三方开源项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站在巨人的肩膀上阅读"><span class="nav-number">3.</span> <span class="nav-text">站在巨人的肩膀上阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读时的姿势"><span class="nav-number">4.</span> <span class="nav-text">阅读时的姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#宏观上看，Android-源码分为功能实现上的纵向，和功能拓展上的横向。"><span class="nav-number">4.1.</span> <span class="nav-text">宏观上看，Android 源码分为功能实现上的纵向，和功能拓展上的横向。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-的功能模块绝大部分是-C-S-架构"><span class="nav-number">4.2.</span> <span class="nav-text">Android 的功能模块绝大部分是 C/S 架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-的底层是-Linux-Kernel。"><span class="nav-number">4.3.</span> <span class="nav-text">Android 的底层是 Linux Kernel。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
@@ -883,7 +870,7 @@
       var disqus_shortname = 'kidhaibara';
       var disqus_identifier = '2016/02/09/android-about-source-code-how-to-read/';
 
-      var disqus_title = "阅读ANDROID源码的一些姿势";
+      var disqus_title = "阅读 Android 源码的一些姿势";
 
 
       function run_disqus_script(disqus_script) {
