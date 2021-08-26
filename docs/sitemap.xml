@@ -16,13 +16,6 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/tags/index.html</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://kaedea.com/link/index.html</loc>
     
     <lastmod>2021-08-26</lastmod>
@@ -30,84 +23,7 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/06/24/hexo-theme-themia-1.7/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/06/09/living-cp18-video/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/06/11/tool-duplicate-screen-and-mechanical-keyboard/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2015/10/05/themia-demo-using-thmia/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/05/04/whisper-jobs-bilibili/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/05/15/tool-get-filco-87/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/05/01/whisper-join-bilibili/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/02/13/whisper-learning-in-android/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2015/04/09/whisper-migrant-to-hexo/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/09/23/living/living-hackintosh-lh532/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/12/01/tools/comment-formatter/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/all-tags/index.html</loc>
+    <loc>http://kaedea.com/tags/index.html</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -135,42 +51,7 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/02/08/android-about-source-code/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2015/11/12/android-best-performance-points/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2015/11/11/android-best-performance-whisper/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2021/08/14/android-apm-battery-stats-opt/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2016/02/05/android-dynamical-loading-00-index/</loc>
+    <loc>http://kaedea.com/all-tags/index.html</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -184,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/02/07/android-dynamical-loading-02-classloader/</loc>
+    <loc>http://kaedea.com/2016/02/06/android-dynamical-loading-01-introduction/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/02/06/android-dynamical-loading-01-introduction/</loc>
+    <loc>http://kaedea.com/2016/02/07/android-dynamical-loading-02-classloader/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -219,14 +100,14 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/</loc>
+    <loc>http://kaedea.com/2016/06/14/android-dynamical-loading-07-dynamic-activity/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
   </url>
   
   <url>
-    <loc>http://kaedea.com/2015/11/08/android-fresco-demo/</loc>
+    <loc>http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -240,7 +121,7 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/06/14/android-dynamical-loading-07-dynamic-activity/</loc>
+    <loc>http://kaedea.com/2015/11/08/android-fresco-demo/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -248,13 +129,6 @@
   
   <url>
     <loc>http://kaedea.com/2015/12/23/android-set-onclicklistener-in-xml/</loc>
-    
-    <lastmod>2021-08-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/2015/10/11/android-mvp-pattern/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -275,6 +149,27 @@
   </url>
   
   <url>
+    <loc>http://kaedea.com/2015/10/11/android-mvp-pattern/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/06/24/hexo-theme-themia-1.7/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/06/09/living-cp18-video/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://kaedea.com/2018/06/04/android-so-loading-2/</loc>
     
     <lastmod>2021-08-26</lastmod>
@@ -282,7 +177,49 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2015/09/02/android/enable-multidex/</loc>
+    <loc>http://kaedea.com/2015/10/05/themia-demo-using-thmia/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/05/15/tool-get-filco-87/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/06/11/tool-duplicate-screen-and-mechanical-keyboard/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/05/04/whisper-jobs-bilibili/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/05/01/whisper-join-bilibili/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2015/04/09/whisper-migrant-to-hexo/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/02/13/whisper-learning-in-android/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -296,7 +233,7 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/2016/10/02/android/log-utility/</loc>
+    <loc>http://kaedea.com/2015/09/02/android/enable-multidex/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -304,6 +241,13 @@
   
   <url>
     <loc>http://kaedea.com/2016/11/11/android/multidex-source-code/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/10/02/android/log-utility/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -345,7 +289,63 @@
   </url>
   
   <url>
+    <loc>http://kaedea.com/2016/12/01/tools/comment-formatter/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/09/23/living/living-hackintosh-lh532/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://kaedea.com/2018/04/01/devops/incremental-spa/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/02/08/android-about-source-code/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/02/09/android-about-source-code-how-to-read/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2015/11/12/android-best-performance-points/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2016/02/05/android-dynamical-loading-00-index/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2021/08/14/android-apm-battery-stats-opt/</loc>
+    
+    <lastmod>2021-08-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/2015/11/11/android-best-performance-whisper/</loc>
     
     <lastmod>2021-08-26</lastmod>
     
@@ -368,6 +368,13 @@
 
   
   <url>
+    <loc>http://kaedea.com/tags/%E5%B7%A5%E4%BD%9C%E6%9C%BA%E4%BC%9A/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://kaedea.com/tags/Android/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
@@ -383,13 +390,6 @@
   
   <url>
     <loc>http://kaedea.com/tags/%E7%94%B5%E9%87%8F%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/tags/%E5%B7%A5%E4%BD%9C%E6%9C%BA%E4%BC%9A/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -466,20 +466,6 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/tags/MVP/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://kaedea.com/tags/%E6%A8%A1%E6%8B%9F%E5%99%A8/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
@@ -494,7 +480,35 @@
   </url>
   
   <url>
+    <loc>http://kaedea.com/tags/JavaScript/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/tags/%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://kaedea.com/tags/Blog/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/tags/MVP/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -529,14 +543,14 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/tags/JavaScript/</loc>
+    <loc>http://kaedea.com/tags/%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://kaedea.com/tags/%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88/</loc>
+    <loc>http://kaedea.com/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -571,28 +585,7 @@
   </url>
   
   <url>
-    <loc>http://kaedea.com/tags/%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://kaedea.com/tags/%E5%90%90%E6%A7%BD/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/tags/MultiDex/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -607,6 +600,13 @@
   
   <url>
     <loc>http://kaedea.com/tags/Hook/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://kaedea.com/tags/MultiDex/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -669,6 +669,13 @@
   </url>
   
   <url>
+    <loc>http://kaedea.com/tags/IDEA-Plugin/</loc>
+    <lastmod>2021-08-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://kaedea.com/tags/Hackintosh/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
@@ -677,13 +684,6 @@
   
   <url>
     <loc>http://kaedea.com/tags/%E9%BB%91%E8%8B%B9%E6%9E%9C/</loc>
-    <lastmod>2021-08-26</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://kaedea.com/tags/IDEA-Plugin/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -713,14 +713,14 @@
 
   
   <url>
-    <loc>http://kaedea.com/categories/Android/</loc>
+    <loc>http://kaedea.com/categories/Life/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://kaedea.com/categories/Life/</loc>
+    <loc>http://kaedea.com/categories/Android/</loc>
     <lastmod>2021-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
