@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>Android 性能调优到底是调个啥 | Kaede Akatsuki | 中二病也要开发 Android</title>
@@ -22,18 +22,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Android 性能调优到底是调个啥"/>
+  <meta property="og:title" content="Android 性能调优到底是调个啥">
 
-  <meta property="og:site_name" content="Kaede Akatsuki"/>
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-  <meta property="og:image" content="/favicon.ico"/>
+  <meta property="og:image" content="/favicon.ico">
   
 
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 4.2.1"></head>
+</head>
 
 
 <body>
@@ -89,7 +89,6 @@
       
         <p>“一本正经地胡说八道” 用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？<br>一直以来都想对 Android APP 开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。<br>“APP 卡顿” 是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为 “如何定位 APP 中的性能问题” 和 “提高性能需要注意哪些点” 这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。</p>
 <a id="more"></a>
-
 <p>开始正题之前先让我吐一吐苦水吧。<br>我个人喜欢日语，所以学了很久的日语了，同样我也是因为喜欢 Android，才开始跳进了 Android 开发这个坑。不过非常遗憾的是，就和 “当初我在日语班里，周围大部分人只是因为日语专业比较轻松才选了它” 一样，我周围的 Android 研发同事大部分用的是 IOS 手机，甚至有人问过我 “我说你工资也不至于那么低吧，怎么每天都拿着安卓手机”。产品则是每次都说 “你这个交互和 IOS 的不一样，我需求文档里写得清清楚楚，要保持一致的用户体验”。设计的话，我从来就没有遇见过拿安卓手机的。<br>我尝试说过 Android 不比 IOS 差，但是没人站在我这边。<br>自从 Android 系统诞生以来一直都有一个疑问，“为什么 Android 手机这么卡？”，无论 Android 设备的硬件再怎么升级，版本再怎么迭代，“Android 比 IOS 卡顿” 似乎成为一个板上钉钉的事实。Android 手机真的卡么？<br>至少在 Android Kitkat 之前，许多 Android 开发者都会选择回避这个问题；Kitkat 之后，有一部分开发者已经有底气回答这个问题了；随着 Android Lollipop 以及 Marshmallow 先后的出现，我觉得 Android 开发者都可以自信地回答说 “Android 不卡” 了。<br>在一个公司内部分享会中，国内 Android 领域的大神罗升阳在分享他对 ART 模式的研究中说到，继 Kitkat 采用了 ART 模式后，Lollipop 中，除了 UI 线程之外又提供了一条专门用于执行动画的线程，这样一来 UI 线程就可以专注于展示数据和响应用户的输入，这让 Android 的流畅度又上了一个档次。IOS 是闭源的所以我们无从得知，但是有人分析说 IOS 之所以这么流畅很大一个原因就是它大概也采用了类似动画线程的机制。老罗也相信 “Android 系统不会比 IOS 卡，甚至已经比它还流畅”。<br>这可不是随便说说，我的 Nexus5 升级到 Lollipop 之后我觉得它已经可以匹敌同事的 IPhone6 了，前不久升级到 Marshmallow 内测版，我更是觉得它已经拉开 IPhone6 一个档次了。<br>那为什么许多人觉得 Android 用起来还是比 IOS 卡？注意老罗说 “Android 系统” 比 IOS 流畅，而不是 “Android 应用”，言下之意就是 Android 系统本身不卡，卡的是设备开发商开发的 ROM 以及开发者开发的第三方 APP。我个人觉得 Android 卡顿问题大致有以下的原因。</p>
 <h2 id="客观原因"><a href="#客观原因" class="headerlink" title="客观原因"></a>客观原因</h2><h3 id="Android-设备系统升级速度慢"><a href="#Android-设备系统升级速度慢" class="headerlink" title="Android 设备系统升级速度慢"></a>Android 设备系统升级速度慢</h3><p>现在 Lollipop 甚至 Kitkat 的普及率还不算很高，更别谈 Marshmallow 了，这是 Android 碎片化的问题决定的，具体原因有兴趣的可以自己 Google，网上一堆比我在这里吹的靠谱多的分析。<br>当然这里也有很大一部分是设备开发商的锅，Google 开源的 AOSP 项目只能兼容 Nexus 系列手机的硬件，如果第三方设备开发商需要使用 AOSP 的话，最起码也要把 AOSP 里面的驱动部分改成能兼容自己的设备的，此外，他们还喜欢把系统 UI 风格做成自己家的，这起码也要自己写一个 Launcher 应用和自定义主题（这也是许多 Android ROM 被吐槽成换皮肤的原因）；此外有一些特色功能，比如指纹设备，Android Marshmallow 之前 AOSP 并没有这个功能，所以开发商就得自己出解决方案了。这一系列的工作，造成了开发商无法在 Google 发布 Android 的新版本之后迅速升级自家 Android 设备的系统。</p>
 <h3 id="Android-APP-需要做过多旧版本的兼容"><a href="#Android-APP-需要做过多旧版本的兼容" class="headerlink" title="Android APP 需要做过多旧版本的兼容"></a>Android APP 需要做过多旧版本的兼容</h3><p>Android4.0 版本相比之前的版本性能上优化了许多，无奈我接触的 Android 产品都要求最低支持 Android2.3，有一款 SDK 甚至要求支持到 Android1.6 而且不能使用 Support 库（今年可是 2015 年！你能想象一个手动写 Thread 去控制一个复杂的属性动画的效果有多糟糕吗？），所以 Android 开发者需要做一大堆向下兼容的工作，有时候为了保证在一些奇葩机型的兼容性，选择了保守的实现方式而不采用 Android 的新特性。向下兼容的逻辑使得 APP 即使在高级版本的 Android 系统上也要跑一堆没用的判断逻辑，如果这些逻辑出现在循环体内则更糟糕；采用保守的实现方式，使得 APP 无法发挥新版本 Android 的性能，即使用户手机升级了 Android 系统版本也享♂受新版本带来的体验。此外，即使许多新的 APP 产品都选择最低支持 Android4.0，这使得许多新特性都不用 Support 库支持就能直接使用，但是许多手机设备还是无法升级到 Android4.4 版本的系统，即使有，很多 ROM 还是把 ART 模式给严格了，无法体验其脱胎换骨版的顺畅。</p>
@@ -155,7 +154,7 @@ hexo.metaAlignment = center
 
 	<section id="comment" class="comment">
 	  <div id="disqus_thread">
-	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 	  </div>
 	</section>
 

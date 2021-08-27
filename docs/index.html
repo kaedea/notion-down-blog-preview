@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>Kaede Akatsuki | 中二病也要开发 Android</title>
@@ -21,16 +21,16 @@
 
   
 
-  <meta property="og:site_name" content="Kaede Akatsuki"/>
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-  <meta property="og:image" content="/favicon.ico"/>
+  <meta property="og:image" content="/favicon.ico">
   
 
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 4.2.1"></head>
+</head>
 
 
 <body>
@@ -101,7 +101,6 @@ Add:
 2021-07-20
 初稿
 -->
-
 <!-- draft
 
 1. 背景
@@ -123,18 +122,15 @@ Add:
 1. 竞品
 
 -->
-
-
 <!-- Header
 
 ## App “耗电综合征”
 
 -->
-
 <p>当我们说一个 App 耗电的时候我们在说什么？</p>
 <p>我们可能是指 App 吃 CPU 导致系统掉电快，也可能是在说系统告警 App 后台扫描频繁消耗电量，还可能是在说使用 App 时手机发烫严重…… 是的，相对于 Crash、ANR 等常见的 APM 指标，Android App 电量优化更像是一个综合性的问题。</p>
 <p>一方面，造成 App 耗电的原因是多种多样的，比如 CPU/GPU Load、屏幕、传感器以及其他硬件开销等，每个分类的排查思路是大相径庭的，再加上 AOSP 没有 “官方” 的耗电异常检测框架，各个 OEM 厂商自家系统对 App 耗电的监控方案又各不相同（且没有充分的公开文档），所以检测方案需要结合具体 App 项目实际和用户反馈状况，针对具体的耗电类型做出考量和取舍。另一方面，耗电问题也经常是比较 “主观” 的，比如用户感觉 App 新版本掉电比较快了，或者在户外气温比较高的环境使用 App 时感觉设备发烫了，又或只是单纯的因为使用时间变长了导致系统耗电排行靠前了等等，这些通常都是一些比较微妙的主观感受，难以量化问题。</p>
-<p>因此，** 如何检测各种类型的耗电异常，以及如何提炼耗电问题的规则（划红线）是优化电量指标的关键所在 **。微信 Android 项目在与 App 耗电异常这项 “疑难杂症” 日常斗智斗勇的过程中，产出了一些比较实用的工具和优化思路。本文针对 Anroid App 的耗电问题，具体分为 “App 电量统计原理”、“耗电异常监控方案”、以及相关的 “优化案例” 三部分进行解析和分享。</p>
+<p>因此，<strong> 如何检测各种类型的耗电异常，以及如何提炼耗电问题的规则（划红线）是优化电量指标的关键所在 </strong>。微信 Android 项目在与 App 耗电异常这项 “疑难杂症” 日常斗智斗勇的过程中，产出了一些比较实用的工具和优化思路。本文针对 Anroid App 的耗电问题，具体分为 “App 电量统计原理”、“耗电异常监控方案”、以及相关的 “优化案例” 三部分进行解析和分享。</p>
         
           <p><a class="excerpt-btn" href="2021/08/14/android-apm-battery-stats-opt/"><span>阅读全文</span></a></p>
         
@@ -216,11 +212,10 @@ Add:
 1. NotionDown
 
 -->
-
 <p>个人认为，笔记（Note）、写作（Writing）和分享（Share）是 <code>个人知识管理</code> 重要的组成部分。笔记是知识元素，写作是知识汇总，分享是知识升华。固然每个人具体实践的方式会尽不相同，不过大家应该都或多或少能对体会其中存在的一些割裂感：</p>
 <p>其一，笔记存在多端同步编辑的刚需。不过随着云笔记解决方案越来越成熟后，这问题现在已经有许多解决方案。其二，笔记草稿和写作正文之间的同步存在许多机械的地方：同一篇文章经常需要在草稿和正文（终稿）之间来回修订，而大部分情况下这两者的同步是通过复制粘贴和人工比对来完成的，这个过场是写作体验主要的割裂感之一。其三，写作正文完成之后的文章分享（Publish）也是一个麻烦的流程，尽管现在许多静态博客可以通过自动化技术完成部署，不过文章正文内容和部署用的 MarkDown 源文件之间的数据同步也是个非常头疼的事情：如果正文和 MD 文件分开处理，两者之间只能手动同步；如果直接用 MD 文件来写正文，又不得不面临现在多数云笔记糟糕的 MD 文件编辑体验（而且 MD 文件能否导出还是个未知数）；如果干脆使用 gitbook 之类的方案来编辑 MD 文件，那基于 git 的笔记云同步方案体验也不会好到哪。</p>
 <p>自从改用静态博客代替 WordPress 来发表自己的文章、文档后，我不得已采用” 云笔记写草稿，MD 文件保存文章正文，手动在草稿和正文之间同步 “这样的 <code>原始</code> 的写作方案，以上说的几种割裂感也是一直以来我感到非常困扰的地方。</p>
-<p>几番苦寻更好的云笔记体验方案，未果。直到 ta 的出现：<code>Notion</code> 。</p>
+<p>几番苦寻更好的云笔记体验方案，未果。直到 ta 的出现：<code>Notion</code> 。<br>
         
           <p><a class="excerpt-btn" href="2021/05/20/devops/notion-to-markdown-file-automating-solution/"><span>阅读全文</span></a></p>
         
@@ -376,9 +371,6 @@ Android 静态代码扫描效率优化与实践 - 美团
 2. 多渠道
 3. 注释
 -->
-
-
-
 <p>静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供的 References。</p>
         
           <p><a class="excerpt-btn" href="2018/04/01/devops/incremental-spa/"><span>阅读全文</span></a></p>
@@ -455,7 +447,7 @@ Android 静态代码扫描效率优化与实践 - 美团
 <p>Where there is an Android App, there is an Application context.</p>
 </blockquote>
 <p>没毛病，扎心了。App 运行的时候，肯定是存在至少一个 Application 实例的。同时，Context 我们再熟悉不过了，写代码的时候经常需要使用到 Context 实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过 attach 方法传递进我们需要用到的类。Context 实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然 App 运行的时候，Application 实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取 Context 实例，这样以来就不需要上面那些繁琐的传递方式。</p>
-<p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。</p>
+<p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。<br>
         
           <p><a class="excerpt-btn" href="2017/04/09/android/global-accessing-context/"><span>阅读全文</span></a></p>
         
@@ -671,8 +663,6 @@ Android 静态代码扫描效率优化与实践 - 美团
     <div class="entry">
       
         <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA; // xxx  |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC; // xxx               |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD; // xxx      |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE; // xxx                      |</span></span><br><span class="line"><span class="comment">//               |                     |                       |</span></span><br><span class="line"><span class="comment">//               |                     v                       |</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA;  // xxx |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC;               // xxx |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD;      // xxx |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE;                      // xxx |</span></span><br><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br></pre></td></tr></table></figure>
-
-
 <p>Comment Formatter is an IntelliJ IDEA plugin (also works in Android Studio) that formats comments as above. It will force all the comments to align to the longest one.</p>
 <p><strong>Getting Started</strong></p>
 <ol>
@@ -763,7 +753,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
   <div class="article-content">
     <div class="entry">
       
-        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 **” 以及 “</strong>INSTALL_FAILED_DEXOPT**” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
+        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
 <p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
         
           <p><a class="excerpt-btn" href="2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
@@ -836,7 +826,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
     <div class="entry">
       
         <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过 UP 主我并没有放弃治疗哈，相信在不就的未来就可以看到 “系统 Api Hook 模式” 和插件化框架 Frontia 的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是 dex 文件的加载。</p>
-<p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 **” 以及 “</strong>INSTALL_FAILED_DEXOPT**” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
+<p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
         
           <p><a class="excerpt-btn" href="2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
         

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>流畅的 Android 模拟器 | Kaede Akatsuki | 中二病也要开发 Android</title>
@@ -22,18 +22,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="流畅的 Android 模拟器"/>
+  <meta property="og:title" content="流畅的 Android 模拟器">
 
-  <meta property="og:site_name" content="Kaede Akatsuki"/>
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-  <meta property="og:image" content="/favicon.ico"/>
+  <meta property="og:image" content="/favicon.ico">
   
 
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 4.2.1"></head>
+</head>
 
 
 <body>
@@ -96,7 +96,6 @@
 </ul>
 <p>一直以来都想找一款能够顺畅运行 APP 的 Android 模拟器，以下就介绍几款比较给力的。</p>
 <a id="more"></a>
-
 <h3 id="大名鼎鼎的-Genymotion"><a href="#大名鼎鼎的-Genymotion" class="headerlink" title="大名鼎鼎的 Genymotion"></a>大名鼎鼎的 <a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a></h3><p><a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a> 是一款顺畅和容易（fast and easy-to-use）使用的 Android 模拟器，可以用来运行和调试你的 APP。<a href="https://www.genymotion.com/" target="_blank" rel="noopener">Genymotion</a> 来自于 <a href="http://androvm.org/blog/" target="_blank" rel="noopener">AndroVM</a> 这个开源项目，基于 x86 和 <a href="https://www.virtualbox.org/" target="_blank" rel="noopener">VirtualBox</a>，支持 OpenGL 加速，可以用于 <code>Mac/Win/Linux</code>。最近发布了新版，支持了 Android2.3/4.3，新增了拖拽安装 apk，移除了 Google 市场（后面提供解决方案）。另外增加了功能更丰富的 <a href="https://shop.genymotion.com/index.php?controller=order-opc" target="_blank" rel="noopener">付费版</a>，个人可以继续使用免费版。</p>
 <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
 <li>超级流畅；</li>
@@ -111,13 +110,13 @@
 <li>根据自己的系统 <a href="https://www.genymotion.com/#!/download" target="_blank" rel="noopener">下载并安装</a> Genymotion；</li>
 </ol>
 <p>启动 Genymotion</p>
-<p><img src="/assets/18cbeaa9_e78a_4496_8836_64293541894d_untitled.png" alt=""></p>
+<p><img src="/assets/18cbeaa9_e78a_4496_8836_64293541894d_untitled.png" alt></p>
 <p>添加设备</p>
-<p><img src="/assets/d5b2f6b5_f8f7_43cd_b037_cc04c89e9d3a_untitled.png" alt=""></p>
+<p><img src="/assets/d5b2f6b5_f8f7_43cd_b037_cc04c89e9d3a_untitled.png" alt></p>
 <p>启动设备</p>
-<p><img src="/assets/44012361.gif" alt=""></p>
+<p><img src="/assets/44012361.gif" alt></p>
 <p>免费版跟收费版功能的区别</p>
-<p><img src="/assets/6e869c11_bd7f_4e35_8f8a_164db3ccab2d_untitled.png" alt=""></p>
+<p><img src="/assets/6e869c11_bd7f_4e35_8f8a_164db3ccab2d_untitled.png" alt></p>
 <p>此外，Genymotion 还提供了 <code>Eclipse</code> 和 <code>Intellij Idea (Android Studio)</code> 的插件，方便你从 IDE 启动模拟器，不过目前插件的功能也仅仅是用于启动模拟器。<br>当然 Genymotion 也不是万能的，它也有一些不足之处。</p>
 <h3 id="Genymotion-无法启动"><a href="#Genymotion-无法启动" class="headerlink" title="Genymotion 无法启动"></a>Genymotion 无法启动</h3><p><code>Window</code> 版本的 <code>Genymotion</code> 与 <code>VirtualBox</code> 的链接经常出问题，Genymotion 经常无法启动，并提示 VirtualBox 引擎出错，关于 Genymotion 安装以及启动过程中出现的问题，你可以参考 <a href="https://www.genymotion.com/#!/support#faq" target="_blank" rel="noopener">官方的帮助文档</a>。</p>
 <h3 id="Genymotion-无法安装-Google-Play"><a href="#Genymotion-无法安装-Google-Play" class="headerlink" title="Genymotion 无法安装 Google Play"></a>Genymotion 无法安装 Google Play</h3><p>前面说过，新版 Genymotion 移除了 Google 市场。实际上，对 ARM library 的支持也一并移除了：</p>
@@ -134,11 +133,11 @@
 <p>这样，Google Play 和其他 Google App 都有了，再安装微信等应用也不会报错了。（但是此方法并不是对所有的 APP 都管用， <code>Genymotion 对使用了 ARM 的 SO 库的 APP 的支持确实不好</code>，希望以后能改进）。</p>
 <h3 id="电脑上也可以玩-Android-游戏的-BlueStacks"><a href="#电脑上也可以玩-Android-游戏的-BlueStacks" class="headerlink" title="电脑上也可以玩 Android 游戏的 BlueStacks"></a>电脑上也可以玩 Android 游戏的 <a href="http://www.bluestacks.net.cn/" target="_blank" rel="noopener">BlueStacks</a></h3><p>Android 第一個第三方的模拟器就是 <code>Bluestacks</code>，网络上也有許多介绍文章。最大优势是占用资源小，安装包用量大约是 182 MB 左右，同样有 Windows / Mac 版、内置 Google Play 商店。</p>
 <h3 id="如何使用-1"><a href="#如何使用-1" class="headerlink" title="如何使用"></a>如何使用</h3><p>首先，xp 用户需先安装 <a href="http://www.pc6.com/softview/SoftView_451.html" target="_blank" rel="noopener">Windows Installer 4.5</a> 和 <a href="http://www.pc6.com/softview/SoftView_65398.html" target="_blank" rel="noopener">.NET Framework 2.0 SP2</a>，否则会提示出错，我们这里也提供了下载，如果电脑上已经安装过这些软件可以跳过此步。然后到官网 <a href="http://www.bluestacks.net.cn/Download/" target="_blank" rel="noopener">下载</a> 最新的安装包并安装。<br>安装</p>
-<p><img src="/assets/ccf8b3ad_c57d_480d_818a_ffbb3cc88e4c_untitled.png" alt=""></p>
+<p><img src="/assets/ccf8b3ad_c57d_480d_818a_ffbb3cc88e4c_untitled.png" alt></p>
 <p>启动模拟器，搜索应用并安装</p>
-<p><img src="/assets/7777f92f_f5d9_4098_b4b0_79db54223f59_untitled.png" alt=""></p>
+<p><img src="/assets/7777f92f_f5d9_4098_b4b0_79db54223f59_untitled.png" alt></p>
 <p>运行 APP</p>
-<p><img src="/assets/2e91cee7_36c6_4f98_9f00_9d28a1f911d6_untitled.png" alt=""></p>
+<p><img src="/assets/2e91cee7_36c6_4f98_9f00_9d28a1f911d6_untitled.png" alt></p>
 <h3 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h3><p><code>Bluestacks</code> 相比 <code>Genymotion</code>，不容易出现无法启动的问题，也支持 ARM Library，但不足之处也是明显的：</p>
 <ol>
 <li>流畅度不如 <code>Genymotion</code>；</li>
@@ -158,14 +157,14 @@
 <li>下载并安装 <a href="http://www.droid4x.cn/" target="_blank" rel="noopener">Droid4X</a>；</li>
 </ol>
 <p>运行模拟器</p>
-<p><img src="/assets/8644f4dd_dc2e_4db5_a723_1d68ffadc4c0_untitled.png" alt=""></p>
+<p><img src="/assets/8644f4dd_dc2e_4db5_a723_1d68ffadc4c0_untitled.png" alt></p>
 <p>设置竖屏</p>
-<p><img src="/assets/e64dbc79_a876_4965_bfec_3fa96351cf85_untitled.png" alt=""></p>
+<p><img src="/assets/e64dbc79_a876_4965_bfec_3fa96351cf85_untitled.png" alt></p>
 <p>运行 APP</p>
-<p><img src="/assets/0000.gif" alt=""></p>
+<p><img src="/assets/0000.gif" alt></p>
 <h3 id="不足之处-1"><a href="#不足之处-1" class="headerlink" title="不足之处"></a>不足之处</h3><p><code>Droid4X</code> 可以说得上没什么可以挑剔的地方，非要说的话，就是流畅度稍微不如 <code>Genymotion</code>，UI 不如 <code>Genymotion</code>“接地气”，更像是为了游戏而设计的。此外，也不想 <code>Genymotion</code> 那样有众多 Android 系统版本可以选择，不过这些都是无关紧要的功能，毕竟我们不会用一个模拟器去作覆盖测试，是不？</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>从使用经验上来看，<code>Droid4X</code> 确实是一款值得每个 Android 开发汪使用的模拟器，试想一下，每次完成 Coding，轻轻按一下 <code>Shift+F10</code>，或者使用 “重大事件决策按钮”，如下图。</p>
-<p><img src="/assets/13bcca14_fe51_4752_b299_14a2f3fb719d_untitled.png" alt=""></p>
+<p><img src="/assets/13bcca14_fe51_4752_b299_14a2f3fb719d_untitled.png" alt></p>
 <p>轻轻一按就将 APP 部署到模拟器上，再也不用为了 AVD 模拟器的卡顿而烦恼，再也不用担心不小心碰了一下 USB 数据线而导致 APP 部署失败，再也不用担心 Logcat 没有打印日志，开发过程是不是变得淋漓尽致？ 其实，我一开始在寻找 AVD 的替代品，当找到 <code>Genymotion</code> 的时候是很感动的，不过为此还推荐给不少朋友使用，但是用久了，发现不支持 ARM Libary 就觉得不妥了，后面 Genymotion 启动经常失败更是觉得坑爹。<br>这次，朋友推荐我使用 <code>Droid4X</code>，一开始我是拒绝的，不能说你使用我就使用是不，用过之后，才发现这货简直是加了特技的，duang~ 的那么一下，APP 就跑起来了。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
@@ -218,7 +217,7 @@ hexo.comments = true
 
 	<section id="comment" class="comment">
 	  <div id="disqus_thread">
-	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 	  </div>
 	</section>
 

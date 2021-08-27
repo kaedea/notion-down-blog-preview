@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>简单的动态加载模式 | Kaede Akatsuki | 中二病也要开发 Android</title>
@@ -22,18 +22,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="简单的动态加载模式"/>
+  <meta property="og:title" content="简单的动态加载模式">
 
-  <meta property="og:site_name" content="Kaede Akatsuki"/>
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-  <meta property="og:image" content="/favicon.ico"/>
+  <meta property="og:image" content="/favicon.ico">
   
 
   <link href="/favicon.ico" rel="icon">
   <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 4.2.1"></head>
+</head>
 
 
 <body>
@@ -92,7 +92,6 @@
 <p>通过 Android SDK 提供的 <strong>DX 工具</strong> 把 <strong>.jar</strong> 文件优化成 <strong>.dex</strong> 文件，然后 Android 的虚拟机才能加载。注意，有的 Android 应用能直接加载 <strong>.jar</strong> 文件，那是因为这个 <strong>.jar</strong> 文件已经经过优化，只不过后缀名没改（其实已经是 <strong>.dex</strong> 文件）。</p>
 <p>如果对 ClassLoader 的工作机制有兴趣，具体过程请参考 <a href="https://zhuanlan.zhihu.com/p/20524252" target="_blank" rel="noopener">动态加载基础 ClassLoader 的工作机制</a>，这里不再赘述。</p>
 <a id="more"></a>
-
 <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>
 <li>Author : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a><ul>
 <li>Index : <a href="http://kaedea.com/2016/02/05/android-dynamical-loading-00-index">ANDROID 动态加载系列</a></li>
@@ -112,30 +111,20 @@
 </ol>
 <p>使用前，先看看 DexClassLoader 的构造方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DexClassLoader</span><span class="params">(String dexPath, String optimizedDirectory, String libraryPath, ClassLoader parent)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>((String)<span class="keyword">null</span>, (File)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, (ClassLoader)<span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 <p>注意，我们之前提到的，DexClassLoader 并不能直接加载外部存储等 noexec 存储路径中的 <strong>.dex</strong> 文件，而是要先拷贝到内部存储里。这里的 dexPath 就是 <strong>.dex</strong> 的外部存储路径，而 optimizedDirectory 则是内部路径（exec 存储），libraryPath 是 Native 库（其实就是 SO 库）的所在路径，必须是内部路径，如果不需要用到 SO 库的话这里直接用 null 即可，parent 则是要传入当前应用的 ClassLoader，这与 ClassLoader 的 “双亲代理模式” 有关。实际上，DexClassLoader 之所以能加载 SD 卡中的 APK 文件，就是因为它会先提取并优化 dexPath 路径上 APK 文件中的 <strong>.dex</strong> 文件，并保存到 optimizedDirectory 路径上，然后再加载优化好的 <strong>.dex</strong> 文件，所有的动态加载只能发生在 exec 存储路径上。</p>
 <p>注意，如果 <strong>.dex</strong> 里面有用到 SO 库相关的代码，我们需要事先把 SO 库拷贝到内部存储路径，并把路径作为参数传给 libraryPath，或者如果你不想在创建 DexClassLoader 的时候就加载 SO 库，可以把 libraryPath 置为 null，并确保在调用相关的 Native 方法前，使用 System#loadLibrary 加载了相应的 SO 库。这里我们并不需要用到 SO 库，所以才使用 null。</p>
 <p>实例使用 DexClassLoader 的代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">File optimizedDexOutputPath = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + <span class="string">"test_dexloader.jar"</span>);<span class="comment">// 外部路径</span></span><br><span class="line">File dexOutputDir = <span class="keyword">this</span>.getDir(<span class="string">"dex"</span>, <span class="number">0</span>);<span class="comment">// 无法直接从外部路径加载.dex文件，需要指定APP内部路径作为缓存目录（.dex文件会被解压到此目录）</span></span><br><span class="line">DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(optimizedDexOutputPath.getAbsolutePath(),dexOutputDir.getAbsolutePath(), <span class="keyword">null</span>, getClassLoader());</span><br></pre></td></tr></table></figure>
-
-
 <p>到这里，我们已经成功把 <strong>.dex</strong> 文件给加载进来了，接下来就是如何调用 <strong>.dex</strong> 里面的代码，主要有两种方式。</p>
 <h3 id="使用反射的方式"><a href="#使用反射的方式" class="headerlink" title="使用反射的方式"></a>使用反射的方式</h3><p>使用 DexClassLoader 加载进来的类，我们本地并没有这些类的源码，所以无法直接调用新加载进来的类，不过可以通过反射的方法调用，简单粗暴。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DexClassLoader dexClassLoader = <span class="keyword">new</span> DexClassLoader(optimizedDexOutputPath.getAbsolutePath(), dexOutputDir.getAbsolutePath(), <span class="keyword">null</span>, getClassLoader());</span><br><span class="line">			Class libProviderClazz = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				libProviderClazz = dexClassLoader.loadClass(<span class="string">"me.kaede.dexclassloader.MyLoader"</span>);</span><br><span class="line"><span class="comment">// 遍历类里所有方法</span></span><br><span class="line">				Method[] methods = libProviderClazz.getDeclaredMethods();</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</span><br><span class="line">					Log.e(TAG, methods[i].toString());</span><br><span class="line">				&#125;</span><br><span class="line">				Method start = libProviderClazz.getDeclaredMethod(<span class="string">"func"</span>);<span class="comment">// 获取方法</span></span><br><span class="line">				start.setAccessible(<span class="keyword">true</span>);<span class="comment">// 把方法设为public，让外部可以调用</span></span><br><span class="line">				String string = (String) start.invoke(libProviderClazz.newInstance());<span class="comment">// 调用方法并获取返回值</span></span><br><span class="line">				Toast.makeText(<span class="keyword">this</span>, string, Toast.LENGTH_LONG).show();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Exception exception) &#123;</span><br><span class="line"><span class="comment">// Handle exception gracefully here.</span></span><br><span class="line">				exception.printStackTrace();</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
-
-
 <h3 id="使用接口的方式"><a href="#使用接口的方式" class="headerlink" title="使用接口的方式"></a>使用接口的方式</h3><p>使用反射的方式不利于代码维护，如果动态加载的业务是多变的话，就不适合了。毕竟 <strong>.dex</strong> 里面的类也是我们自己维护的，所以可以设计一个宿主和插件共用的基础类，把方法抽象成公共接口，再把这些接口复制到公共库里面去，宿主项目和插件项目都依赖公共库，这样就可以通过这些接口调用动态加载插件得到的类的方法了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pulic <span class="class"><span class="keyword">interface</span> <span class="title">IFunc</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">func</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">IFunc ifunc = (IFunc)libProviderClazz;</span><br><span class="line">String string = ifunc.func();<span class="comment">// 这样看上去是不是比较好维护</span></span><br><span class="line">Toast.makeText(<span class="keyword">this</span>, string, Toast.LENGTH_LONG).show();</span><br></pre></td></tr></table></figure>
-
-
 <p>到这里，我们已经成功从外部路径动态加载一个 <strong>.dex</strong> 文件，并执行里面的代码逻辑了。通过从服务器下载最新的 <strong>.dex</strong> 文件并替换本地的旧文件，就能初步实现 “APP 的动态升级了”。但是这只是非常基础的功能，所以我称之为 “简单加载”。从一般的 Android 开发需要来看，“简单动态加载” 虽然能动态更换类了，但还是有不少问题需要解决。</p>
-<h2 id="如何动态更改-XML-布局"><a href="#如何动态更改-XML-布局" class="headerlink" title="如何动态更改 XML 布局"></a>如何动态更改 XML 布局</h2><p>虽然已经能动态更改代码逻辑了，但是 UI 界面要怎么更改啊？Android 开发中大部分的情况下，UI 界面都是通过 XML 布局实现的，放在 res 目录下，可是 <strong>.dex</strong> 库里面并没有这些静态资源啊，所以无法改变 XML 布局。（这里即使直接动态加载 APK 文件，但是通过 DexClassLoader 只能加载新的 APK 其中的 <strong>.dex</strong> 文件，并无法加载其中的 res 资源文件，所以如果在动态加载的 <strong>.dex</strong> 的类中直接使用新的 APK 的 res 资源的话会抛出异常。）<br>大家都知道，所有的 XML 布局在运行的时候都要通过 LayoutInflator 渲染成 View 的实例，这个实例与我们使用纯 Java 代码创建的 View 实例几乎是等价的，而且后者可能效率还更高，所有的 XML 布局实现的 UI 界面都有等价的纯代码的创建方案。由此伸展开来，<strong>res 目录下所有 XML 资源都有等价的纯代码的实现方式 **，比如 XML 动画、XML Drawable 等。<br>所以，如果想要动态更改应用的 UI 界面的话，可以通过用纯代码创建布局的形式来解决。此外，还可以模仿 LayoutInflator 的工作方式，自己写一套布局渲染机制来代替系统的 LayoutInflator 方案（类似于许多跨平台游戏引擎的方案），这样就能在完全不依赖 res 资源的情况下创建 UI 界面了，当然这样的工作量不少，而且，完全避开 res 资源的话，所有的分辨率、国际化等自适应问题都要自己在应用层写代码维护了，显然脱离 res 资源框架不是一个很明智的做法，</strong> 但是这种做法确实可行 **，在我们之前的实际生产中的项目中也稳定使用着，这里出于责任问题就不方便公开细节了。<br>（早期还没有解决 res 资源的方案，现在有了，宝宝心里苦 🌚，说实在，这种方案非常繁琐，不好维护，一方面，这是产品一句 “技术可行就做呗” 而产生的解决方案；另一方面，当时动态加载技术还很不成熟，也没有什么实际投入到生产的项目，所以采取了非常保守的开发方式）。</p>
+<h2 id="如何动态更改-XML-布局"><a href="#如何动态更改-XML-布局" class="headerlink" title="如何动态更改 XML 布局"></a>如何动态更改 XML 布局</h2><p>虽然已经能动态更改代码逻辑了，但是 UI 界面要怎么更改啊？Android 开发中大部分的情况下，UI 界面都是通过 XML 布局实现的，放在 res 目录下，可是 <strong>.dex</strong> 库里面并没有这些静态资源啊，所以无法改变 XML 布局。（这里即使直接动态加载 APK 文件，但是通过 DexClassLoader 只能加载新的 APK 其中的 <strong>.dex</strong> 文件，并无法加载其中的 res 资源文件，所以如果在动态加载的 <strong>.dex</strong> 的类中直接使用新的 APK 的 res 资源的话会抛出异常。）<br>大家都知道，所有的 XML 布局在运行的时候都要通过 LayoutInflator 渲染成 View 的实例，这个实例与我们使用纯 Java 代码创建的 View 实例几乎是等价的，而且后者可能效率还更高，所有的 XML 布局实现的 UI 界面都有等价的纯代码的创建方案。由此伸展开来，<strong>res 目录下所有 XML 资源都有等价的纯代码的实现方式 </strong>，比如 XML 动画、XML Drawable 等。<br>所以，如果想要动态更改应用的 UI 界面的话，可以通过用纯代码创建布局的形式来解决。此外，还可以模仿 LayoutInflator 的工作方式，自己写一套布局渲染机制来代替系统的 LayoutInflator 方案（类似于许多跨平台游戏引擎的方案），这样就能在完全不依赖 res 资源的情况下创建 UI 界面了，当然这样的工作量不少，而且，完全避开 res 资源的话，所有的分辨率、国际化等自适应问题都要自己在应用层写代码维护了，显然脱离 res 资源框架不是一个很明智的做法，<strong> 但是这种做法确实可行 </strong>，在我们之前的实际生产中的项目中也稳定使用着，这里出于责任问题就不方便公开细节了。<br>（早期还没有解决 res 资源的方案，现在有了，宝宝心里苦 🌚，说实在，这种方案非常繁琐，不好维护，一方面，这是产品一句 “技术可行就做呗” 而产生的解决方案；另一方面，当时动态加载技术还很不成熟，也没有什么实际投入到生产的项目，所以采取了非常保守的开发方式）。</p>
 <h2 id="使用-Fragment-代替-Activity"><a href="#使用-Fragment-代替-Activity" class="headerlink" title="使用 Fragment 代替 Activity"></a>使用 Fragment 代替 Activity</h2><p>Activity 需要在 Manifest 里注册，然后以标准的 Intent 启动才会具有生命周期（详情参考 AMS 的工作机制），很明显，如果想要动态加载的 <strong>.dex</strong> 里的 Activity 没有注册的话，是无法启动的。<br>有一种简单粗暴的做法就是可以把 <strong>.dex</strong> 里所有需要用到的 Activity 都事先注册到原项目里，不过这样只适用于 Activity 数量不经常改变的业务，如果 <strong>.dex</strong> 里的 Activity 有变化，原项目就必须跟着升级。另外一种方案是使用 Fragment，Fragment 只是普通的 Java 类，不是组件类，但是自带生命周期（同步 FragmentActivity 的），不需要在 Manifest 里注册，所以可以在 <strong>.dex</strong> 里使用 Fragment 来代替 Activity，代价就是 Fragment 之间的切换会繁琐许多。</p>
 <h2 id="ART-模式的兼容性问题"><a href="#ART-模式的兼容性问题" class="headerlink" title="ART 模式的兼容性问题"></a>ART 模式的兼容性问题</h2><p>当初我们开始设计动态加载方案的时候，还没有 ART 模式。随着 Kitkat 的发布以及 ART 模式的出现，我们开始担心 “用 DexClassLoader 加载 <strong>.dex</strong> 文件” 的方案会不会在 ART 模式上面存在兼容性问题。<br>其实，ART 模式相比原来的 Dalvik，会在安装 APK 的时候，使用 Android 系统自带的 <strong>dex2oat</strong> 工具把 APK 里面的. <strong>.dex</strong> 文件转化成 <strong>OAT</strong> 文件， <strong>OAT</strong> 文件是一种 Android 私有 ELF 文件格式，它不仅包含有从 DEX 文件翻译而来的本地机器指令，还包含有原来的 DEX 文件内容。这使得我们无需重新编译原有的 APK 就可以让它正常地在 ART 里面运行，也就是我们不需要改变原来的 APK 编程接口。ART 模式的系统里，同样存在 DexClassLoader 类，包名路径也没变，只不过它的具体实现与原来的有所不同，但是接口是一致的。（如果你熟悉设计模式的话，应该会知道有种原则叫做 “针对接口编程，而不针对实现编程”，就是因为接口没有变化，才能保证 ART 模式的向下兼容。）<br>在 Kitkat 项目的源码中，我们依然能找到同样 API 的 DexClassLoader：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> dalvik.system;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> dalvik.system.BaseDexClassLoader;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DexClassLoader</span> <span class="keyword">extends</span> <span class="title">BaseDexClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DexClassLoader</span><span class="params">(String dexPath, String optimizedDirectory, String libraryPath, ClassLoader parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>((String)<span class="keyword">null</span>, (File)<span class="keyword">null</span>, (String)<span class="keyword">null</span>, (ClassLoader)<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 <p>也就是说，ART 模式在加载 <strong>.dex</strong> 文件的方法上，对 Dalvik 做了向下兼容，所以使用 DexClassLoader 加载进来的 <strong>.dex</strong> 文件同样也会被转化成 OAT 文件再被执行，“以 DexClassLoader 为核心的动态加载方案” 在 ART 模式上可以稳定运行。<br>关于 ART 模式以及 OAT 文件的详细分析，请参考官方的 <a href="https://source.android.com/devices/tech/dalvik/" target="_blank" rel="noopener">ART and Dalvik</a>，以及老罗的 <a href="http://blog.csdn.net/luoshengyang/article/details/18006645" target="_blank" rel="noopener">Android ART 运行时无缝替换 Dalvik 虚拟机的过程分析</a>。</p>
 <h2 id="存在的问题与改进方案"><a href="#存在的问题与改进方案" class="headerlink" title="存在的问题与改进方案"></a>存在的问题与改进方案</h2><p>以上大致就是 “Android 动态性加载初级阶段” 的解决方案，虽然现在已经能投入到具体的生产中去，但是还有一些问题无法忽略。</p>
 <ol>
@@ -200,7 +189,7 @@ hexo.metaAlignment = center
 
 	<section id="comment" class="comment">
 	  <div id="disqus_thread">
-	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 	  </div>
 	</section>
 
