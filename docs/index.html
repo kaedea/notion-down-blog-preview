@@ -266,6 +266,78 @@ Add:
 
   
     
+    <h3 class="article-title"><a href="/2021/05/01/devops/project-notion-down-jp/"><span>Project NotionDown 🇯🇵</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2021/05/01/devops/project-notion-down-jp/" rel="bookmark">
+        <time class="entry-date published" datetime="2021-05-01T00:00:00.000Z">
+          2021-05-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="https://www.notion.so/image/https%3A%252F%252Fwww.notion.so%252Fimages%252Fpage-cover%252Fnasa_buzz_aldrin_on_the_moon.jpg" alt="Page Cover"></p>
+<p><a href="https://github.com/kaedea/notion-down" target="_blank" rel="noopener">Notion Down</a> とは、 Notion ページを Markdown ファイルにコンバートする Python ツールです。ちなみ、Hexo などのブログとのインテグレーションも可能です。このレポのインスピレーションやゴールは、「Notion のみでノートしながら自動的に目標な MD ファイルを生成する」ことで、ライティングの断片化を避ける。</p>
+        
+          <p><a class="excerpt-btn" href="2021/05/01/devops/project-notion-down-jp/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Notion/">Notion</a><a href="/tags/NotionDown/">NotionDown</a><a href="/tags/日本語/">日本語</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2021/05/01/devops/project-notion-down-jp/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2021/05/01/devops/project-notion-down/"><span>Project NotionDown</span></a></h3>
     
   
@@ -792,78 +864,6 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <i class="icon-comments"></i>
         <span>
           <a href="/2016/12/01/tools/comment-formatter/#comment">评论</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2016/11/22/android/pre-multidex/"><span>通过预安装给 MultiDex 加速</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/11/22/android/pre-multidex/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-11-22T00:00:00.000Z">
-          2016-11-22
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
-<p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
-        
-          <p><a class="excerpt-btn" href="2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Android/">Android</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/MultiDex/">MultiDex</a><a href="/tags/启动速度/">启动速度</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2016/11/22/android/pre-multidex/#comment">评论</a>
         </span>
       </span>
     </div>

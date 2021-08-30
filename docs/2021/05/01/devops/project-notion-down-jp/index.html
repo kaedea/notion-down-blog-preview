@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Project NotionDown | Kaede Akatsuki | 中二病也要开发 Android</title>
+  <title>Project NotionDown 🇯🇵 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
   <meta name="author" content="Kaede Akatsuki">
@@ -15,14 +15,14 @@
 
   
   
-  <meta name="keywords" content="Notion,知识管理,NotionDown">
+  <meta name="keywords" content="Notion,NotionDown,日本語">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta property="og:title" content="Project NotionDown">
+  <meta property="og:title" content="Project NotionDown 🇯🇵">
 
   <meta property="og:site_name" content="Kaede Akatsuki">
 
@@ -67,13 +67,13 @@
 
   
     
-    <h3 class="article-title"><span>Project NotionDown</span></h3>
+    <h3 class="article-title"><span>Project NotionDown 🇯🇵</span></h3>
     
   
 
   <div class="article-top-meta">
     <span class="posted-on">
-      <a href="/2021/05/01/devops/project-notion-down/" rel="bookmark">
+      <a href="/2021/05/01/devops/project-notion-down-jp/" rel="bookmark">
         <time class="entry-date published" datetime="2021-05-01T00:00:00.000Z">
           2021-05-01
         </time>
@@ -88,12 +88,12 @@
     <div class="entry">
       
         <p><img src="https://www.notion.so/image/https%3A%252F%252Fwww.notion.so%252Fimages%252Fpage-cover%252Fnasa_buzz_aldrin_on_the_moon.jpg" alt="Page Cover"></p>
-<p><a href="https://github.com/kaedea/notion-down" target="_blank" rel="noopener">Notion Down</a> 是一个用来把 Notion Page 转换成 Markdown 文件的 Python 工具，同时还提供了一些如 Hexo 静态博客构建的集成功能。其灵感和目标是通过 “在 Notion 上写作并自动生成目标 MD 文件” 来解决写作的割裂问题。比如：在 Notion 上编辑日志，并按照不同渠道配置生成目标 MD 文件；将指定 Notion 日志生成 Hexo Page 并自动部署到静态博客。</p>
+<p><a href="https://github.com/kaedea/notion-down" target="_blank" rel="noopener">Notion Down</a> とは、 Notion ページを Markdown ファイルにコンバートする Python ツールです。ちなみ、Hexo などのブログとのインテグレーションも可能です。このレポのインスピレーションやゴールは、「Notion のみでノートしながら自動的に目標な MD ファイルを生成する」ことで、ライティングの断片化を避ける。</p>
 <a id="more"></a>
 <h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p><a href="http://www.kaedea.com" target="_blank" rel="noopener">kaedea.com</a><br><a href="http://hexo.kaedea.com" target="_blank" rel="noopener">hexo.kaedea.com</a><br><a href="https://www.kaedea.com/2021/05/20/devops/notion-to-markdown-file-automating-solution/" target="_blank" rel="noopener">基于 Notion 的笔记写作和博客分享自动化方案</a></p>
-<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><p>现在 NotionDown 提供以下功能：</p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><p>今 NotionDown のできること：</p>
 <ul>
-<li>Notion Page 转换成 MarkDown 文件<ul>
+<li>Notion ページのコンバート<ul>
 <li><del>Basic Notion PageBlocks parsing</del></li>
 <li><del>Notion images refer &amp; download</del></li>
 <li><del>Notion nested list blocks</del></li>
@@ -102,29 +102,29 @@
 <li>Notion subpage / alias link parsing</li>
 </ul>
 </li>
-<li>Advanced Notion PageBlocks 支持<ul>
+<li>アドバンス Notion PageBlocks サポート<ul>
 <li><del>Pullquote Blocks (Notion ColumnList)</del></li>
 </ul>
 </li>
-<li>图源替换<pre><code>- ~~Replace notion image url with image file~~
+<li>イメージソースの変わり<pre><code>- ~~Replace notion image url with image file~~
 - Replace notion image url with other CDN urls
 </code></pre><ul>
 <li>Notion page embed blocks</li>
 </ul>
 </li>
-<li>写作增强<ul>
+<li>ライティングインハンス<ul>
 <li><del>Noton custom <code>ShortCode</code> blocks that control parametered MD files generating</del></li>
 <li><del>Mixed CN-EN text separation format</del> (<a href="https://github.com/vinta/pangu" target="_blank" rel="noopener">by pangu</a>)</li>
 <li><del>Spelling inspect</del> (by <a href="https://github.com/shibing624/pycorrector" target="_blank" rel="noopener">pycorrector</a>)</li>
 </ul>
 </li>
-<li>HEXO 集成<ul>
+<li>Hexo インテグレーション<ul>
 <li><del>HEXO page properties config</del></li>
 <li><del>HEXO generate</del></li>
 <li>HEXO tags plugin</li>
 </ul>
 </li>
-<li>PyPI 发布<ul>
+<li>PyPI パブリッシャ<ul>
 <li>Notion APIs<ul>
 <li><del>notion-py (3rd party)</del></li>
 <li>notion-sdk (official)</li>
@@ -133,52 +133,52 @@
 </ul>
 </li>
 </ul>
-<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><img src="/assets/notiondown_workflows_notiondown.png" alt="NotionDown Workflows"></p>
-<p>NotionDown 通过 <a href="https://github.com/jamalex/notion-py" target="_blank" rel="noopener">notion-py</a> 读取 Notion Page 的数据，然后再（根据配置）解析成 MD 文件。</p>
+<h2 id="ワークフロー"><a href="#ワークフロー" class="headerlink" title="ワークフロー"></a>ワークフロー</h2><p><img src="/assets/notiondown_workflows_notiondown.png" alt="NotionDown Workflows"></p>
+<p>NotionDown は <a href="https://github.com/jamalex/notion-py" target="_blank" rel="noopener">notion-py</a> を使っって Notion Page のデータを読み込む、そしてコンフィグレーションによって、目標な MD ファイルを生成する。</p>
 <h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><blockquote>
 <p>notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
 </blockquote>
 <h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a>Advanced usage</h3><blockquote>
 <p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
 </blockquote>
-<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>前置准备：</p>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>準備：</p>
 <ol>
-<li>Prepare <code>notion_token_v2</code>.</li>
-<li>Prepare <code>public notion blog_url</code> as root post for NotionDown to get the pages you want to handle.</li>
-<li>Run <code>notion-down/main.py</code> with your configs.</li>
+<li><code>notion_token_v2</code> を取る。</li>
+<li>ルーツページの <code>public notion blog_url</code> を取る。</li>
+<li><code>notion-down/main.py</code> を実行する。</li>
 </ol>
-<p>参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_gettokenv2.md" target="_blank" rel="noopener">这里</a> 获取 <code>notion_token_v2</code>。</p>
-<p>复制一份 <a href="https://www.notion.so/kaedea/NotionDown-Posts-Template-f77f3322915a4ab48caa0f2e76e9d733" target="_blank" rel="noopener">NotionDown Posts Template</a> 到你的 Notion Workspace 并把其 URL 做为 <code>blog_url</code> (或者直接使用你自己已有的 Notion Posts)。需要注意的是，现阶段配合 notion_token_v2 使用的 Notion Posts 必须是 Public 的。</p>
-<h3 id="运行-NotionDown"><a href="#运行-NotionDown" class="headerlink" title="运行 NotionDown"></a>运行 NotionDown</h3><p>执行 Python 基本 <code>notion-down/main.py</code> :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --token_v2 &lt;token_v2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有三种方式配置 NotionDown 的运行参数：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
-<p>更详细的参数配置，请参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_custom_configs.md" target="_blank" rel="noopener">Custom Configurations</a>。</p>
-<p>以下提供几种使用 NotionDown 的案例。</p>
-<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>参看以下 CI 脚本 <code>/.circleci/config.yaml</code>：</p>
+<p><code>notion_token_v2</code> のゲットする方法は <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_gettokenv2.md" target="_blank" rel="noopener">ここに</a> ある。</p>
+<p><a href="https://www.notion.so/kaedea/NotionDown-Posts-Template-f77f3322915a4ab48caa0f2e76e9d733" target="_blank" rel="noopener">NotionDown Posts Template</a> を自分の Notion Workspace にコピーする、そしてその URL を <code>blog_url</code> をしてつかいます（既存するルーツページを使うのもオッケー）。ちなみに、ルーツページを Public にセットすることが必要です。</p>
+<h3 id="NotionDown-の実行"><a href="#NotionDown-の実行" class="headerlink" title="NotionDown の実行"></a>NotionDown の実行</h3><p><code>notion-down/main.py</code> の使い方：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --token_v2 &lt;token_v2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># アーギュメントのコンフィグ：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
+<p>くわりコンフィグレーションはここに <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_custom_configs.md" target="_blank" rel="noopener">Custom Configurations</a>。</p>
+<p>以降は NotionDown のそれぞれな使い方を紹介する。</p>
+<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>チェック <code>/.circleci/config.yaml</code>：</p>
 <ul>
-<li><code>test-build-readme</code>: CircleCI jobs 用来生成 NotionDown 的 README.md。</li>
-<li><code>test-build-hexo</code>: CircleCI jobs 用来演示如何生成 Hexo 源文件 <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>。</li>
-<li><code>test-run-pycorrector</code>: CircleCI jobs 用来演示如何执行拼写检查。</li>
+<li><code>test-build-readme</code>: README.md を生成する CircleCI Jobs。</li>
+<li><code>test-build-hexo</code>: デーモン Hexo ソースコードを生成する CircleCI jobs、チェック <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>。</li>
+<li><code>test-run-pycorrector</code>: スペルチェックの CircleCI jobs。</li>
 </ul>
-<h3 id="Showcase-Jobs"><a href="#Showcase-Jobs" class="headerlink" title="Showcase Jobs"></a>Showcase Jobs</h3><p>示例脚本放在 <a href="/jobs">/jobs</a>，其运行产物在 <a href="/dist">/dist</a>。</p>
+<h3 id="Showcase-Jobs"><a href="#Showcase-Jobs" class="headerlink" title="Showcase Jobs"></a>Showcase Jobs</h3><p>デーモンスクリプトは <a href="/jobs">/jobs</a> にあり、そしてアウトプットは <a href="/dist">/dist</a>。</p>
 <ul>
-<li><a href="/jobs/parse_readme/">生成 README</a></li>
-<li><a href="/jobs/parse_sample_posts/">生成 Notion posts</a></li>
-<li><a href="/jobs/parse_sample_posts_for_hexo/">生成 Hexo 源文件</a><ul>
-<li>Notion image page source replacing (WIP)</li>
+<li><a href="/jobs/parse_readme/">Build README</a></li>
+<li><a href="/jobs/parse_sample_posts/">Build Notion posts</a><ul>
+<li><a href="/jobs/parse_sample_posts_for_hexo/">Build Hexo ソースコード</a></li>
 </ul>
 </li>
+<li>Notion image page source replacing (WIP)</li>
 </ul>
-<h3 id="UnitTest-Examples"><a href="#UnitTest-Examples" class="headerlink" title="UnitTest Examples"></a>UnitTest Examples</h3><p>单元测试放在 <code>test/</code>。</p>
+<h3 id="UnitTest-Examples"><a href="#UnitTest-Examples" class="headerlink" title="UnitTest Examples"></a>UnitTest Examples</h3><p>チェック <code>test/</code>。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
 notion-down.revision = b'6687057'
-Title = Project NotionDown
+Title = Project NotionDown 🇯🇵
 Date = 2021-05-01
 Published = true
 Category = DevOps
-Tag = ['Notion', '知识管理', 'NotionDown']
+Tag = ['Notion', '日本語', 'NotionDown']
 FileLocate = devops
-FileName = project-notion-down
+FileName = project-notion-down-jp
 hexo.comments = false
 -->
 
@@ -204,7 +204,7 @@ hexo.comments = false
 
     <span class="post-tags">
       <i class="icon-tags"></i>
-        <a href="/tags/Notion/">Notion</a><a href="/tags/知识管理/">知识管理</a><a href="/tags/NotionDown/">NotionDown</a>
+        <a href="/tags/Notion/">Notion</a><a href="/tags/NotionDown/">NotionDown</a><a href="/tags/日本語/">日本語</a>
     </span>
     
 
