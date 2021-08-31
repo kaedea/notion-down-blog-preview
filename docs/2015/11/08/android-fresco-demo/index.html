@@ -94,41 +94,41 @@
     <div class="entry">
       
         <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt></p>
-<p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。</p>
+<p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco使用起来非常简单，也容易扩展，然而这并不是我喜欢Fresco的主要原因。</p>
 <a id="more"></a>
 <h3 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h3><p>GitHub : <a href="https://github.com/kaedea/Fresco-Sample-Usage" target="_blank" rel="noopener">Fresco Sample Usage</a><br>作者 : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a><br>参考 : <a href="https://github.com/facebook/fresco" target="_blank" rel="noopener">fresco</a> <a href="https://github.com/06peng/FrescoDemo" target="_blank" rel="noopener">06peng</a> <a href="http://frescolib.org/" target="_blank" rel="noopener">frescolib.org</a></p>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>关于图片加载框架，我用过许多轮子，也有自己写过。目前项目在使用的是一个我基于 Volley 修改而来的 ImageLoader ，但是由于产品天花乱坠的需求，现在已经渐渐改得面目全非了，于是打算换成一个新的轮子，在 Glide 和 Fresco 纠结一段时间后，打算先尝试 Fresco 。</p>
-<p>图片加载框架如果不处理好 Bitmap 的缓存问题就容易引发 Bitmap 泄露，Bitmap 泄露是 Android 内存泄露的一大原因，而内存泄露又是 OOM 的主要原因。</p>
-<p>Bitmap 是非常占用内存的，比普通的 Java 对象大多了，不释放的话很快就 OOM 了；如果释放过早，如果有 ImageView 还用着被释放的 Bitmap，当这个 ImageView 被重绘的时候就会抛 IllegalState 异常。OOM 和 IllegalState 可是为我项目的崩溃率贡献了好多数据。</p>
-<p>Android 3.0 (Honeycomb) 之前，系统把 Bitmap 的像素数据放在 Native 层，所以图片加载框架必须手动做好这些 Bitmap 的释放工作，Honeycomb 之后这些放在虚拟机 Heap 里，虚拟机会帮我们回收，所以可以不用手动释放。但是由于 Bitmap 本身非常占用虚拟机的内存，虚拟机的内存很快就不够用了，所以会频繁触发虚拟机的 GC (Garbage Collector)，然而 GC 是非常耗性能的工作，因此也会造成 APP 的卡顿。好在，Android 5.0 (Lollipop) 已经妥善解决这个问题了。</p>
-<p>对于 Honeycomb 之前的 Bitmap 缓存问题，目前我项目的轮子使用的处理方式是 Google 推荐的方案，简单说一下就是：设置一个 count，如果一个 Bitmap 被 set 进一个 ImageView 就 + 1，remove 放就 - 1，定期检查这些 Bitmap，如果 count&lt;=0 就回收掉。这个方法能通过测试妹子 “机の宝库” 的考验，无奈在用户的崩溃日志上看起来还是有导致 OOM 和 IllegalState 的情况（天朝水深火日的生态啊），而且这一方法并不能解决 Lollipop 之前频繁 GC 造成的卡顿问题。</p>
-<p>之所以想换 Fresco 最主要的原因是：</p>
+<p>图片加载框架如果不处理好Bitmap的缓存问题就容易引发Bitmap泄露，Bitmap泄露是Android内存泄露的一大原因，而内存泄露又是OOM的主要原因。</p>
+<p>Bitmap是非常占用内存的，比普通的Java对象大多了，不释放的话很快就OOM了；如果释放过早，如果有ImageView还用着被释放的Bitmap，当这个ImageView被重绘的时候就会抛IllegalState异常。OOM和IllegalState可是为我项目的崩溃率贡献了好多数据。</p>
+<p>Android 3.0(Honeycomb)之前，系统把Bitmap的像素数据放在Native层，所以图片加载框架必须手动做好这些Bitmap的释放工作，Honeycomb之后这些放在虚拟机Heap里，虚拟机会帮我们回收，所以可以不用手动释放。但是由于Bitmap本身非常占用虚拟机的内存，虚拟机的内存很快就不够用了，所以会频繁触发虚拟机的GC(Garbage Collector)，然而GC是非常耗性能的工作，因此也会造成APP的卡顿。好在，Android 5.0(Lollipop) 已经妥善解决这个问题了。</p>
+<p>对于Honeycomb之前的Bitmap缓存问题，目前我项目的轮子使用的处理方式是Google推荐的方案，简单说一下就是：设置一个count，如果一个Bitmap被set进一个ImageView就+1，remove放就-1，定期检查这些Bitmap，如果count&lt;=0就回收掉。这个方法能通过测试妹子“机の宝库”的考验，无奈在用户的崩溃日志上看起来还是有导致OOM和IllegalState的情况（天朝水深火日的生态啊），而且这一方法并不能解决Lollipop之前频繁GC造成的卡顿问题。</p>
+<p>之所以想换Fresco最主要的原因是：</p>
 <blockquote>
-<p>Fresco 会在 Lollipop 之前，把 Bitmap 放在 Ashmem（系统匿名共享内存），在图片不显示的时候，占用的内存会自动被释放，不需要手动释放，也不会频繁触发 GC！这会使得 APP 更加流畅，减少因图片内存占用而引发的 OOM，也能有效避免 IllegalState，而且在 Honeycomb 之前的 Android 版本的表现也同样优秀（官方宣称）。</p>
+<p>Fresco会在Lollipop之前，把Bitmap放在Ashmem（系统匿名共享内存），在图片不显示的时候，占用的内存会自动被释放，不需要手动释放，也不会频繁触发GC！这会使得APP更加流畅，减少因图片内存占用而引发的OOM，也能有效避免IllegalState，而且在Honeycomb之前的Android版本的表现也同样优秀（官方宣称）。</p>
 </blockquote>
 <p>总之先把源码看一下，拿来用用看，用数据说话吧。目前只写了一个 Demo 项目，后续打算把笔记整理一下，写成一篇日志。</p>
-<h3 id="Fresco-简介"><a href="#Fresco-简介" class="headerlink" title="Fresco 简介"></a>Fresco 简介</h3><p><a href="https://github.com/facebook/fresco" target="_blank" rel="noopener">Fresco</a> 是 Facebook 开源的一个强大的 Android 图片加载框架，本项目是一个 Fresco 用法的 Demo 项目。</p>
+<h3 id="Fresco-简介"><a href="#Fresco-简介" class="headerlink" title="Fresco 简介"></a>Fresco 简介</h3><p><a href="https://github.com/facebook/fresco" target="_blank" rel="noopener">Fresco</a>是Facebook开源的一个强大的Android图片加载框架，本项目是一个Fresco用法的Demo项目。</p>
 <h3 id="项目内容"><a href="#项目内容" class="headerlink" title="项目内容"></a>项目内容</h3><ul>
 <li>简单地加载一张图片</li>
-<li>自定义图片的加载，比如 ScaleType, Rounded Corner, Circle, Fade Animation, Placeholder, Failure Image, Retry Image, ProgressBar, PressedState Overlay</li>
-<li>加载 Gif 以及 WebPng 动态图片</li>
+<li>自定义图片的加载，比如ScaleType, Rounded Corner, Circle, Fade Animation, Placeholder, Failure Image, Retry Image, ProgressBar, PressedState Overlay</li>
+<li>加载Gif以及WebPng动态图片</li>
 <li>监听图片加载的过程</li>
 <li>渐进式图片加载</li>
 <li>调整图片大小</li>
 <li>加载图片后对图片做一些处理</li>
-<li>在 ListView 上的使用</li>
-<li>在 RecyclerView 上的使用</li>
+<li>在ListView上的使用</li>
+<li>在RecyclerView上的使用</li>
 <li>配合第三方图片控件的使用（PhotoView, SubsamplingSacleImageView, GifDrawable）</li>
 <li>相关代码段</li>
 </ul>
-<h3 id="Fresco-的特性"><a href="#Fresco-的特性" class="headerlink" title="Fresco 的特性"></a>Fresco 的特性</h3><ul>
+<h3 id="Fresco的特性"><a href="#Fresco的特性" class="headerlink" title="Fresco的特性"></a>Fresco的特性</h3><ul>
 <li>完善的内存缓存和释放机制</li>
 <li>渐进式图片加载</li>
 <li>动图支持</li>
-<li>可高度自定义的 UI</li>
+<li>可高度自定义的UI</li>
 <li>可高度自定义的图片加载过程</li>
 </ul>
-<p>详细信息可以参考 <a href="http://frescolib.org/" target="_blank" rel="noopener">frescolib.org</a></p>
+<p>详细信息可以参考<a href="http://frescolib.org/" target="_blank" rel="noopener">frescolib.org</a></p>
 <h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><p><img src="/assets/55c526dd_43d6_44ec_89a1_57d8dabb389a_untitled.png" alt></p>
 <p><img src="/assets/4836a887_8427_4574_93ad_73a5c6965846_untitled.png" alt></p>
 <!-- Generated by HexoWriter

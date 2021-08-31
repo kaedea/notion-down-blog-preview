@@ -91,8 +91,8 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
-<p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
+        <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
+<p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
         
           <p><a class="excerpt-btn" href="2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
         
@@ -163,8 +163,8 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过 UP 主我并没有放弃治疗哈，相信在不就的未来就可以看到 “系统 Api Hook 模式” 和插件化框架 Frontia 的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是 dex 文件的加载。</p>
-<p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
+        <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
+<p>MultiDex 是Google 为了解决 “<strong>65535方法数超标</strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
         
           <p><a class="excerpt-btn" href="2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
         
@@ -236,9 +236,9 @@
     <div class="entry">
       
         <blockquote>
-<p>LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。</p>
+<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。</p>
 </blockquote>
-<p>LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项目里面都包含着大量的 Log 相关代码。不过，或许是因为 Log 实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
+<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
         
           <p><a class="excerpt-btn" href="2016/10/02/android/log-utility/"><span>阅读全文</span></a></p>
         
@@ -310,8 +310,8 @@
     <div class="entry">
       
         <p><img src="/assets/bb50f6df_4c0f_424a_b9b3_04870fa7b35c_untitled.png" alt></p>
-<p>高中开始折腾电脑 DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装 Windows 系统，玩腻了就折腾 Linux，到后来开始打算折腾 Mac。在普通 PC 上安装苹果的 OSX 系统（现在叫 MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起 Windows 和 Linux 实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
-<p>最近在公司开始正式切换到 Mac 系统上进行开发工作，但是回到家里就得用 WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是 Mac 上的快捷键和 Windows 大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
+<p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
+<p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
         
           <p><a class="excerpt-btn" href="2016/09/23/living/living-hackintosh-lh532/"><span>阅读全文</span></a></p>
         
@@ -383,7 +383,7 @@
     <div class="entry">
       
         <p><img src="/assets/86859476.jpg" alt></p>
-<p>又到了折腾博客主题的时间了，好吧，我承认我用在主题上的时间远比用在写博客上的时间要多多了 (〃ﾉωﾉ)。这次用的是 Hexo 中最受欢迎的主题（没有之一）的 <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">NEXT</a>。</p>
+<p>又到了折腾博客主题的时间了，好吧，我承认我用在主题上的时间远比用在写博客上的时间要多多了 (〃ﾉωﾉ)。这次用的是Hexo中最受欢迎的主题（没有之一）的<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">NEXT</a>。</p>
 <!-- ColumnList start -->
 <!-- Column 0 start -->
         
@@ -457,7 +457,7 @@
     <div class="entry">
       
         <p><img src="/assets/4df27cf7_e064_4741_ae49_f4bca8a82724_untitled.png" alt></p>
-<p>结合动态加载系列文章的分析，现在开始设计并开发一个 Android 的插件化框架，命名为 Frontia。Frontia 有 “前端” 的意思，寓意着 Android 插件能像前端开发那样动态发版，同时，这一词出自 Macross 动画系列，有 “繁星” 的意思，“我们的征途是星辰大海 KIRA!!(&lt; ゝ ω・)☆”。</p>
+<p>结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&lt;ゝω·)☆”。</p>
         
           <p><a class="excerpt-btn" href="2016/07/10/android-dynamical-loading-08-satrt-frontia/"><span>阅读全文</span></a></p>
         
@@ -533,7 +533,7 @@
 ![](/assets/09924d84_d08c_4599_9470_492271d8f6b9_untitled.png)
 
 -->
-<p>关于 “是否应该在中文和英文之间加上空格” 的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
+<p>关于“是否应该在中文和英文之间加上空格”的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
         
           <p><a class="excerpt-btn" href="2016/06/26/front-auto-space/"><span>阅读全文</span></a></p>
         
@@ -605,14 +605,14 @@
     <div class="entry">
       
         <p><img src="/assets/23334229.jpg" alt></p>
-<p><strong>Themia</strong> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，<strong> 大部分功能都是原有主题的 </strong>，只是为了我自己的需求做了小部分的修改，主要是针对中文适配做的修改。<br>特点</p>
+<p><strong>Themia</strong> 是一个华丽的Hexo响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题<a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a>的基础上改造而来，<strong>大部分功能都是原有主题的</strong>，只是为了我自己的需求做了小部分的修改，主要是针对中文适配做的修改。<br>特点</p>
 <ol>
-<li>增加 1080P 等大屏显示器下的 SideBar 样式；</li>
+<li>增加1080P等大屏显示器下的SideBar样式；</li>
 <li>调整文章的样式，比如字体、字体大小、对齐等；</li>
 <li>中英混排自动加入空格（参考 <a href="https://github.com/vinta/pangu.js" target="_blank" rel="noopener">pangu.js</a>）；</li>
 <li>同步更新至 TranquiPeak 1.7.1；</li>
 </ol>
-<p>将项目根目录的所有文件复制进一个文件夹，并把该文件夹复制进 Hexo 项目的 themes 目录下，再把 Hexo 的配置文件_config.yml 中的 theme 标签的指改为该文件夹的名称即可。</p>
+<p>将项目根目录的所有文件复制进一个文件夹，并把该文件夹复制进Hexo项目的themes目录下，再把Hexo的配置文件_config.yml中的theme标签的指改为该文件夹的名称即可。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.1.0
 notion-down.revision = b'074303e'
@@ -695,16 +695,16 @@ hexo.metaAlignment = center
   <div class="article-content">
     <div class="entry">
       
-        <p>还记得我们在代理 Activity 模式里谈到启动插件 APK 里的 Activity 的两个难题吗，由于插件里的 Activity 没在主项目的 Manifest 里面注册，所以无法经历系统 Framework 层级的一系列初始化过程，最终导致获得的 Activity 实例并没有生命周期和无法使用 res 资源。</p>
-<p>使用代理 Activity 能够解决这两个问题，但是有一些限制：</p>
+        <p>还记得我们在代理Activity模式里谈到启动插件APK里的Activity的两个难题吗，由于插件里的Activity没在主项目的Manifest里面注册，所以无法经历系统Framework层级的一系列初始化过程，最终导致获得的Activity实例并没有生命周期和无法使用res资源。</p>
+<p>使用代理Activity能够解决这两个问题，但是有一些限制：</p>
 <ul>
-<li>实际运行的 Activity 实例其实都是 ProxyActivity，并不是真正想要启动的 Activity；</li>
-<li>ProxyActivity 只能指定一种 LaunchMode，所以插件里的 Activity 无法自定义 LaunchMode；</li>
-<li>不支持静态注册的 BroadcastReceiver；</li>
-<li>往往不是所有的 APK 都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的 “开发规范”；</li>
+<li>实际运行的Activity实例其实都是ProxyActivity，并不是真正想要启动的Activity；</li>
+<li>ProxyActivity只能指定一种LaunchMode，所以插件里的Activity无法自定义LaunchMode；</li>
+<li>不支持静态注册的BroadcastReceiver；</li>
+<li>往往不是所有的APK都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的”开发规范”；</li>
 </ul>
-<p>特别是最后一个，无法直接把一个普通的 APK 作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通 APP 那样自由。</p>
-<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的 APK 安装包。这听起来好像是只有获得 ROOT 权限才能做到的事情，要不然随便写个空壳的 APK 加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成 Activity 类的方式。</p>
+<p>特别是最后一个，无法直接把一个普通的APK作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通APP那样自由。</p>
+<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的APK安装包。这听起来好像是只有获得ROOT权限才能做到的事情，要不然随便写个空壳的APK加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成Activity类的方式。</p>
         
           <p><a class="excerpt-btn" href="2016/06/14/android-dynamical-loading-07-dynamic-activity/"><span>阅读全文</span></a></p>
         
