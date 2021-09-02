@@ -71,6 +71,86 @@
 
   
     
+    <h3 class="article-title"><a href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/"><span>动态创建 Activity 模式</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-06-14T00:00:00.000Z">
+          2016-06-14
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>还记得我们在代理Activity模式里谈到启动插件APK里的Activity的两个难题吗，由于插件里的Activity没在主项目的Manifest里面注册，所以无法经历系统Framework层级的一系列初始化过程，最终导致获得的Activity实例并没有生命周期和无法使用res资源。</p>
+<p>使用代理Activity能够解决这两个问题，但是有一些限制：</p>
+<ul>
+<li>实际运行的Activity实例其实都是ProxyActivity，并不是真正想要启动的Activity；</li>
+<li>ProxyActivity只能指定一种LaunchMode，所以插件里的Activity无法自定义LaunchMode；</li>
+<li>不支持静态注册的BroadcastReceiver；</li>
+<li>往往不是所有的APK都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的”开发规范”；</li>
+</ul>
+<p>特别是最后一个，无法直接把一个普通的APK作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通APP那样自由。</p>
+<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的APK安装包。这听起来好像是只有获得ROOT权限才能做到的事情，要不然随便写个空壳的APK加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成Activity类的方式。</p>
+        
+          <p><a class="excerpt-btn" href="2016/06/14/android-dynamical-loading-07-dynamic-activity/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/动态化/">动态化</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2016/06/11/tool-duplicate-screen-and-mechanical-keyboard/"><span>双屏显示器配合机械键盘食用更佳</span></a></h3>
     
   
@@ -721,78 +801,6 @@ hexo.metaAlignment = center
         <i class="icon-comments"></i>
         <span>
           <a href="/2016/05/04/whisper-jobs-bilibili/#comment">评论</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2016/05/01/whisper-join-bilibili/"><span>BILIBILI・乾杯</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/05/01/whisper-join-bilibili/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-05-01T00:00:00.000Z">
-          2016-05-01
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p><img src="/assets/5708321a_7f3a_4f4a_aa73_093598f34aed_untitled.png" alt></p>
-<p>我最近搬到BiliBili（B站）总部工作了。<br>虽然今天才刚刚到了五月，不过我的五月病已经发作了好几个月了。<br>最近一段时间一直处理咸鱼状态，因为发生了一接连不愉快的事情，让我无从淡定……</p>
-        
-          <p><a class="excerpt-btn" href="2016/05/01/whisper-join-bilibili/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Life/">Life</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/工作机会/">工作机会</a><a href="/tags/哔哩哔哩/">哔哩哔哩</a><a href="/tags/B-站/">B 站</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2016/05/01/whisper-join-bilibili/#comment">评论</a>
         </span>
       </span>
     </div>
