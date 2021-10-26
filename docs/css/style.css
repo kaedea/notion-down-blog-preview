@@ -457,7 +457,7 @@ body .blog .content {
   box-sizing: border-box;
   max-width: 770px;
   width: 100%;
-  padding: 0px 10px 10px;
+  padding: 0px 20px 20px;
   margin: 0 auto;
 }
 header {
@@ -482,7 +482,7 @@ header .site-branding .site-title a {
   background-color: #9f353a;
   line-height: 5rem;
   height: 5rem;
-  padding: 0 2rem;
+  padding: 0 5rem;
   -webkit-transition: padding 0.3s ease-out;
   transition: padding 0.3s ease-out;
 }
