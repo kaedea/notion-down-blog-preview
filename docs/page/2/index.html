@@ -94,7 +94,7 @@
         <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard又搞了个大新闻</a>），主要吐槽的是项目里面使用ProGuard工具导致的一个诡异的坑。其中根本的原因就是，ProGuard混淆Java注解类的时候，把两个方法混淆成同样的名字，导致dx工具在打包<code>.dex</code>文件的时候报错。</p>
 <p>本来以为这件事情算是告一段落了，没想到自己还是太Naive了。今天早上突然收到了ProGuard开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
         
-          <p><a class="excerpt-btn" href="2017/03/21/android/naughty-proguard-tuduki/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2017/03/21/android/naughty-proguard-tuduki/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -166,7 +166,7 @@
         <p>一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。</p>
 <p>ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我们往往无法察觉BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。<br>不过今天被ProGuard坑的不是混淆API导致的BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
         
-          <p><a class="excerpt-btn" href="2017/03/20/android/naughty-proguard/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2017/03/20/android/naughty-proguard/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -329,7 +329,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
 <p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
         
-          <p><a class="excerpt-btn" href="2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -401,7 +401,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
 <p>MultiDex 是Google 为了解决 “<strong>65535方法数超标</strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
         
-          <p><a class="excerpt-btn" href="2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -475,7 +475,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
 </blockquote>
 <p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
         
-          <p><a class="excerpt-btn" href="2016/10/02/android/log-utility/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/10/02/android/log-utility/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -548,7 +548,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
 <p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
 <p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
         
-          <p><a class="excerpt-btn" href="2016/09/23/living/living-hackintosh-lh532/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/09/23/living/living-hackintosh-lh532/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -622,7 +622,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
 <!-- ColumnList start -->
 <!-- Column 0 start -->
         
-          <p><a class="excerpt-btn" href="2016/09/17/front/front-hexo-theme-next/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/09/17/front/front-hexo-theme-next/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -694,7 +694,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <p><img src="/assets/4df27cf7_e064_4741_ae49_f4bca8a82724_untitled.png" alt></p>
 <p>结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&lt;ゝω·)☆”。</p>
         
-          <p><a class="excerpt-btn" href="2016/07/10/android-dynamical-loading-08-satrt-frontia/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/"><span>阅读全文</span></a></p>
         
       
     </div>
@@ -770,7 +770,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
 -->
 <p>关于“是否应该在中文和英文之间加上空格”的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
         
-          <p><a class="excerpt-btn" href="2016/06/26/front-auto-space/"><span>阅读全文</span></a></p>
+          <p><a class="excerpt-btn" href="/2016/06/26/front-auto-space/"><span>阅读全文</span></a></p>
         
       
     </div>
