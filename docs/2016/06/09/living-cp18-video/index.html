@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <iframe src="//player.bilibili.com/player.html?aid=4982268&bvid=BV19s411e7R2&cid=8092576&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 <p>转眼间来B站工作已经有2个月了，这是第一天粗来玩，9号一个人逛CP18，找基友章鱼的摊位，被安利了一张CD，现场许多萌妹子，发了不少牢骚（求个妹纸一起吃自助餐、看电影、逛漫展）。</p>

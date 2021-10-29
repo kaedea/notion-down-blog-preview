@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>Android开发中，可以在Java代码里给View设置点击事件，也可以直接在XML布局里通过<code>android:onClick</code>属性设置回调，这篇日志注意是从源码角度分析后者的实现方式。</p>
 <a id="more"></a>
 <p>给一个View设置监听点击事件是再普通不过的事情，比如：</p>

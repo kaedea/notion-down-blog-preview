@@ -17,8 +17,8 @@
   border: 1px solid #e0e0e0;
   line-height: 30px;
   height: 32px;
-  padding: 10px 20px;
-  border-radius: 16px;
+  padding: 10px 16px;
+  border-radius: 12px;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
 }

@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NotionUp"><span class="toc-text">NotionUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#备份-Notion-数据"><span class="toc-text">备份 Notion 数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配合-CircleCi-使用"><span class="toc-text">配合 CircleCi 使用</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/8f134329_a1a6_49b2_97a4_c07ea4c3e733_untitled.png" alt></p>
 <p>最近我已经把自己的笔记系统迁移到 Notion 上面，相比过去十年间用过的为知笔记和有道云笔记，Notion 的自定义和自动化玩法显然要丰富许多，而且多个平台的客户端也做得不错（国产软件现在都是满屏的广告非常难受）。不过我总感觉 Notion 在数据同步和历史数据版本控制上做得比较搓。</p>
 <p>比如我感觉我好像同步丢过几次数据，而且就算开了 Notion Pro 服务，Notion Page 的历史记录居然没有 <code>diff</code> 比对（这样很难看出不同历史记录之间的变更）。</p>

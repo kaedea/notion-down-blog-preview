@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/4ece21b3_fdd1_478f_bf2e_abf40eb1960b_untitled.png" alt></p>
 <p>3年Android程序设计的自我吐槽。<br>春节期间，因为使用VPN梯子的姿势不对，导致Chrome的Google书签和xMarks书签发生了冲突，所以有一些重要的书签可能丢失了，我需要整理一下。看了一边满屏的技术教程，顿时产生了颇多的思绪。<br>Okay，来看看都有哪些书签</p>
 <a id="more"></a>

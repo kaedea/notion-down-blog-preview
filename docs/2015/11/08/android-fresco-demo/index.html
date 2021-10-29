@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fresco-简介"><span class="toc-text">Fresco 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#项目内容"><span class="toc-text">项目内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fresco的特性"><span class="toc-text">Fresco的特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预览"><span class="toc-text">预览</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt></p>
 <p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco使用起来非常简单，也容易扩展，然而这并不是我喜欢Fresco的主要原因。</p>
 <a id="more"></a>

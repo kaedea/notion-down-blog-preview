@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ワークフロー"><span class="toc-text">ワークフロー</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NotionDown-の実行"><span class="toc-text">NotionDown の実行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="https://www.notion.so/image/https%3A%252F%252Fwww.notion.so%252Fimages%252Fpage-cover%252Fnasa_buzz_aldrin_on_the_moon.jpg" alt="Page Cover"></p>
 <p><a href="https://github.com/kaedea/notion-down" target="_blank" rel="noopener">Notion Down</a> とは、 Notion ページを Markdown ファイルにコンバートする Python ツールです。ちなみ、Hexo などのブログとのインテグレーションも可能です。このレポのインスピレーションやゴールは、「Notion のみでノートしながら自動的に目標な MD ファイルを生成する」ことで、ライティングの断片化を避ける。</p>
 <a id="more"></a>

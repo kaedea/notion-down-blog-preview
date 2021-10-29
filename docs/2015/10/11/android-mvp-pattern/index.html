@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC模式"><span class="toc-text">MVC模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP模式"><span class="toc-text">MVP模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP模式的作用"><span class="toc-text">MVP模式的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity-代码变得更加简洁"><span class="toc-text">Activity 代码变得更加简洁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方便进行单元测试"><span class="toc-text">方便进行单元测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免-Activity-的内存泄露"><span class="toc-text">避免 Activity 的内存泄露</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP模式的使用"><span class="toc-text">MVP模式的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP模式简单实例"><span class="toc-text">MVP模式简单实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-text">后记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录"><span class="toc-text">附录</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>Android <strong>MVP模式</strong>[1]也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP模式</strong> 的优势就充分显示出来了。<br>MVP模式是MVC模式在Android上的一种变体，要介绍MVP就得先介绍MVC。在MVC模式中，Activity应该是属于View这一层。而实质上，它既承担了View，同时也包含一些Controller的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把Activity的View和Controller抽离出来就变成了View和Presenter，这就是MVP模式。</p>
 <a id="more"></a>
 <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>

@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MultiDex是如何判断是否需要重新解压和优化dex的"><span class="toc-text">MultiDex是如何判断是否需要重新解压和优化dex的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预解压（PreMultiDex）详细的流程图"><span class="toc-text">预解压（PreMultiDex）详细的流程图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装新Apk前先解压和优化dex"><span class="toc-text">安装新Apk前先解压和优化dex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次运行新Apk时，移动预先安装好的dex文件"><span class="toc-text">第一次运行新Apk时，移动预先安装好的dex文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次运行新Apk后，检查dex文件是否正确"><span class="toc-text">第一次运行新Apk后，检查dex文件是否正确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复MultiDex"><span class="toc-text">恢复MultiDex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些小细节"><span class="toc-text">一些小细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dex文件、odex文件？"><span class="toc-text">dex文件、odex文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dexopt缓存"><span class="toc-text">dexopt缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于dex文件校验"><span class="toc-text">关于dex文件校验</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
 <p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
 <a id="more"></a>

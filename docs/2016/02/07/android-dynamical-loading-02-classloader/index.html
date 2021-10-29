@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类加载器ClassLoader"><span class="toc-text">类加载器ClassLoader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有几个ClassLoader实例？"><span class="toc-text">有几个ClassLoader实例？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建自己ClassLoader实例"><span class="toc-text">创建自己ClassLoader实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader双亲代理模型加载类的特点和作用"><span class="toc-text">ClassLoader双亲代理模型加载类的特点和作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用"><span class="toc-text">作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用ClassLoader一些需要注意的问题"><span class="toc-text">使用ClassLoader一些需要注意的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DexClassLoader-和-PathClassLoader"><span class="toc-text">DexClassLoader 和 PathClassLoader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类加载器的初始化"><span class="toc-text">类加载器的初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载类的过程"><span class="toc-text">加载类的过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义ClassLoader"><span class="toc-text">自定义ClassLoader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android程序比起一般Java程序在使用动态加载时麻烦在哪里"><span class="toc-text">Android程序比起一般Java程序在使用动态加载时麻烦在哪里</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>早期使用过Eclipse等Java编写的软件的同学可能比较熟悉，Eclipse可以加载许多第三方的插件（或者叫扩展），这就是动态加载。这些插件大多是一些Jar包，而使用插件其实就是动态加载Jar包里的Class进行工作。这其实非常好理解，Java代码都是写在Class里面的，程序运行在虚拟机上时，虚拟机需要把需要的Class加载进来才能创建实例对象并工作，而完成这一个加载工作的角色就是ClassLoader。</p>
 <a id="more"></a>
 <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>

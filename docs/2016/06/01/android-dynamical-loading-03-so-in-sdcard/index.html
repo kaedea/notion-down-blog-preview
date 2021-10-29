@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一般的SO文件的使用姿势"><span class="toc-text">一般的SO文件的使用姿势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何把SO文件存放在外部存储"><span class="toc-text">如何把SO文件存放在外部存储</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>Android中JNI的使用其实就包含了动态加载，APP运行时动态加载<code>.so</code>库并通过JNI调用其封装好的方法。后者一般是使用NDK工具从C/C++代码编译而成，运行在Native层，效率会比执行在虚拟机的Java代码高很多，所以Android中经常通过动态加载<code>.so</code>库来完成一些对性能比较有需求的工作（比如T9搜索、或者Bitmap的解码、图片高斯模糊处理等）。此外，由于<code>.so</code>库是由C++编译而来的，只能被反编译成汇编代码，相比Smali更难被破解，因此<code>.so</code>库也可以被用于安全领域。</p>
 <p>与我们常说的基于ClassLoader的动态加载不同，SO库的加载是使用System类的（由此可见对SO库的支持也是Android的基础功能），所以这里这是作为补充说明。不过，如果使用ClassLoader加载SD卡里插件APK，而插件APK里面包含有SO库，这就涉及到了对插件APK里的SO库的加载，所以我们也要知道如何加载SD卡里面的SO库。</p>
 <a id="more"></a>

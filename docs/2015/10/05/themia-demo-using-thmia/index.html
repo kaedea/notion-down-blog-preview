@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主题特点"><span class="toc-text">主题特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应式主题"><span class="toc-text">响应式主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漂亮的边栏-SideBar"><span class="toc-text">漂亮的边栏 SideBar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可自定义的背景图片-Background-CoverImage"><span class="toc-text">可自定义的背景图片 Background CoverImage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简洁的关于我卡片-About-Page"><span class="toc-text">简洁的关于我卡片 About Page</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持国际化语言-i18n"><span class="toc-text">支持国际化语言(i18n)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索-Swiftype"><span class="toc-text">搜索 Swiftype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志功能"><span class="toc-text">日志功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志缩略图-Post-ThumbnailImage"><span class="toc-text">日志缩略图 Post ThumbnailImage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志封面图-Post-CoverImage"><span class="toc-text">日志封面图 Post CoverImage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多种图片展示方式"><span class="toc-text">多种图片展示方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相册型日志-Gallery-Post"><span class="toc-text">相册型日志 Gallery Post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志分享功能"><span class="toc-text">日志分享功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志评论功能-Disqus"><span class="toc-text">日志评论功能 Disqus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他功能"><span class="toc-text">其他功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Themia做了哪些更改？"><span class="toc-text">Themia做了哪些更改？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调整日志的宽度"><span class="toc-text">调整日志的宽度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改字体"><span class="toc-text">修改字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改字体颜色的配色"><span class="toc-text">修改字体颜色的配色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增加图片加载的淡入动画"><span class="toc-text">增加图片加载的淡入动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志缩略图居中截取"><span class="toc-text">日志缩略图居中截取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改分享功能"><span class="toc-text">修改分享功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/27f9ca87_2f0c_4ae0_ae1e_1c18feb424b1_untitled.png" alt></p>
 <p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress时代，还是现在换成Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是<a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a>的响应式WP主题，但是如今Soma已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的Hexo主题翻了个边，连Fork的主题都没放过，发现最满意的还是TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a>是一个华丽的Hexo响应式主题，由<strong>LouisBarranqueiro</strong>开发的主题<a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a>的基础上改造而来，<strong>大部分功能都是原有主题的</strong>，只是为了我自己的需求做了小部分的修改。</p>
 <a id="more"></a>

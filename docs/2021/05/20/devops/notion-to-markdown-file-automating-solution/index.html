@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Notion"><span class="toc-text">Notion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solution-amp-Workflows"><span class="toc-text">Solution &amp; Workflows</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NotionDown-Project"><span class="toc-text">NotionDown Project</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Substitute"><span class="toc-text">Substitute</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="https://www.notion.so/image/https%3A%252F%252Fwww.notion.so%252Fimages%252Fpage-cover%252Fwoodcuts_16.jpg" alt="Page Cover"></p>
 <!-- draft
 

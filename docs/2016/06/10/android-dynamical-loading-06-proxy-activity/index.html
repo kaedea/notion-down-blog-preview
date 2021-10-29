@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动没有注册的Activity的两个主要问题"><span class="toc-text">启动没有注册的Activity的两个主要问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理Activity模式"><span class="toc-text">代理Activity模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-处理插件Activity的生命周期"><span class="toc-text">1. 处理插件Activity的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-在插件Activity里使用res资源"><span class="toc-text">2. 在插件Activity里使用res资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理模式的具体项目-dynamic-load-apk"><span class="toc-text">代理模式的具体项目 dynamic-load-apk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#处理插件项目里的so库的加载"><span class="toc-text">处理插件项目里的so库的加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多插件APK的管理"><span class="toc-text">多插件APK的管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际应用中可能要处理的问题"><span class="toc-text">实际应用中可能要处理的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-插件APK的管理后台"><span class="toc-text">1. 插件APK的管理后台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-插件APK合法性校验"><span class="toc-text">2. 插件APK合法性校验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#是热部署，还是插件化？"><span class="toc-text">是热部署，还是插件化？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-只有在用户使用到的时候才加载插件"><span class="toc-text">1. 只有在用户使用到的时候才加载插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-一启动主项目就加载插件"><span class="toc-text">2. 一启动主项目就加载插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-让插件使用主项目的功能"><span class="toc-text">3. 让插件使用主项目的功能</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>简单模式中，使用ClassLoader加载外部的Dex或Apk文件，可以加载一些本地APP不存在的类（或者更新本地已存在的类），从而执行一些新的代码逻辑，但是使用这种方法却不能直接启动插件里的Activity等组件，也没办法使用res资源，如果不解决这两个问题，则使用插件化的方式开发Android业务会非常繁琐。</p>
 <a id="more"></a>
 <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>

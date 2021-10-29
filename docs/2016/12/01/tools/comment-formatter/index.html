@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA; // xxx  |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC; // xxx               |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD; // xxx      |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE; // xxx                      |</span></span><br><span class="line"><span class="comment">//               |                     |                       |</span></span><br><span class="line"><span class="comment">//               |                     v                       |</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA;  // xxx |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC;               // xxx |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD;      // xxx |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE;                      // xxx |</span></span><br><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br></pre></td></tr></table></figure>
 <p>Comment Formatter is an IntelliJ IDEA plugin (also works in Android Studio) that formats comments as above. It will force all the comments to align to the longest one.</p>
 <p><strong>Getting Started</strong></p>

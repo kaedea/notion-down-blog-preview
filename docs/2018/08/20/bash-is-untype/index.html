@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-is-Untype"><span class="toc-text">Bash is Untype</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#面向文本编程"><span class="toc-text">面向文本编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-编程最佳实践"><span class="toc-text">Bash 编程最佳实践</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/bash_mian_xiang_google_bian_cheng_bashy.png" alt="Bash，面向 Google 编程！"></p>
 <p>Bash，一门典型的面向 Google 编程的语言（类似的还有面向 StackOverflow 编程的 vim），最大的语言特性是其“不确定性原理”（你要么学会了 Bash 了语法，要么写出了能正常运行的 Bash 脚本，但是不能即学会了语法又写出了脚本），你今天刚学会的语法，到了明天就不一定会记得了；今天刚写好的代码，到了明天就不一定能运行了。与其回忆昨天学了什么，还不如直接问 Google。</p>
 <p>Bash 学习的深入可真是“从入门到入土”，个人感觉最佳实践应该是把 Bash 作为脚本入口，包一层别的脚本语言（比如 Python），后续工作全交由后者处理。</p>

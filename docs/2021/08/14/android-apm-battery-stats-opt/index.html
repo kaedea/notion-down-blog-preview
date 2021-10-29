@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#App-电量统计原理"><span class="toc-text">App 电量统计原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#电量计算公式"><span class="toc-text">电量计算公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-硬件模块的电量统计方式"><span class="toc-text">Android 硬件模块的电量统计方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-系统电量统计服务"><span class="toc-text">Android 系统电量统计服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工作流程"><span class="toc-text">工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BatteryStatsService-时长统计流程"><span class="toc-text">BatteryStatsService 时长统计流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BatteryStatsService-功耗计算流程"><span class="toc-text">BatteryStatsService 功耗计算流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Android-系统-App-耗电排行"><span class="toc-text">Android 系统 App 耗电排行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#adb-dumpsys-batterystats-amp-adb-bugreport"><span class="toc-text">adb dumpsys batterystats &amp; adb bugreport</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU-Load-Usage"><span class="toc-text">CPU Load/Usage</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BatteryCanary"><span class="toc-text">BatteryCanary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程监控"><span class="toc-text">线程监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统服务调用监控"><span class="toc-text">系统服务调用监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些实现细节"><span class="toc-text">一些实现细节</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#App-状态统计"><span class="toc-text">App 状态统计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程池问题细分"><span class="toc-text">线程池问题细分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程异常现场"><span class="toc-text">线程异常现场</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例分享"><span class="toc-text">案例分享</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#长时、频繁任务"><span class="toc-text">长时、频繁任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前后台判断"><span class="toc-text">前后台判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loop-退出逻辑不完备"><span class="toc-text">Loop 退出逻辑不完备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#while-true"><span class="toc-text">while(true) {}</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Loop-嵌套"><span class="toc-text">Loop 嵌套</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Loop-Sleep"><span class="toc-text">Loop + Sleep</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap-并发操作导致的死循环（死链）"><span class="toc-text">HashMap 并发操作导致的死循环（死链）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-BatteryCanary"><span class="toc-text">使用 BatteryCanary</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Battery-Lifecycle"><span class="toc-text">Battery Lifecycle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Battery-电量报告-amp-Thread-Dump"><span class="toc-text">Battery 电量报告 &amp; Thread Dump</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Benchmarks"><span class="toc-text">Benchmarks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Facebook-Battery-Metrics"><span class="toc-text">Facebook Battery-Metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <!-- changelog
 2021-09-10
 修订 3

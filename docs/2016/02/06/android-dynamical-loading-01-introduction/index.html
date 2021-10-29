@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术背景"><span class="toc-text">技术背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统PC软件中的动态加载技术"><span class="toc-text">传统PC软件中的动态加载技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android应用的动态加载技术"><span class="toc-text">Android应用的动态加载技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态加载的定义"><span class="toc-text">动态加载的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android动态加载的类型"><span class="toc-text">Android动态加载的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android动态加载的大致过程"><span class="toc-text">Android动态加载的大致过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态加载-so库"><span class="toc-text">动态加载 so库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态加载-dex-jar-apk文件"><span class="toc-text">动态加载 dex/jar/apk文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础知识：类加载器ClassLoader和dex文件"><span class="toc-text">基础知识：类加载器ClassLoader和dex文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的动态加载模式"><span class="toc-text">简单的动态加载模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代理Activity模式"><span class="toc-text">代理Activity模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态创建Activity模式"><span class="toc-text">动态创建Activity模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么我们要使用动态加载技术"><span class="toc-text">为什么我们要使用动态加载技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#作用与代价"><span class="toc-text">作用与代价</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#作用"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代价"><span class="toc-text">代价</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他动态修改代码的技术"><span class="toc-text">其他动态修改代码的技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态加载开源项目"><span class="toc-text">动态加载开源项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#脚注"><span class="toc-text">脚注</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>我们很早开始就在Android项目中采用了动态加载技术，主要目的是为了达到让用户不用重新安装APK就能升级应用的功能（特别是 SDK项目），这样一来不但可以大大提高应用新版本的覆盖率，也减少了服务器对旧版本接口兼容的压力，同时如果也可以快速修复一些线上的BUG。</p>
 <p>这种技术并不是常规的Android开发方式，早期并没有完善的解决方案。从“不明觉厉”到稳定投入生产，一直以来我总想对此编写一些文档，这也是这篇日志的由来，没想到前前后后竟然拖沓着编辑了一年多，所以日志里有的地方思路可能有点衔接得不是很好，如果有修正建议请直接回复。</p>
 <a id="more"></a>

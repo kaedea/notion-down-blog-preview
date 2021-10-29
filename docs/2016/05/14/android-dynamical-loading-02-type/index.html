@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态加载的类型"><span class="toc-text">动态加载的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行在虚拟机"><span class="toc-text">运行在虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#热部署"><span class="toc-text">热部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插件化"><span class="toc-text">插件化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#热修复"><span class="toc-text">热修复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拆分DEX"><span class="toc-text">拆分DEX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行在Native"><span class="toc-text">运行在Native</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载SO库"><span class="toc-text">加载SO库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JNI-HOOK"><span class="toc-text">JNI HOOK</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/11123e44_8bc4_4279_bd17_0381425910a0_untitled.png" alt></p>
 <p>现在网络上有许多关于动态加载的介绍的文章，谈及的关键词汇有动态加载、插件化、热部署、热修复等，对于一些刚接触这方面开发技术的人来说，可能容易混淆。<br>虽然我在动态加载系列的文章中或多或少有谈到这些概念的区别，但是我觉得认识这些区别对于使用动态加载技术还是挺重要的，所以特别开这个新的文章进行分析。</p>
 <a id="more"></a>

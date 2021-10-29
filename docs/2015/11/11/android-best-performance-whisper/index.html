@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#客观原因"><span class="toc-text">客观原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android设备系统升级速度慢"><span class="toc-text">Android设备系统升级速度慢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-APP需要做过多旧版本的兼容"><span class="toc-text">Android APP需要做过多旧版本的兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大量采用“黑科技”"><span class="toc-text">大量采用“黑科技”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常驻内存、全家桶以及互相唤醒"><span class="toc-text">常驻内存、全家桶以及互相唤醒</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#H5内容、硬生生把Android应用做成IOS应用等等"><span class="toc-text">H5内容、硬生生把Android应用做成IOS应用等等</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主观原因"><span class="toc-text">主观原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#没做好异步"><span class="toc-text">没做好异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存泄露以及GC"><span class="toc-text">内存泄露以及GC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#没做好界面的布局优化"><span class="toc-text">没做好界面的布局优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#没做好代码优化"><span class="toc-text">没做好代码优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能问题的排查方法"><span class="toc-text">性能问题的排查方法</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>“一本正经地胡说八道”用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？<br>一直以来都想对Android APP开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。<br>“APP卡顿”是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为“如何定位APP中的性能问题”和“提高性能需要注意哪些点”这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。</p>
 <a id="more"></a>
 <p>开始正题之前先让我吐一吐苦水吧。<br>我个人喜欢日语，所以学了很久的日语了，同样我也是因为喜欢Android，才开始跳进了Android开发这个坑。不过非常遗憾的是，就和“当初我在日语班里，周围大部分人只是因为日语专业比较轻松才选了它”一样，我周围的Android研发同事大部分用的是IOS手机，甚至有人问过我“我说你工资也不至于那么低吧，怎么每天都拿着安卓手机”。产品则是每次都说“你这个交互和IOS的不一样，我需求文档里写得清清楚楚，要保持一致的用户体验”。设计的话，我从来就没有遇见过拿安卓手机的。<br>我尝试说过Android不比IOS差，但是没人站在我这边。<br>自从Android系统诞生以来一直都有一个疑问，“为什么Android手机这么卡？”，无论Android设备的硬件再怎么升级，版本再怎么迭代，“Android比IOS卡顿”似乎成为一个板上钉钉的事实。Android手机真的卡么？<br>至少在Android Kitkat之前，许多Android开发者都会选择回避这个问题；Kitkat之后，有一部分开发者已经有底气回答这个问题了；随着Android Lollipop以及Marshmallow先后的出现，我觉得Android开发者都可以自信地回答说“Android不卡”了。<br>在一个公司内部分享会中，国内Android领域的大神罗升阳在分享他对ART模式的研究中说到，继Kitkat采用了ART模式后，Lollipop中，除了UI线程之外又提供了一条专门用于执行动画的线程，这样一来UI线程就可以专注于展示数据和响应用户的输入，这让Android的流畅度又上了一个档次。IOS是闭源的所以我们无从得知，但是有人分析说IOS之所以这么流畅很大一个原因就是它大概也采用了类似动画线程的机制。老罗也相信“Android系统不会比IOS卡，甚至已经比它还流畅”。<br>这可不是随便说说，我的Nexus5升级到Lollipop之后我觉得它已经可以匹敌同事的IPhone6了，前不久升级到Marshmallow内测版，我更是觉得它已经拉开IPhone6一个档次了。<br>那为什么许多人觉得Android用起来还是比IOS卡？注意老罗说“Android系统”比IOS流畅，而不是“Android应用”，言下之意就是Android系统本身不卡，卡的是设备开发商开发的ROM以及开发者开发的第三方APP。我个人觉得Android卡顿问题大致有以下的原因。</p>

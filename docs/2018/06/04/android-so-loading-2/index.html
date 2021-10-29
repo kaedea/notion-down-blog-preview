@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求价值"><span class="toc-text">需求价值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态化需要解决的问题"><span class="toc-text">动态化需要解决的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安全性问题"><span class="toc-text">1. 安全性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-版本控制问题"><span class="toc-text">2. 版本控制问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-abi-兼容性判断"><span class="toc-text">3. abi 兼容性判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-System-load-加载代码侵入问题"><span class="toc-text">4. System#load 加载代码侵入问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体方案"><span class="toc-text">具体方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-系统加载-so-库的工作流程"><span class="toc-text">1. 系统加载 so 库的工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JNI-代码隔离方案"><span class="toc-text">2. JNI 代码隔离方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-JNI-代码内置方案"><span class="toc-text">3. JNI 代码内置方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-处理-dlopen-问题"><span class="toc-text">4. 处理 dlopen 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-so-依赖分析工具"><span class="toc-text">5. so 依赖分析工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他问题"><span class="toc-text">其他问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关-JNI-类污染问题"><span class="toc-text">相关 JNI 类污染问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码后续维护成本"><span class="toc-text">代码后续维护成本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持续集成、部署问题（CI-CD）"><span class="toc-text">持续集成、部署问题（CI/CD）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Play-Store-动态代码禁用问题"><span class="toc-text">Play Store 动态代码禁用问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾巴"><span class="toc-text">尾巴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-text">References</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>众所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
 <a id="more"></a>
 <h2 id="需求价值"><a href="#需求价值" class="headerlink" title="需求价值"></a>需求价值</h2><p>一般来说，越是成熟的 Android 项目，Native 代码的贡献量就越多，以往 APK 体积的主要占比大都是资源文件，不过现在 Native 代码带来的 so 体积占比也很可观了，所以 so 动态化的价值越来越凸显。另一方面，现在支持 arm64 的 Android 项目也越来越多，Google Play 更是强制要求支持 arm64，所以有的 Android 项目需要内置两种甚至以上 abi 支持（比如 B 站客户端项目就同时支持 arm32/arm64/x86 三种，以往还支持 arm5），结果就是 so 体积成倍地上涨。因此，能不能将非主要的 abi 相关的 so 文件动态化，也成为了国内 Android 项目瘦身优化不得不优先考虑的问题。</p>

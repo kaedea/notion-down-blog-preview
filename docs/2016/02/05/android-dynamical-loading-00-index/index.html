@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关信息"><span class="toc-text">相关信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-简单易懂的介绍"><span class="toc-text">1. 简单易懂的介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-动态加载的分类"><span class="toc-text">2. 动态加载的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-类加载器ClassLoader的工作机制"><span class="toc-text">3. 类加载器ClassLoader的工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-加载SD卡的SO库"><span class="toc-text">4. 加载SD卡的SO库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用SO库时需要注意的一些问题"><span class="toc-text">5. 使用SO库时需要注意的一些问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-简单的动态加载模式"><span class="toc-text">6. 简单的动态加载模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-代理Activity的模式"><span class="toc-text">7. 代理Activity的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-动态创建Activity的模式"><span class="toc-text">8. 动态创建Activity的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-设计一个插件化框架Frontia"><span class="toc-text">9. 设计一个插件化框架Frontia</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#还未发布的内容"><span class="toc-text">还未发布的内容</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/9228cd65_dd51_4de4_a55a_a5f0cf0226bc_untitled.png" alt></p>
 <p>说到动态加载，我们经常使用“插件化”、“热修复”、“热部署”等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
 <p>在Android开发中采用动态加载技术，可以达到不安装新的APK就升级APP功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急BUG。</p>

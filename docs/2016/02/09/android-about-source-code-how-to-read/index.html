@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日常开发中怎么阅读源码"><span class="toc-text">日常开发中怎么阅读源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#找到正确的源码"><span class="toc-text">找到正确的源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于SDK自带的源码和隐藏API"><span class="toc-text">关于SDK自带的源码和隐藏API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google的AOSP项目"><span class="toc-text">Google的AOSP项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些辅助阅读的工具"><span class="toc-text">一些辅助阅读的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chrome扩展"><span class="toc-text">Chrome扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Source-Insight"><span class="toc-text">Source Insight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VPN梯子"><span class="toc-text">VPN梯子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐阅读的源码"><span class="toc-text">推荐阅读的源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开始"><span class="toc-text">开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进阶"><span class="toc-text">进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三方开源项目"><span class="toc-text">第三方开源项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#站在巨人的肩膀上阅读"><span class="toc-text">站在巨人的肩膀上阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阅读时的姿势"><span class="toc-text">阅读时的姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。"><span class="toc-text">宏观上看，Android源码分为功能实现上的纵向，和功能拓展上的横向。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android的功能模块绝大部分是C-S架构"><span class="toc-text">Android的功能模块绝大部分是C/S架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android的底层是Linux-Kernel。"><span class="toc-text">Android的底层是Linux Kernel。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/302de811_18fd_4467_a307_86ef09076d7a_untitled.png" alt></p>
 <p>前面吐槽了 <a href="http://kaedea.com/2016/02/08/android-about-source-code/">有没有必要阅读Android源码</a>，后面觉得只吐槽不太好，还是应该多少弄点干货。需要说明的是，Android每个系统版本的源码都会有变动，而且代码中时不时Java和Native互相穿插，追求完全看透源码意义不大，把目的定在“理解代码设计的思路，弄清各个生命周期方法调用的顺序”比较实际。</p>
 <a id="more"></a>

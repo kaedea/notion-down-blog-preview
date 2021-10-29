@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#学习攻略"><span class="toc-text">学习攻略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单易懂的说明方式"><span class="toc-text">简单易懂的说明方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#确认硬盘的格式"><span class="toc-text">确认硬盘的格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#制作启动盘"><span class="toc-text">制作启动盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选用对应的引导辅助工具"><span class="toc-text">选用对应的引导辅助工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装驱动"><span class="toc-text">安装驱动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fujitsu-LH532-OS-X-El-Capitan"><span class="toc-text">Fujitsu LH532 OS X El Capitan</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/bb50f6df_4c0f_424a_b9b3_04870fa7b35c_untitled.png" alt></p>
 <p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
 <p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>

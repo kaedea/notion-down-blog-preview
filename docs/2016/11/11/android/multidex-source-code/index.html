@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dex的工作机制"><span class="toc-text">Dex的工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建DexFile对象"><span class="toc-text">创建DexFile对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载Dex文件里的类"><span class="toc-text">加载Dex文件里的类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MultiDex的工作机制"><span class="toc-text">MultiDex的工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工作流程"><span class="toc-text">工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码分析"><span class="toc-text">源码分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化方案"><span class="toc-text">优化方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PreMultiDex方案"><span class="toc-text">PreMultiDex方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步MultiDex方案"><span class="toc-text">异步MultiDex方案</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
 <p>MultiDex 是Google 为了解决 “<strong>65535方法数超标</strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
 <a id="more"></a>

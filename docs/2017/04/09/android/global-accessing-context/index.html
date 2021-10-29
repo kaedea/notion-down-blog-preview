@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取Context实例的一般方式"><span class="toc-text">获取Context实例的一般方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取Context实例的二般方式"><span class="toc-text">获取Context实例的二般方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一种全局获取Context实例的方式"><span class="toc-text">一种全局获取Context实例的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>哥白尼·罗斯福·马丁路德·李开复·嫁衣曾经说过</p>
 <blockquote>
 <p>Where there is an Android App, there is an Application context.</p>

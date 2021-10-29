@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么制作这个Blog？"><span class="toc-text">为什么制作这个Blog？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么制作这个博客？"><span class="toc-text">怎么制作这个博客？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写什么样的类型的日志？"><span class="toc-text">写什么样的类型的日志？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客系统的更换时间线"><span class="toc-text">博客系统的更换时间线</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>平时要么在工作中学习，要么在家里学习，但是不知道自己进步到哪一步了，故准备重启博客系统，记录一些点滴以看清自己的成长。相比以前使用的<code>Wordpress</code>，更想尝试一下静态博客，对比多个博客系统后，决定采用<code>HEXO</code>。</p>
 <a id="more"></a>
 <h2 id="为什么制作这个Blog？"><a href="#为什么制作这个Blog？" class="headerlink" title="为什么制作这个Blog？"></a>为什么制作这个Blog？</h2><p>折腾个人主页的时间也挺长了，最开始是使用SAE+WordPress搭建的博客，不过早期SAE权限不多，而且还有流量限制，所以就搬迁到BAE去了，还是使用WordPress搭建，坑爹的是BAE2014年开始直接收费了，T_T，所以个人主页荒废了一段时间，直到接触到Jekyll和HEXO，开始尝试以MarkDown的方式写日志。</p>

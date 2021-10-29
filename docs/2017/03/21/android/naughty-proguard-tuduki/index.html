@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#被雪藏的问题真正原因"><span class="toc-text">被雪藏的问题真正原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结一些人参经验"><span class="toc-text">总结一些人参经验</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard又搞了个大新闻</a>），主要吐槽的是项目里面使用ProGuard工具导致的一个诡异的坑。其中根本的原因就是，ProGuard混淆Java注解类的时候，把两个方法混淆成同样的名字，导致dx工具在打包<code>.dex</code>文件的时候报错。</p>
 <p>本来以为这件事情算是告一段落了，没想到自己还是太Naive了。今天早上突然收到了ProGuard开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
 <a id="more"></a>

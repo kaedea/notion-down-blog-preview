@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#双屏显示器"><span class="toc-text">双屏显示器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机械键盘"><span class="toc-text">机械键盘</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/4f2afbfb_c3c1_4faf_962b_3c1ca9933b2e_untitled.png" alt></p>
 <p>我一直计划着打造自己的工作室（工作平台），因为我觉得除了相关姿势扎实以外，优秀的生产工具也是提高办公效率的利器，而且好玩的生产工具还能提高自己工作的积极性，减少咸鱼状态。所以，适当地买一些优质的生产工具犒劳自己，也是我自己为数不多的乐趣。说到开发相关的生产工具，则莫过于大屏显示器和机械键盘了。</p>
 <a id="more"></a>

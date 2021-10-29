@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#满足多种业务需求的插件"><span class="toc-text">满足多种业务需求的插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件的更新策略"><span class="toc-text">插件的更新策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件的安装策略"><span class="toc-text">插件的安装策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件投入生产前需要解决的问题"><span class="toc-text">插件投入生产前需要解决的问题</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/4df27cf7_e064_4741_ae49_f4bca8a82724_untitled.png" alt></p>
 <p>结合动态加载系列文章的分析，现在开始设计并开发一个Android的插件化框架，命名为Frontia。Frontia有“前端”的意思，寓意着Android插件能像前端开发那样动态发版，同时，这一词出自Macross动画系列，有“繁星”的意思，“我们的征途是星辰大海 KIRA!!(&lt;ゝω·)☆”。</p>
 <a id="more"></a>

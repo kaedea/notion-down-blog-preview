@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建Activity模式"><span class="toc-text">动态创建Activity模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用DexMaker动态创建一个类"><span class="toc-text">使用DexMaker动态创建一个类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改需要启动的目标Activity"><span class="toc-text">修改需要启动的目标Activity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建Activity开源项目-android-pluginmgr"><span class="toc-text">动态创建Activity开源项目 android-pluginmgr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理Activity模式与动态创建Activity模式的区别"><span class="toc-text">代理Activity模式与动态创建Activity模式的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>还记得我们在代理Activity模式里谈到启动插件APK里的Activity的两个难题吗，由于插件里的Activity没在主项目的Manifest里面注册，所以无法经历系统Framework层级的一系列初始化过程，最终导致获得的Activity实例并没有生命周期和无法使用res资源。</p>
 <p>使用代理Activity能够解决这两个问题，但是有一些限制：</p>
 <ul>

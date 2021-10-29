@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#大名鼎鼎的Genymotion"><span class="toc-text">大名鼎鼎的Genymotion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Genymotion无法启动"><span class="toc-text">Genymotion无法启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Genymotion无法安装Google-Play"><span class="toc-text">Genymotion无法安装Google Play</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电脑上也可以玩Android游戏的BlueStacks"><span class="toc-text">电脑上也可以玩Android游戏的BlueStacks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用-1"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不足之处"><span class="toc-text">不足之处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最适合开发的Android模拟器Droid4X"><span class="toc-text">最适合开发的Android模拟器Droid4X</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特点-1"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使用-2"><span class="toc-text">如何使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不足之处-1"><span class="toc-text">不足之处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p>“工欲善其事，必先利其器。” 使用<code>Android模拟器</code>开发和调试应用肯定比使用真机方便。但相比<code>XCODE</code>的<code>IOS模拟器</code>，Android SDK自带的<code>AVD</code>实在不争气，不过一些第三方的模拟器却表现不俗！</p>
 <p>10年我开始接触Android开发时候，手头上甚至连一部低端的Android手机都没有，那时候用的是Android SDK自带的AVD模拟器，相信任何Android开发者都对这货深恶痛绝。一直以来，Android开发都有以下的毛病：</p>
 <ul>

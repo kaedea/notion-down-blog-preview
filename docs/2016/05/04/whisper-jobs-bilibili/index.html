@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#公司介绍"><span class="toc-text">公司介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#职位"><span class="toc-text">职位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android开发攻城狮"><span class="toc-text">Android开发攻城狮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android视频播放器开发攻城狮"><span class="toc-text">Android视频播放器开发攻城狮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#薪资福利"><span class="toc-text">薪资福利</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#联系方式"><span class="toc-text">联系方式</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/baeaf8f0_ed2b_4d8d_8783_20187052cefa_untitled.png" alt></p>
 <p>来B站不到半个月就是开内推了 😂 <strong>BiliBili移动技术部</strong> 开始招兵买马啦，欢迎各位小伙伴加入！🌝🌝🌚（严肃脸） Android开发/iOS开发/算法工程师/产品/运营，中二二次元技术宅集聚地，20-30k，高薪高逼格技术风格、大量绝度领域妹子。</p>
 <a id="more"></a>

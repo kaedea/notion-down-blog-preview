@@ -95,6 +95,38 @@
   <div class="article-content">
     <div class="entry">
       
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#刚开始时候的故事"><span class="toc-text">刚开始时候的故事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要阅读源码"><span class="toc-text">为什么要阅读源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#其一，了解基层，高层才能更好地工作。"><span class="toc-text">其一，了解基层，高层才能更好地工作。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其二，能够理解Android设计者的意图。"><span class="toc-text">其二，能够理解Android设计者的意图。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其三，能够学习优秀开源项目的代码风格和设计理念"><span class="toc-text">其三，能够学习优秀开源项目的代码风格和设计理念</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
         <p><img src="/assets/927fa91a_6f78_4968_bd27_36f04888c6f7_untitled.png" alt></p>
 <p>或许对于许多Android开发者来说，所谓的Android工程师的工作“不过就是用XML实现设计师的美术图，用JSON解析服务器的数据，再把数据显示到界面上”就好了，源码什么的，看也好不看也罢，反正应用层的开发用不上，再加上现在优秀的轮子越来越多，拿来主义泛滥，能用就是，反正老板也不关心是不是你自己写的，用我现在老大的话来说，阅读源码似乎只是一种“锦上添花”的事，有自然好，没有也罢。<br>那么，作为Android开发者的自我修养，到底有没有必要阅读AOSP以及其他开源项目的源码呢？</p>
 <a id="more"></a>
