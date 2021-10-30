@@ -73,6 +73,82 @@
 
   
     
+    <h3 class="article-title"><a href="/2017/04/09/android/global-accessing-context/"><span>一种Android应用内全局获取Context实例的装置</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/04/09/android/global-accessing-context/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-04-09T00:00:00.000Z">
+          2017-04-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>哥白尼·罗斯福·马丁路德·李开复·嫁衣曾经说过</p>
+<blockquote>
+<p>Where there is an Android App, there is an Application context.</p>
+</blockquote>
+<p>没毛病，扎心了。App运行的时候，肯定是存在至少一个Application实例的。同时，Context我们再熟悉不过了，写代码的时候经常需要使用到Context实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过attach方法传递进我们需要用到的类。Context实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然App运行的时候，Application实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取Context实例，这样以来就不需要上面那些繁琐的传递方式。</p>
+<p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。<br>
+        
+          <p><a class="excerpt-btn" href="/2017/04/09/android/global-accessing-context/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/Context/">Context</a><a href="/tags/Hook/">Hook</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2017/04/09/android/global-accessing-context/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2017/03/21/android/naughty-proguard-tuduki/"><span>西方程序员跑得比谁都快</span></a></h3>
     
   
@@ -734,82 +810,6 @@ hexo.link = https://github.com/kaedea/comment-formatter
         <i class="icon-comments"></i>
         <span>
           <a href="/2016/07/10/android-dynamical-loading-08-satrt-frontia/#comment">评论</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2016/06/26/front-auto-space/"><span>自动给你的博客的中英文间加上空格</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/06/26/front-auto-space/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-06-26T00:00:00.000Z">
-          2016-06-26
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <!-- draft
-
-![](/assets/09924d84_d08c_4599_9470_492271d8f6b9_untitled.png)
-
--->
-<p>关于“是否应该在中文和英文之间加上空格”的争论在 <code>知乎</code> 上的争论历来已久，我本喜欢加上空格，只是对于英文单词频繁穿插的中文句子来说实在是有点繁琐和难看（特别是技术向文章），自从发现了有自动在博客的中英文间加上空格的脚本后，就放弃手动加空格的做法，这些频繁的工作，就交给脚本去做吧。<br>
-        
-          <p><a class="excerpt-btn" href="/2016/06/26/front-auto-space/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Blog/">Blog</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/JavaScript/">JavaScript</a><a href="/tags/中文排版/">中文排版</a><a href="/tags/Blog/">Blog</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2016/06/26/front-auto-space/#comment">评论</a>
         </span>
       </span>
     </div>
