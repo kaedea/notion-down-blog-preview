@@ -1,438 +1,133 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE HTML>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
+  
+  <title>增量静态检查（SPA）在代码合入检查里的应用 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
+  <meta name="author" content="Kaede Akatsuki">
   
 
   
-    
-    
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
   
 
   
-
+  
+  <meta name="keywords" content="DevOps,SPA,自动化，静态检查">
   
 
-  
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="增量静态检查（SPA）在代码合入检查里的应用">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <meta property="og:image" content="/favicon.ico">
   
 
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="DevOps,SPA,自动化，静态检查,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
-<meta name="keywords" content="DevOps,SPA,自动化，静态检查">
-<meta property="og:type" content="article">
-<meta property="og:title" content="增量静态检查（SPA）在代码合入检查里的应用">
-<meta property="og:url" content="http://kaedea.com/2018/04/01/devops/incremental-spa/index.html">
-<meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/man_git_diff_img_git_diff.png">
-<meta property="og:image" content="http://kaedea.com/assets/lint_gong_zuo_liu_cheng_shi_yi_tu_image_lint_workflow.png">
-<meta property="og:image" content="http://kaedea.com/assets/idea_inspect_code_image_idea_inspect_code.png">
-<meta property="og:image" content="http://kaedea.com/assets/workflow_image_workflows.png">
-<meta property="og:image" content="http://kaedea.com/assets/app_clean_app_lint_time_consumed_image_demo_1.png">
-<meta property="og:image" content="http://kaedea.com/assets/checkincremental_time_consumde_image_demo_1.png">
-<meta property="og:image" content="http://kaedea.com/assets/mr_he_ru_jian_cha_pipelines_1579101129_18.png">
-<meta property="og:image" content="http://kaedea.com/assets/mr_dai_ma_zeng_liang_jian_cha_jie_guo_1579101164_53.png">
-<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="增量静态检查（SPA）在代码合入检查里的应用">
-<meta name="twitter:description" content="静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供">
-<meta name="twitter:image" content="http://kaedea.com/assets/man_git_diff_img_git_diff.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: "",
-      labels: ""
-    }
-  };
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
 </script>
 
 
+<body>
+<div class="blog">
+  <div class="content">
 
-  <link rel="canonical" href="http://kaedea.com/2018/04/01/devops/incremental-spa/">
-
-
-
-
-
-  <title> 增量静态检查（SPA）在代码合入检查里的应用 | 中二病也要开发ANDROID </title>
-</head>
-
-<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
-<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//tajs.qq.com/stats?sId=58507383";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'10%'}, 150);
-    </script>
-    
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">中二病也要开发ANDROID</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
   </div>
-  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
+        <li><a href="/archives">归档</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          
-          <a href="/archives" rel="section">
-            
-            Archives
-          </a>
-        </li>
+        <li><a href="/categories">分类</a></li>
       
-        
-        <li class="menu-item menu-item-categories">
-          
-          <a href="/categories" rel="section">
-            
-            Categories
-          </a>
-        </li>
+        <li><a href="/about">关于</a></li>
       
-        
-        <li class="menu-item menu-item-tags">
-          
-          <a href="/tags" rel="section">
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          
-          <a href="/about" rel="section">
-            
-            About
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-            Search
-          </a>
-        </li>
+        <li><a href="/atom.xml">订阅</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-    <div class="site-search">
+    
+    <h3 class="article-title"><span>增量静态检查（SPA）在代码合入检查里的应用</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/04/01/devops/incremental-spa/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-04-01T00:00:00.000Z">
+          2018-04-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
-</form>
+        
 
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
 </script>
 
 
-
-    </div>
-  
-</nav>
- </div>
-    </header>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'30%'}, 150);
-    </script>
-    
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2018/04/01/devops/incremental-spa/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                增量静态检查（SPA）在代码合入检查里的应用
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+00:00">
-              2018-04-01
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DevOps/" itemprop="url" rel="index">
-                    <span itemprop="name">DevOps</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2018/04/01/devops/incremental-spa/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/01/devops/incremental-spa/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2018/04/01/devops/incremental-spa/" class="leancloud_visitors" data-flag-title="增量静态检查（SPA）在代码合入检查里的应用">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#名词解释"><span class="toc-text">名词解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决思路"><span class="toc-text">解决思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-如何让静态检查工具只检查出新增部分代码带来的问题"><span class="toc-text">1. 如何让静态检查工具只检查出新增部分代码带来的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-如何提高静态检查的效率"><span class="toc-text">2. 如何提高静态检查的效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体方案实现"><span class="toc-text">具体方案实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-通过-git-计算增量代码的信息"><span class="toc-text">1. 通过 git 计算增量代码的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-基于-AGP-插件的-Lint-增量检查方案"><span class="toc-text">2. 基于 AGP 插件的 Lint 增量检查方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-检查的工作流程"><span class="toc-text">Lint 检查的工作流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-自定义检查规则"><span class="toc-text">Lint 自定义检查规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-增量检查的实现方案"><span class="toc-text">Lint 增量检查的实现方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-整体工作流程图"><span class="toc-text">3. 整体工作流程图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果沉淀"><span class="toc-text">结果沉淀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾巴"><span class="toc-text">尾巴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
 
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
-
-      
         <!-- draft
-Android 静态代码扫描效率优化与实践 - 美团
+Android静态代码扫描效率优化与实践 - 美团
 [https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA](https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA)
 1. 背景
 2. 思考
@@ -453,10 +148,10 @@ Android 静态代码扫描效率优化与实践 - 美团
 </ol>
 <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><!-- draft
 
-- 提高代码质量
-- 为 CodeReview 提供支撑
-- 效率
-- 历史包袱
+ - 提高代码质量
+ - 为 CodeReview 提供支撑
+ - 效率
+ - 历史包袱
 
 -->
 <p>微信相关 Android 项目的 DevOps 实践中，我们在合入检查方向已经先后完成了 “需求合法性检查”、“代码冲突检查”、“编译检查”、“编译后 WeTest 自动化 UI 测试” 等检查项目，代码合入检查流程已经比较完善。接下来，我们想尝试在检查流程里加入静态检查环节，看看能不能在 “统一代码风格、提高代码质量” 方面实现一些突破。</p>
@@ -473,9 +168,9 @@ Android 静态代码扫描效率优化与实践 - 美团
 </ol>
 <h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><!-- draft
 
-- 代码差分算法
-- CheckStyle/Lint 增量方案
-- 增量报告方案
+ - 代码差分算法
+ - CheckStyle/Lint 增量方案
+ - 增量报告方案
 
 -->
 <h3 id="1-如何让静态检查工具只检查出新增部分代码带来的问题"><a href="#1-如何让静态检查工具只检查出新增部分代码带来的问题" class="headerlink" title="1. 如何让静态检查工具只检查出新增部分代码带来的问题"></a>1. 如何让静态检查工具只检查出新增部分代码带来的问题</h3><p>介绍我们的方案之前，先说一说两个使用得比较普遍的方案：其一，根据代码提交的时间（例如 git 工具就可以检查每一行代码最近的时间），约定一个起始点时间（比如上一个稳定版本）作为 baseline，静态检查工具检查出来的问题，其对应的代码提交记录如果早于这个 baseline 则自动忽略该问题，这样就能从一大堆问题里面筛选出比较 “新鲜” 的问题。其二，选一个稳定版本作为 baseversion，扫描出这个版本所有的问题并把结果记录下来，以后每次静态扫描都和前面 baseversion 保留的记录做比对，屏蔽存量问题（或者直接编写脚本，根据 baseversion 扫描出来的结果，给全部存量问题自动加上 suppression 注释以便后续静态检查在扫描阶段就屏蔽问题）。</p>
@@ -494,13 +189,13 @@ Android 静态代码扫描效率优化与实践 - 美团
 <li>运行检查任务，根据预置的检查规则进行扫描，得到检查结果。</li>
 <li>从检查结果中筛选出和增量代码相关的问题（粒度是文件修改行数）</li>
 </ol>
-<h2 id="具体-方案-实现"><a href="#具体-方案-实现" class="headerlink" title=" 具体  方案  实现 "></a><strong> 具体 </strong> 方案 <strong> 实现 </strong></h2><!-- draft
+<h2 id="具体方案实现"><a href="#具体方案实现" class="headerlink" title="具体方案实现"></a><strong>具体</strong>方案<strong>实现</strong></h2><!-- draft
 
-- 本地增量代码计算
-- Lint 增量
+ - 本地增量代码计算
+ - Lint 增量
 
 -->
-<h3 id="1-通过-git-计算-增量-代码的信息"><a href="#1-通过-git-计算-增量-代码的信息" class="headerlink" title="1. 通过 git 计算  增量  代码的信息 "></a><strong>1. 通过 git 计算 </strong> 增量 <strong> 代码的信息 </strong></h3><p>在计算代码增量信息方面，我们需要解决以下几个问题：</p>
+<h3 id="1-通过-git-计算增量代码的信息"><a href="#1-通过-git-计算增量代码的信息" class="headerlink" title="1. 通过 git 计算增量代码的信息"></a><strong>1. 通过 git 计算</strong>增量<strong>代码的信息</strong></h3><p>在计算代码增量信息方面，我们需要解决以下几个问题：</p>
 <ol>
 <li>需要计算本地修改代码的增量信息，在体检代码前检查一下有没有新增问题。</li>
 <li>需要计算提交 MR 时，开发分支与主干分支之间代码的增量信息，用于检查 MR 带来的新增问题。</li>
@@ -510,8 +205,8 @@ Android 静态代码扫描效率优化与实践 - 美团
 <p><img src="/assets/man_git_diff_img_git_diff.png" alt="man: git diff"></p>
 <p>这里先简单介绍一下我们方案需要用到的这几个参数的作用：</p>
 <ol>
-<li><code>name-only</code>：只显示修改文件的名字，不显示内容，这个参数分别刚好满足上面提到的方案的 “文件粒度” 和 “文件修改行数粒度”。</li>
-<li><code>-cached</code>：只显示被 staged 过的文件（也就是已经被 add 到 git index 里），计算本地修改代码的时候，需要通过这个参数计算 “已 staged” 和 “未 staged” 两种文件的综合数据。</li>
+<li><code>name-only</code>：只显示修改文件的名字，不显示内容，这个参数分别刚好满足上面提到的方案的 “文件粒度” 和“文件修改行数粒度”。</li>
+<li><code>-cached</code>：只显示被 staged 过的文件（也就是已经被 add 到 git index 里），计算本地修改代码的时候，需要通过这个参数计算 “已 staged” 和“未 staged”两种文件的综合数据。</li>
 <li><code>-diff-filter=ACMR</code>： 显示哪类文件：Added (A)、Copied (C)、 Modified (M)、Renamed (R)，具体配置请参看官方文档。</li>
 <li><code>-ignore-space-at-eol</code>: 忽略行尾空格或者换行符等修改信息，这里额外说明一下，MR 计算代码修改信息用的也是 git diff 工具而且默认不带这个参数，而 IDEA 的 Annotate 默认是带这个参数的，所以有时候会看到有人提交 MR 显示修改了大量代码（比如批量代码格式化导致修改文件换行符），而当事人本地 IDEA 又看不出自己改了代码。</li>
 <li><code>M100%</code>：这是一个阈值，用来计算前后两个不同名字的文件，内容相似度达到哪个百分比就认为这是一个被 Renamed (R) 的文件。</li>
@@ -542,37 +237,37 @@ Android 静态代码扫描效率优化与实践 - 美团
 <p>Android 项目中，一般我们有三种方式运行 Lint 检查：命令行、IDEA 的 Inspections 检查功能、Gradle Lint 任务，他们都由 <a href="http://tools.android.com/tips/lint" target="_blank" rel="noopener">AGP Android Lint</a> 提供，并由 Android 官方进行维护，虽然检查入口各不相同，但是底层都是同一套 Lint API 实现（提供 Lint 检查实现的 lint-api.jar 和封装好一些常用检查规则的 lint-check.jar，三种工作方式都是基于这两个类库实现）。</p>
 <p>届于 Lint API 涉及的类库比较复杂，这里不做深入讨论，主要介绍一下几个比较关键的 API：</p>
 <ol>
-<li><code>LintDriver</code>: 三种工作方式最后都通过 LintDriver#analyse () 执行实际上的检查工作。</li>
+<li><code>LintDriver</code>: 三种工作方式最后都通过 LintDriver#analyse() 执行实际上的检查工作。</li>
 <li><code>IssueRegistry</code>：管理 Lint 检查规则，配合 lint.xml 使用。Android 有内置的 BuiltinIssueRegistry，用户自定义检查的话，需要重写该类。</li>
 <li><code>LintRequest</code>：执行 Lint 检查时的一个请求类，封装好了需要检查的文件内容，我们需要实现的增量检查，也是要从这里下手。</li>
 <li><code>LintClient</code>：Lint 客户端，集成 Lint 检查的操作、配置，对应某一种具体的工作方式，比如 LintCliClient 对应命令行方式，LintIdeClient 对应 IDEA 的 Inspections，LintGradleClient 对应 Gradle Lint Task。</li>
 </ol>
 <p>用伪代码表示的话大概是：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> registry = <span class="keyword">new</span> IssueRegistry()</span><br><span class="line"><span class="keyword">def</span> client = <span class="keyword">new</span> LintClient(registry) &#123;</span><br><span class="line">    override createLintRequest(file) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LintRequest(file)</span><br><span class="line">    &#125;</span><br><span class="line">    override run() &#123;</span><br><span class="line">        LintDriver.analyze()  <span class="comment">// super impl</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">client.run()</span><br></pre></td></tr></table></figure>
-<h4 id="Lint-自-定义-检查规则"><a href="#Lint-自-定义-检查规则" class="headerlink" title="Lint 自  定义  检查规则 "></a><strong>Lint 自 </strong> 定义 <strong> 检查规则 </strong></h4><p>自定义检查规则，就是要自定义各种检查 Detector 类，具体可以参考官方的指导文档 <a href="http://tools.android.com/tips/lint/writing-a-lint-check" target="_blank" rel="noopener">Writing a Lint Check</a> 或者美团的几篇 Lint 实践文章 <a href="https://tech.meituan.com/tags/lint.html" target="_blank" rel="noopener">美团 Lint</a>。老实说，这方面官方给出的 Example 并不是很详细，具体怎么写还是要靠自己去看官方 Lint API 的源码，以及参考别人的开源代码（如果你比较熟悉 Visitor 访问者模式，或者写过 ASM 插件，应该比较容易上手）。</p>
+<h4 id="Lint-自定义检查规则"><a href="#Lint-自定义检查规则" class="headerlink" title="Lint 自定义检查规则"></a><strong>Lint 自</strong>定义<strong>检查规则</strong></h4><p>自定义检查规则，就是要自定义各种检查 Detector 类，具体可以参考官方的指导文档 <a href="http://tools.android.com/tips/lint/writing-a-lint-check" target="_blank" rel="noopener">Writing a Lint Check</a> 或者美团的几篇 Lint 实践文章 <a href="https://tech.meituan.com/tags/lint.html" target="_blank" rel="noopener">美团 Lint</a>。老实说，这方面官方给出的 Example 并不是很详细，具体怎么写还是要靠自己去看官方 Lint API 的源码，以及参考别人的开源代码（如果你比较熟悉 Visitor 访问者模式，或者写过 ASM 插件，应该比较容易上手）。</p>
 <p>这里给出一个我们自己自定义的检查规则作参考：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检查 Log 的使用规范</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogIssue</span> <span class="keyword">extends</span> <span class="title">Detector</span> <span class="keyword">implements</span> <span class="title">Detector</span>.<span class="title">UastScanner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Issue ISSUE = Issue.create (</span><br><span class="line">            <span class="string">"WxLog"</span>,</span><br><span class="line">            <span class="string">"Log 使用不规范，请使用 platformtools.Log"</span>,</span><br><span class="line">            <span class="string">"请使用项目共用的 Log 函数，输出 console 及 xlog 文件请使用 platformtools.Log, 不希望输出 xlog 文件请使用 android.util.Log"</span>,</span><br><span class="line">            Category.CORRECTNESS,</span><br><span class="line">            <span class="number">9</span>,</span><br><span class="line">            Severity.ERROR,</span><br><span class="line">            <span class="keyword">new</span> Implementation (LogIssue<span class="class">.<span class="keyword">class</span>, <span class="title">Scope</span>.<span class="title">JAVA_FILE_SCOPE</span>))</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visitMethod</span> <span class="params">(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method)</span> </span>&#123;<span class="keyword">if</span> (context.getEvaluator ().isMemberInClass (method, <span class="string">"java.io.PrintStream"</span>)) &#123;context.report (ISSUE, context.getLocation (node), ISSUE.getBriefDescription (TextFormat.TEXT));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getApplicableMethodNames</span> <span class="params">()</span> </span>&#123;<span class="keyword">return</span> Arrays.asList (<span class="string">"print"</span>, <span class="string">"println"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检查 Log 的使用规范</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogIssue</span> <span class="keyword">extends</span> <span class="title">Detector</span> <span class="keyword">implements</span> <span class="title">Detector</span>.<span class="title">UastScanner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Issue ISSUE = Issue.create(</span><br><span class="line">            <span class="string">"WxLog"</span>,</span><br><span class="line">            <span class="string">"Log 使用不规范, 请使用 platformtools.Log"</span>,</span><br><span class="line">            <span class="string">"请使用项目共用的Log函数, 输出console及xlog文件请使用platformtools.Log, 不希望输出xlog文件请使用android.util.Log"</span>,</span><br><span class="line">            Category.CORRECTNESS,</span><br><span class="line">            <span class="number">9</span>,</span><br><span class="line">            Severity.ERROR,</span><br><span class="line">            <span class="keyword">new</span> Implementation(LogIssue<span class="class">.<span class="keyword">class</span>, <span class="title">Scope</span>.<span class="title">JAVA_FILE_SCOPE</span>))</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visitMethod</span><span class="params">(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (context.getEvaluator().isMemberInClass(method, <span class="string">"java.io.PrintStream"</span>)) &#123;</span><br><span class="line">            context.report(ISSUE, context.getLocation(node), ISSUE.getBriefDescription(TextFormat.TEXT));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getApplicableMethodNames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(<span class="string">"print"</span>, <span class="string">"println"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Lint-增量检查的实现方案"><a href="#Lint-增量检查的实现方案" class="headerlink" title="Lint 增量检查的实现方案"></a>Lint 增量检查的实现方案</h4><p>上面提到，“我们需要实现的增量检查，需要从 LintRequest 下手”，通过重写 LintClient 中的 createLintRequest 方法，传入我们需要增量检查的文件，以下给出关键的代码，具体的实现细节，请参考我们的代码库。</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LintToolClient</span> <span class="keyword">extends</span> <span class="title">LintCliClient</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> LintRequest createLintRequest (List&lt;File&gt; files) &#123;LintRequest request = <span class="keyword">super</span>.createLintRequest (files)</span><br><span class="line">        <span class="keyword">for</span> (Project <span class="string">project :</span> request.getProjects ()) &#123;<span class="keyword">for</span> (File <span class="string">file :</span> files) &#123;project.addFile (file) <span class="comment">// 具体需要检查的文件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LintRequest (<span class="keyword">this</span>, files)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LintToolClient</span> <span class="keyword">extends</span> <span class="title">LintCliClient</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> LintRequest createLintRequest(List&lt;File&gt; files) &#123;</span><br><span class="line">        LintRequest request = <span class="keyword">super</span>.createLintRequest(files)</span><br><span class="line">        <span class="keyword">for</span> (Project <span class="string">project :</span> request.getProjects()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (File <span class="string">file :</span> files) &#123;</span><br><span class="line">                project.addFile(file) <span class="comment">// 具体需要检查的文件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LintRequest(<span class="keyword">this</span>, files)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面提到有三种 Lint 的工作方式，我们采用的是扩展第三种 Lint Gradle 方式（因为这种方式能直接复用现成的 lint.xml 配置文件和 Lint Output 报告格式），最终整体的工作流程是：</p>
 <ol>
 <li>通过 git diff 获得需要检查文件作为 Source Files。</li>
 <li>根据自己的检查需要自定义 LintIssueRegistry（增加了一批自定义的 Detector，考虑的性能需要，移除了那些需要依赖编译产物的内置 Detectors）。</li>
 <li>自定义继承 LintGradleClient 的 LintIncrementalClient（也就是采用 Lint Gradle 工作方式）。</li>
-<li>根据 Source Files，为每一个有文件变动的 Module 创建增量检查用的 Gradle Task；运行检查任务的时候，执行 LintIncrementalClient#run () 实现增量检查</li>
+<li>根据 Source Files，为每一个有文件变动的 Module 创建增量检查用的 Gradle Task；运行检查任务的时候，执行 LintIncrementalClient#run() 实现增量检查</li>
 </ol>
 <p>除了我们采用的第三种 Lint Gradle 方式，这里补充说明一下第二种 IDEA 的 Inspections 功能：通过 “IDEA - Analyse - Inspect Code” 可以迅速针对一个指定的文件做 Lint 检查。如下：</p>
 <p><img src="/assets/idea_inspect_code_image_idea_inspect_code.png" alt="IDEA Inspect Code"></p>
 <p>经过挖掘，我们发现其实现的关键代码在 <a href="https://github.com/JetBrains/android/blob/master/android/src/com/android/tools/idea/lint/LintIdeClient.java" target="_blank" rel="noopener">LintIdeClient.java</a>。通过 Inspections 方案，我们能直接对指定文件进行 Lint 检查，而不需要依赖于 Gradle 环境，这是 Lint 增量检查的最佳方案。不过考虑到 IDEA 版本之间的兼容性问题，而且我们还需要将检查工作合入到 DevOps 自动化流程里，所以最终还是选择了 Gradle Lint 方案。</p>
 <p>最后，关于具体的 Lint 实现有一点需要补充说明：Lint API 25 到 26 之间，无论是 API 接口还是具体的实现，变化都非常大，所以各位参考别人的具体实现代码的时候，一定要先分清当前的 API 版本是多少。</p>
-<h3 id="3-整体-工作-流程图"><a href="#3-整体-工作-流程图" class="headerlink" title="3. 整体  工作  流程图 "></a>3<strong>. 整体 </strong> 工作 <strong> 流程图 </strong></h3><p>没有流程图的方案是没有灵魂的，如下：</p>
+<h3 id="3-整体工作流程图"><a href="#3-整体工作流程图" class="headerlink" title="3. 整体工作流程图"></a>3<strong>. 整体</strong>工作<strong>流程图</strong></h3><p>没有流程图的方案是没有灵魂的，如下：</p>
 <p><img src="/assets/workflow_image_workflows.png" alt="workflow"></p>
 <h2 id="结果沉淀"><a href="#结果沉淀" class="headerlink" title="结果沉淀"></a>结果沉淀</h2><!-- draft
 
-- 检查结果展示
+ - 检查结果展示
  - Incrementals
-- 专利
-- 检查时间
+ - 专利
+ - 检查时间
 
 -->
 <p>以代码仓库的 Demo 项目为例，如果执行一遍默认的 <code>:app:clean :app:lint</code> 检查任务，耗时 Configure + 检查任务整体耗时大概在 10s 左右，如下：</p>
@@ -595,8 +290,8 @@ Android 静态代码扫描效率优化与实践 - 美团
 <li><a href="https://github.com/lingochamp/okcheck" target="_blank" rel="noopener">https://github.com/lingochamp/okcheck</a> （增量检查，粒度是有代码改动的 Module，一个折中的方案，优点是侵入性小)</li>
 </ol>
 <!-- Generated by HexoWriter
-notion-down.version = 0.1.0
-notion-down.revision = b'349007a'
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
 Title = 增量静态检查（SPA）在代码合入检查里的应用
 Date = 2018-04-01
 Published = true
@@ -610,551 +305,91 @@ hexo.comments = true
       
     </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
-          
-            <a href="/tags/SPA/" rel="tag"># SPA</a>
-          
-            <a href="/tags/自动化，静态检查/" rel="tag"># 自动化，静态检查</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/09/android/global-accessing-context/" rel="next" title="一种Android应用内全局获取Context实例的装置">
-                <i class="fa fa-chevron-left"></i> 一种Android应用内全局获取Context实例的装置
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/04/android-so-loading-2/" rel="prev" title="动态下发 so 库在 Android APK 安装包瘦身方面的应用">
-                动态下发 so 库在 Android APK 安装包瘦身方面的应用 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/DevOps/">DevOps</a><a href="/tags/SPA/">SPA</a><a href="/tags/自动化，静态检查/">自动化，静态检查</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
-          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
-          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">43</span>
-              <span class="site-state-item-name">posts</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/rurin" title="微博" target="_blank">
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
-                  
-                  SegmentFault
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
-                  
-                  HaoMoe
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
-                  
-                  Pixiv
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
-                  
-                  Twitter
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="/about/" title="友情链接">友情链接</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
 
 
-      </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
 
-            
-              
-            
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#名词解释"><span class="nav-number">1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题背景"><span class="nav-number">2.</span> <span class="nav-text">问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">3.</span> <span class="nav-text">解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何让静态检查工具只检查出新增部分代码带来的问题"><span class="nav-number">3.1.</span> <span class="nav-text">1. 如何让静态检查工具只检查出新增部分代码带来的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-如何提高静态检查的效率"><span class="nav-number">3.2.</span> <span class="nav-text">2. 如何提高静态检查的效率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体-方案-实现"><span class="nav-number">4.</span> <span class="nav-text"> 具体  方案  实现 </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-通过-git-计算-增量-代码的信息"><span class="nav-number">4.1.</span> <span class="nav-text">1. 通过 git 计算  增量  代码的信息 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基于-AGP-插件的-Lint-增量检查方案"><span class="nav-number">4.2.</span> <span class="nav-text">2. 基于 AGP 插件的 Lint 增量检查方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Lint-检查的工作流程"><span class="nav-number">4.2.1.</span> <span class="nav-text">Lint 检查的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lint-自-定义-检查规则"><span class="nav-number">4.2.2.</span> <span class="nav-text">Lint 自  定义  检查规则 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lint-增量检查的实现方案"><span class="nav-number">4.2.3.</span> <span class="nav-text">Lint 增量检查的实现方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-整体-工作-流程图"><span class="nav-number">4.3.</span> <span class="nav-text">3. 整体  工作  流程图 </span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果沉淀"><span class="nav-number">5.</span> <span class="nav-text">结果沉淀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾巴"><span class="nav-number">6.</span> <span class="nav-text">尾巴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <!-- update loading -->
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'60%'}, 150);
-    </script>
+    &copy; 2022 Kaede Akatsuki
     
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
-</div>
-
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <!-- update loading -->
+  </p>
+</footer>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'80%'}, 150);
-    </script>
-    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'kidhaibara';
-      var disqus_identifier = '2018/04/01/devops/incremental-spa/';
-
-      var disqus_title = "增量静态检查（SPA）在代码合入检查里的应用";
-
-
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-
-  <!-- update loading -->
-  
-  <script type="text/javascript">
-      $('.headband').animate({'width':'100%'}, 150);
-  </script>
-  
-
-  <!-- pangu auto space -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
-  <script> pangu.spacingPage(); </script>
-
+  </div>
+</div>
 </body>
 </html>

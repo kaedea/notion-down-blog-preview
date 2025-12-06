@@ -1,516 +1,218 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE HTML>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
+  
+  <title>Android 性能调优的技术优化点 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
+  <meta name="author" content="Kaede Akatsuki">
   
 
   
-    
-    
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
   
 
   
-
+  
+  <meta name="keywords" content="Android,APM">
   
 
-  
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Android 性能调优的技术优化点">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <meta property="og:image" content="/favicon.ico">
   
 
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="Android,APM,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入">
-<meta name="keywords" content="Android,APM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android 性能调优的技术优化点">
-<meta property="og:url" content="http://kaedea.com/2015/11/12/android-best-performance-points/index.html">
-<meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png">
-<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 性能调优的技术优化点">
-<meta name="twitter:description" content="最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入">
-<meta name="twitter:image" content="http://kaedea.com/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: "",
-      labels: ""
-    }
-  };
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
 </script>
 
 
+<body>
+<div class="blog">
+  <div class="content">
 
-  <link rel="canonical" href="http://kaedea.com/2015/11/12/android-best-performance-points/">
-
-
-
-
-
-  <title> Android 性能调优的技术优化点 | 中二病也要开发ANDROID </title>
-</head>
-
-<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
-<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//tajs.qq.com/stats?sId=58507383";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'10%'}, 150);
-    </script>
-    
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">中二病也要开发ANDROID</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
   </div>
-  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
+        <li><a href="/archives">归档</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          
-          <a href="/archives" rel="section">
-            
-            Archives
-          </a>
-        </li>
+        <li><a href="/categories">分类</a></li>
       
-        
-        <li class="menu-item menu-item-categories">
-          
-          <a href="/categories" rel="section">
-            
-            Categories
-          </a>
-        </li>
+        <li><a href="/about">关于</a></li>
       
-        
-        <li class="menu-item menu-item-tags">
-          
-          <a href="/tags" rel="section">
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          
-          <a href="/about" rel="section">
-            
-            About
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-            Search
-          </a>
-        </li>
+        <li><a href="/atom.xml">订阅</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-    <div class="site-search">
+    
+    <h3 class="article-title"><span>Android 性能调优的技术优化点</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2015/11/12/android-best-performance-points/" rel="bookmark">
+        <time class="entry-date published" datetime="2015-11-12T00:00:00.000Z">
+          2015-11-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
-</form>
+        
 
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
 </script>
 
 
-
-    </div>
-  
-</nav>
- </div>
-    </header>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'30%'}, 150);
-    </script>
-    
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2015/11/12/android-best-performance-points/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Android 性能调优的技术优化点
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-12T00:00:00+00:00">
-              2015-11-12
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/12/android-best-performance-points/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/12/android-best-performance-points/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/11/12/android-best-performance-points/" class="leancloud_visitors" data-flag-title="Android 性能调优的技术优化点">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#要点"><span class="toc-text">要点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用异步"><span class="toc-text">使用异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免内存泄露"><span class="toc-text">避免内存泄露</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视图优化"><span class="toc-text">视图优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adapter优化"><span class="toc-text">Adapter优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码优化"><span class="toc-text">代码优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他优化"><span class="toc-text">其他优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APK瘦身"><span class="toc-text">APK瘦身</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能问题的排查方法"><span class="toc-text">性能问题的排查方法</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
 
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
-
-      
-        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong> 这个贴的目的在于想骗一些高质量的干货 </strong>（我从未见过如此厚颜无耻之人 + 脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个 DEMO 之类的放到 Github 骗骗粉之类的。</p>
+        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的“有坏味道”的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是“千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的Code Review，最好的做法是把“性能优化”的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong>这个贴的目的在于想骗一些高质量的干货</strong>（我从未见过如此厚颜无耻之人+脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个DEMO之类的放到Github骗骗粉之类的。</p>
 <p><img src="/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png" alt></p>
 <p>请大家补充要点啊，我一并处理。以下只是一时想到写的笔记，详细的分析还需要一点时间。</p>
 <a id="more"></a>
 <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><h3 id="使用异步"><a href="#使用异步" class="headerlink" title="使用异步"></a>使用异步</h3><ul>
-<li>保持 APP 的高度响应，不要在 UI 线程做耗时操作，多使用异步任务</li>
+<li>保持APP的高度响应，不要在UI线程做耗时操作，多使用异步任务</li>
 <li>使用线程时要做好线程控制；使用队列、线程池</li>
-<li>谨慎使用糟糕的 AysncTask、Timer</li>
+<li>谨慎使用糟糕的AysncTask、Timer</li>
 <li>警惕异步任务引起的内存泄露</li>
-<li>应该异步任务分类，比如 HTTP，图片下载，文件读写，每一类的异步任务维护一个任务队列，而不是每一个任务都开一个线程（Volley 表示我一个可以搞定这些全部 <em>(:з」∠)</em>）</li>
-<li>这些常用的任务应该做好优先级处理（一般 JSON 数据优先于图片等静态数据的请求）</li>
-<li>一般异步任务应该开启一个 SingleAsyncTask，保证一时只有一个线程在工作</li>
-<li>HTTP 和图片下载尽量使用同一套网络请求</li>
-<li>使用 MVP 模式规范大型 Activity 类的行为，避免异步任务造成的内存泄露</li>
+<li>应该异步任务分类，比如HTTP，图片下载，文件读写，每一类的异步任务维护一个任务队列，而不是每一个任务都开一个线程（Volley表示我一个可以搞定这些全部 <em>(:з」∠)</em>）</li>
+<li>这些常用的任务应该做好优先级处理（一般JSON数据优先于图片等静态数据的请求）</li>
+<li>一般异步任务应该开启一个SingleAsyncTask，保证一时只有一个线程在工作</li>
+<li>HTTP和图片下载尽量使用同一套网络请求</li>
+<li>使用MVP模式规范大型Activity类的行为，避免异步任务造成的内存泄露</li>
 </ul>
 <h3 id="避免内存泄露"><a href="#避免内存泄露" class="headerlink" title="避免内存泄露"></a>避免内存泄露</h3><ul>
 <li>了解虚拟机内存回收机制</li>
-<li>频繁 GC 也会造成卡顿，避免不必要的内存开销</li>
-<li>错误的引用姿♂势造成的内存泄露（啊～要泄了～）</li>
-<li>常见的 Activity 泄露（单例、Application、后台线程、无限动画、静态引用）</li>
-<li>Bitmap 泄露（HoneyComb 这个问题之前压力好大）</li>
-<li>尽量使用 IntentService 代替 Service，前者会自动 StopItself</li>
-<li>排查内存泄露问题的方法（我一直以来都是简单暴力的人肉 dump 检查大法）</li>
-<li>使用 LeakCanary 自动检查 Activity 泄露问题</li>
+<li>频繁GC也会造成卡顿，避免不必要的内存开销</li>
+<li>错误的引用姿♂势造成的内存泄露（啊~要泄了~）</li>
+<li>常见的Activity泄露（单例、Application、后台线程、无限动画、静态引用）</li>
+<li>Bitmap泄露（HoneyComb这个问题之前压力好大）</li>
+<li>尽量使用IntentService代替Service，前者会自动StopItself</li>
+<li>排查内存泄露问题的方法（我一直以来都是简单暴力的人肉dump检查大法）</li>
+<li>使用LeakCanary自动检查Activity泄露问题</li>
 <li>对内存负载要保持敏感（Sharp）</li>
 </ul>
 <h3 id="视图优化"><a href="#视图优化" class="headerlink" title="视图优化"></a>视图优化</h3><ul>
 <li>布局优化、减少层次，Include Merge</li>
-<li>使用 ViewStub 避免不必要的 LayoutInflate，使用 GONE 代替重复 LayoutInflate 同一个布局</li>
-<li>避免过度绘制，应该减少不必要的布局背景；布局层次太深会造成过度绘制以及 Measure、Layout 等方法时间复杂度的指数增长</li>
+<li>使用ViewStub避免不必要的LayoutInflate，使用GONE代替重复LayoutInflate同一个布局</li>
+<li>避免过度绘制，应该减少不必要的布局背景；布局层次太深会造成过度绘制以及Measure、Layout等方法时间复杂度的指数增长</li>
 <li>使用过渡动画，比如给图片的呈现加一个轻量的淡入效果会让视觉上变得流畅许多</li>
-<li>避免过度的动画，不要让一个界面同时出现多出动画，比如 List 滚动时 Item 项要停止播放动画或者 GIF</li>
-<li>复杂动画使用 SurfaceView 或 TextureView</li>
+<li>避免过度的动画，不要让一个界面同时出现多出动画，比如List滚动时Item项要停止播放动画或者GIF</li>
+<li>复杂动画使用SurfaceView或TextureView</li>
 <li>尽量提供多套分辨率的图片，使用矢量图</li>
 </ul>
-<h3 id="Adapter-优化"><a href="#Adapter-优化" class="headerlink" title="Adapter 优化"></a>Adapter 优化</h3><ul>
-<li>复用 convertView，用 ViewHolder 代替频繁 findViewById</li>
-<li>不要重复 setListener，要使用 v.getId 来复用 Listener，不然会创建一堆 Listener 导致频繁 GC</li>
-<li>多布局要采用 MultiItemView，而不是使用一个大布局然后动态控制需要现实的部分</li>
-<li>不要在 getView 方法做做耗时的操作</li>
+<h3 id="Adapter优化"><a href="#Adapter优化" class="headerlink" title="Adapter优化"></a>Adapter优化</h3><ul>
+<li>复用convertView，用ViewHolder代替频繁findViewById</li>
+<li>不要重复setListener，要使用v.getId来复用Listener，不然会创建一堆Listener导致频繁GC</li>
+<li>多布局要采用MultiItemView，而不是使用一个大布局然后动态控制需要现实的部分</li>
+<li>不要在getView方法做做耗时的操作</li>
 <li>快速滚动列表的时候，可以停止加载列表项的图片，停止列表项的动画，不要在这时候改变列表项的布局</li>
-<li>尽量用 RecyclerView（增量 Notify 和 RecycledViewPool 带你飞）</li>
+<li>尽量用RecyclerView（增量Notify和RecycledViewPool带你飞）</li>
 </ul>
 <h3 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h3><ul>
 <li>算法优化，减少时间复杂度，参考一些经典的优化算法</li>
-<li>尽量使用 int，而不是 float 或者 double</li>
+<li>尽量使用int，而不是float或者double</li>
 <li>尽量采用基本类型，避免无必要的自动装箱和拆箱，浪费时间和空间</li>
-<li>选用合适的集合类（尽量以空间换时间）、选用 Android 家的 SparseArray,SparseBooleanArray 和 LongSparseArray</li>
+<li>选用合适的集合类（尽量以空间换时间）、选用Android家的SparseArray,SparseBooleanArray和LongSparseArray</li>
 <li>避免创建额外的对象（StringBuilder）</li>
-<li>使用 SO 库完成一些比较独立的功能（高斯模糊）</li>
+<li>使用SO库完成一些比较独立的功能（高斯模糊）</li>
 <li>预处理（提前操作）一些比较耗时的初始化工作统一放到启动图处理</li>
-<li>懒加载（延迟处理）规避 Activity 的敏感生命周期</li>
-<li>Log 工具类，要在编译时删掉调试代码，而不是在运行时通过判断条件规避</li>
+<li>懒加载（延迟处理）规避Activity的敏感生命周期</li>
+<li>Log工具类，要在编译时删掉调试代码，而不是在运行时通过判断条件规避</li>
 <li>优先使用静态方法、公有方法还是私有方法？速度区别很大哦</li>
-<li>类内部直接对成员变量进行操作，不要使用 getter/setter 方法，调用方法耗额外的时间</li>
+<li>类内部直接对成员变量进行操作，不要使用getter/setter方法，调用方法耗额外的时间</li>
 <li>给内部类访问的外部类成员变量要声明称包内可访问，而不是私有，不然编译的时候还是会自动创建用于访问外部类成员变量的方法</li>
-<li>遍历集合时，使用 i++ 代替 Iterator，后者需要额外的对象操作，应在循环体内避免这种情况</li>
-<li>如果一个基本类型或者 String 的值不会改变，尽量用 final static，编译时会直接用变量的值替换变量，也就不需要在查询变量的值了</li>
+<li>遍历集合时，使用i++代替Iterator，后者需要额外的对象操作，应在循环体内避免这种情况</li>
+<li>如果一个基本类型或者String的值不会改变，尽量用final static，编译时会直接用变量的值替换变量，也就不需要在查询变量的值了</li>
 </ul>
 <h3 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h3><ul>
 <li>数据库优化：使用索引、使用异步线程</li>
 <li>网络优化 …… 一堆优秀的轮子</li>
 <li>避免过度使用依赖注入框架，大量的反射</li>
-<li>不过过度设计 / 抽象，多态看起来很有设计感，代价就是额外的代码、空间、时间</li>
+<li>不过过度设计/抽象，多态看起来很有设计感，代价就是额外的代码、空间、时间</li>
 <li>尽量不要开启多进程，进程的开销很大</li>
 </ul>
-<h3 id="APK-瘦身"><a href="#APK-瘦身" class="headerlink" title="APK 瘦身"></a>APK 瘦身</h3><ul>
+<h3 id="APK瘦身"><a href="#APK瘦身" class="headerlink" title="APK瘦身"></a>APK瘦身</h3><ul>
 <li>开启混淆</li>
-<li>使用 zipalign 工具优化 APK</li>
+<li>使用zipalign工具优化APK</li>
 <li>适当有损图片压缩、使用矢量图</li>
-<li>删除项目中冗余的资源，之前写过一些删除没有 res 资源的脚本</li>
+<li>删除项目中冗余的资源，之前写过一些删除没有res资源的脚本</li>
 <li>动态加载模块化，项目拆分啊！</li>
 </ul>
 <h3 id="性能问题的排查方法"><a href="#性能问题的排查方法" class="headerlink" title="性能问题的排查方法"></a>性能问题的排查方法</h3><ul>
-<li>GPU 条形图，没事开来看看淘宝</li>
+<li>GPU条形图，没事开来看看淘宝</li>
 <li>过度绘制颜色，嗯，不要一片姨妈红就好</li>
-<li>LeakCanary，自动检测 Activity 泄露，挺好用的</li>
-<li>TraceView（Device Monitor），Systrace，分析哪些代码占用的 CPU 时间太大，屡试不爽</li>
-<li>Lint，检查不合理的 res 资源</li>
-<li>layoutopt（还是 optlayout？），对当前布局提出优化建议，已被 lint 替代，但是还能用</li>
-<li>HierarchyViewer，查看手机当前界面的布局层次，布局优化时常用（只用于模拟器，真机上用要 ROOT，不想 ROOT 加得使用 ViewServer）</li>
-<li>StrictMode，UI 操作、网络操作等容易出现性能问题的地方，如果出现异常情况 StrictMode 会报警</li>
+<li>LeakCanary，自动检测Activity泄露，挺好用的</li>
+<li>TraceView（Device Monitor），Systrace，分析哪些代码占用的CPU时间太大，屡试不爽</li>
+<li>Lint，检查不合理的res资源</li>
+<li>layoutopt（还是optlayout？），对当前布局提出优化建议，已被lint替代，但是还能用</li>
+<li>HierarchyViewer，查看手机当前界面的布局层次，布局优化时常用（只用于模拟器，真机上用要ROOT，不想ROOT加得使用ViewServer）</li>
+<li>StrictMode，UI操作、网络操作等容易出现性能问题的地方，如果出现异常情况StrictMode会报警</li>
 </ul>
 <p>#<strong>欢迎各位补充</strong></p>
 <!-- Generated by HexoWriter
-notion-down.version = 0.1.0
-notion-down.revision = b'349007a'
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
 Title = Android 性能调优的技术优化点
 Date = 2015-11-12 00:00:00
 Published = true
@@ -525,549 +227,91 @@ hexo.metaAlignment = center
       
     </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/APM/" rel="tag"># APM</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/11/11/android-best-performance-whisper/" rel="next" title="Android 性能调优到底是调个啥">
-                <i class="fa fa-chevron-left"></i> Android 性能调优到底是调个啥
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/23/android-set-onclicklistener-in-xml/" rel="prev" title="在 XML 布局里给 View 设置点击事件">
-                在 XML 布局里给 View 设置点击事件 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
-          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
-          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">43</span>
-              <span class="site-state-item-name">posts</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/rurin" title="微博" target="_blank">
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
-                  
-                  SegmentFault
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
-                  
-                  HaoMoe
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
-                  
-                  Pixiv
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
-                  
-                  Twitter
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="/about/" title="友情链接">友情链接</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
 
 
-      </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
 
-            
-              
-            
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">1.</span> <span class="nav-text">要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用异步"><span class="nav-number">1.1.</span> <span class="nav-text">使用异步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免内存泄露"><span class="nav-number">1.2.</span> <span class="nav-text">避免内存泄露</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图优化"><span class="nav-number">1.3.</span> <span class="nav-text">视图优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adapter-优化"><span class="nav-number">1.4.</span> <span class="nav-text">Adapter 优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码优化"><span class="nav-number">1.5.</span> <span class="nav-text">代码优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他优化"><span class="nav-number">1.6.</span> <span class="nav-text">其他优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APK-瘦身"><span class="nav-number">1.7.</span> <span class="nav-text">APK 瘦身</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能问题的排查方法"><span class="nav-number">1.8.</span> <span class="nav-text">性能问题的排查方法</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <!-- update loading -->
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'60%'}, 150);
-    </script>
+    &copy; 2022 Kaede Akatsuki
     
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
-</div>
-
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <!-- update loading -->
+  </p>
+</footer>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'80%'}, 150);
-    </script>
-    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'kidhaibara';
-      var disqus_identifier = '2015/11/12/android-best-performance-points/';
-
-      var disqus_title = "Android 性能调优的技术优化点";
-
-
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-
-  <!-- update loading -->
-  
-  <script type="text/javascript">
-      $('.headband').animate({'width':'100%'}, 150);
-  </script>
-  
-
-  <!-- pangu auto space -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
-  <script> pangu.spacingPage(); </script>
-
+  </div>
+</div>
 </body>
 </html>

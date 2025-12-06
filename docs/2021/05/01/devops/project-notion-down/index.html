@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Project NotionDown | Kaede Akatsuki | 中二病也要开发 Android</title>
+
+  
+  <meta name="author" content="Kaede Akatsuki">
+  
+
+  
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
+  
+
+  
+  
+  <meta name="keywords" content="Notion,NotionDown,知识管理">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Project NotionDown">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
+</script>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+        <li><a href="/atom.xml">订阅</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Project NotionDown</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2021/05/01/devops/project-notion-down/" rel="bookmark">
+        <time class="entry-date published" datetime="2021-05-01T00:00:00.000Z">
+          2021-05-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行-NotionDown"><span class="toc-text">运行 NotionDown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
+        <!-- ColumnList BGN -->
+<p><img src="/assets/notiondown.png" alt></p>
+<!-- ColumnList END -->
+<p><a href="https://github.com/kaedea/notion-down" target="_blank" rel="noopener">Notion Down</a> 是一个用来把 Notion Page 转换成 Markdown 文件的 Python 工具，同时还提供了一些如 Hexo 静态博客构建的集成功能。其灵感和目标是通过“在 Notion 上写作并自动生成目标 MD 文件”来解决写作的割裂问题。比如：在 Notion 上编辑日志，并按照不同渠道配置生成目标 MD 文件；将指定 Notion 日志生成 Hexo Page 并自动部署到静态博客。</p>
+<a id="more"></a>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p><a href="http://www.kaedea.com" target="_blank" rel="noopener">kaedea.com</a><br><a href="http://hexo.kaedea.com" target="_blank" rel="noopener">hexo.kaedea.com</a><br><a href="https://www.kaedea.com/2021/05/20/devops/notion-to-markdown-file-automating-solution/" target="_blank" rel="noopener">基于 Notion 的笔记写作和博客分享自动化方案</a>  </p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><p>现在 NotionDown 提供以下功能：</p>
+<ul>
+<li>Notion Page 转换成 MarkDown 文件<ul>
+<li><del>Basic Notion PageBlocks parsing</del></li>
+<li><del>Notion images refer &amp; download</del></li>
+<li><del>Notion nested list blocks</del></li>
+<li><del>Notion obfuscated-links parsing</del></li>
+<li><del>Notion table block (Collection)</del></li>
+<li>Notion subpage / alias link parsing</li>
+</ul>
+</li>
+<li>Advanced Notion PageBlocks 支持<ul>
+<li><del>Pullquote Blocks (Notion ColumnList)</del></li>
+<li>图源替换<ul>
+<li><del>Replace notion image url with image file</del></li>
+<li>Replace notion image url with other CDN urls</li>
+</ul>
+</li>
+<li>Notion page embed blocks</li>
+</ul>
+</li>
+<li>写作增强<ul>
+<li><del>Noton custom <code>ShortCode</code> blocks that control parametered MD files generating</del></li>
+<li><del>Mixed CN-EN text separation format</del> (<a href="https://github.com/vinta/pangu" target="_blank" rel="noopener">by pangu</a>)</li>
+<li><del>Spelling inspect</del> (by <a href="https://github.com/shibing624/pycorrector" target="_blank" rel="noopener">pycorrector</a>)</li>
+</ul>
+</li>
+<li>HEXO 集成<ul>
+<li><del>HEXO page properties config</del></li>
+<li><del>HEXO generate</del></li>
+<li>HEXO tags plugin</li>
+</ul>
+</li>
+<li>PyPI 发布</li>
+<li>Notion APIs<ul>
+<li><del>notion-py (3rd party)</del></li>
+<li>notion-sdk (official)</li>
+</ul>
+</li>
+</ul>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><img src="/assets/notiondown_workflows_notiondown.png" alt="NotionDown Workflows"></p>
+<p>NotionDown 通过 <a href="https://github.com/jamalex/notion-py" target="_blank" rel="noopener">notion-py</a> 读取 Notion Page 的数据，然后再（根据配置）解析成 MD 文件。</p>
+<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><blockquote>
+<p>notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
+</blockquote>
+<h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a>Advanced usage</h3><blockquote>
+<p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
+</blockquote>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>前置准备：</p>
+<ol>
+<li>Prepare <code>notion_token_v2</code>.</li>
+<li>Prepare <code>public notion blog_url</code> as root post for NotionDown to get the pages you want to handle.</li>
+<li>Run <code>notion-down/main.py</code> with your configs.</li>
+</ol>
+<p>参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_gettokenv2.md" target="_blank" rel="noopener">这里</a> 获取 <code>notion_token_v2</code>。 </p>
+<p>复制一份 <a href="https://www.notion.so/kaedea/NotionDown-Posts-Template-f77f3322915a4ab48caa0f2e76e9d733" target="_blank" rel="noopener">NotionDown Posts Template</a> 到你的 Notion Workspace 并把其 URL 做为 <code>blog_url</code> (或者直接使用你自己已有的 Notion Posts)。需要注意的是，现阶段配合 notion_token_v2 使用的 Notion Posts 必须是 Public 的。</p>
+<h3 id="运行-NotionDown"><a href="#运行-NotionDown" class="headerlink" title="运行 NotionDown"></a>运行 NotionDown</h3><p>执行 Python 基本 <code>notion-down/main.py</code> :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --token_v2 &lt;token_v2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有三种方式配置 NotionDown 的运行参数：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
+<p>更详细的参数配置，请参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_custom_configs.md" target="_blank" rel="noopener">Custom Configurations</a>。</p>
+<p>以下提供几种使用 NotionDown 的案例。</p>
+<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>参看以下 CI 脚本 <code>/.circleci/config.yaml</code>：</p>
+<ul>
+<li><code>test-build-readme</code>: CircleCI jobs 用来生成 NotionDown 的 README.md。</li>
+<li><code>test-build-hexo</code>: CircleCI jobs 用来演示如何生成 Hexo 源文件 <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>。</li>
+<li><code>test-run-pycorrector</code>: CircleCI jobs 用来演示如何执行拼写检查。</li>
+</ul>
+<h3 id="Showcase-Jobs"><a href="#Showcase-Jobs" class="headerlink" title="Showcase Jobs"></a>Showcase Jobs</h3><p>示例脚本放在 <a href="/jobs">/jobs</a>，其运行产物在 <a href="/dist">/dist</a>。</p>
+<ul>
+<li><a href="/jobs/parse_readme/">生成 README</a></li>
+<li><a href="/jobs/parse_sample_posts/">生成 Notion posts</a></li>
+<li><a href="/jobs/parse_sample_posts_for_hexo/">生成 Hexo 源文件</a></li>
+<li>Notion image page source replacing (WIP)</li>
+</ul>
+<h3 id="UnitTest-Examples"><a href="#UnitTest-Examples" class="headerlink" title="UnitTest Examples"></a>UnitTest Examples</h3><p>单元测试放在 <code>test/</code>。</p>
+<!-- Generated by HexoWriter
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
+Title = Project NotionDown
+Date = 2021-05-01
+Published = true
+Category = DevOps
+Tag = ['Notion', '知识管理', 'NotionDown']
+FileLocate = devops
+FileName = project-notion-down
+hexo.comments = false
+-->
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Notion/">Notion</a><a href="/tags/NotionDown/">NotionDown</a><a href="/tags/知识管理/">知识管理</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
+    
+    &copy; 2022 Kaede Akatsuki
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div>
+</body>
+</html>

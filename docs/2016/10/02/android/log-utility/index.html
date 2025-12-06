@@ -1,455 +1,159 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE HTML>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
+  
+  <title>Android Logging 的正确姿势 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
+  <meta name="author" content="Kaede Akatsuki">
   
 
   
-    
-    
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
   
 
   
-
+  
+  <meta name="keywords" content="Android,APM,Logging">
   
 
-  
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Android Logging 的正确姿势">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <meta property="og:image" content="/favicon.ico">
   
 
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="Android,APM,Logging,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。  LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项">
-<meta name="keywords" content="Android,APM,Logging">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android Logging 的正确姿势">
-<meta property="og:url" content="http://kaedea.com/2016/10/02/android/log-utility/index.html">
-<meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。  LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Logging 的正确姿势">
-<meta name="twitter:description" content="LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。  LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: "",
-      labels: ""
-    }
-  };
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
 </script>
 
 
+<body>
+<div class="blog">
+  <div class="content">
 
-  <link rel="canonical" href="http://kaedea.com/2016/10/02/android/log-utility/">
-
-
-
-
-
-  <title> Android Logging 的正确姿势 | 中二病也要开发ANDROID </title>
-</head>
-
-<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
-<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//tajs.qq.com/stats?sId=58507383";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'10%'}, 150);
-    </script>
-    
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">中二病也要开发ANDROID</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
   </div>
-  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
+        <li><a href="/archives">归档</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          
-          <a href="/archives" rel="section">
-            
-            Archives
-          </a>
-        </li>
+        <li><a href="/categories">分类</a></li>
       
-        
-        <li class="menu-item menu-item-categories">
-          
-          <a href="/categories" rel="section">
-            
-            Categories
-          </a>
-        </li>
+        <li><a href="/about">关于</a></li>
       
-        
-        <li class="menu-item menu-item-tags">
-          
-          <a href="/tags" rel="section">
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          
-          <a href="/about" rel="section">
-            
-            About
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-            Search
-          </a>
-        </li>
+        <li><a href="/atom.xml">订阅</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-    <div class="site-search">
+    
+    <h3 class="article-title"><span>Android Logging 的正确姿势</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/10/02/android/log-utility/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-10-02T00:00:00.000Z">
+          2016-10-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
-</form>
+        
 
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
 </script>
 
 
-
-    </div>
-  
-</nav>
- </div>
-    </header>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'30%'}, 150);
-    </script>
-    
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/10/02/android/log-utility/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Android Logging 的正确姿势
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-02T00:00:00+00:00">
-              2016-10-02
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/02/android/log-utility/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/02/android/log-utility/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/10/02/android/log-utility/" class="leancloud_visitors" data-flag-title="Android Logging 的正确姿势">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Log相关的一些问题"><span class="toc-text">Log相关的一些问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#没有关闭调试用的LOG"><span class="toc-text">没有关闭调试用的LOG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在循环体内部打印LOG"><span class="toc-text">在循环体内部打印LOG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无法获取重要LOG内容"><span class="toc-text">无法获取重要LOG内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BLog"><span class="toc-text">BLog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
 
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
-
-      
         <blockquote>
-<p>LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。 有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。毕竟爱情需要书写，不能是一整张白纸。</p>
+<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 Hello, World!。<br>有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。<br>毕竟爱情需要书写，不能是一整张白纸。</p>
 </blockquote>
-<p>LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项目里面都包含着大量的 Log 相关代码。不过，或许是因为 Log 实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
+<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
 <a id="more"></a>
-<h2 id="Log-相关的一些问题"><a href="#Log-相关的一些问题" class="headerlink" title="Log 相关的一些问题"></a>Log 相关的一些问题</h2><h3 id="没有关闭调试用的-LOG"><a href="#没有关闭调试用的-LOG" class="headerlink" title="没有关闭调试用的 LOG"></a>没有关闭调试用的 LOG</h3><p>许多同学喜欢在开发阶段用 Log 输出当前的一些环境数据，用于调试代码，但是在调试完成后却忘了关闭这些 Log，导致发版出去的应用里面还会继续输出这些 LOG，这样不仅会造成不必要的性能丢失，也会暴露一些敏感的数据，这些都是我们不愿看到的。</p>
-<p>首先，我们要给 Log 进行分级，规定 “DEBUG 版本输出哪一些级别的 LOG 并屏蔽哪一些级别的 LOG，而 RELEASE 版本又输出另一些级别的 LOG 并屏蔽另一些级别的 LOG”，这样在开发阶段能够输出我们调试需要的 LOG，而同时又能保证放送的版本能够屏蔽这些敏感的 LOG。但是在开发阶段我们不应该特意去注意这些细节，所以必须开发一个 Log 工具库，在框架层级解决这个需求。</p>
-<p>同时，需要注意的是，<strong> 用于作为 “开启 / 关闭 Log” 的开关必须是一个常量 </strong>，而不能是一个变量（使用常量的话，在编译代码的时候，如果常量为 false），编译器会直接把调试部分的 Log 代码直接去掉，而使用变量作为开关的话，这个判断逻辑会继续保留，一方面会造成性能丢失，另一方面在运行时也可以通过 Hack 手段强行开启这部分 Log 代码。</p>
-<p>另外，“开启 / 关闭 Log” 的开关必须写在 Log 方法外部，也就是说必须先判断 “开启 / 关闭 Log” 条件，再调用 Log 方法，因为在调用 Log 方法的时候已经造成了性能丢失，而且调用方法的时候，会先构造好改方法需要的参数（按照参数顺序从右往左），再调用方法，而许多人喜欢在调用 Log 方法的时候计算需要打印出来的内容，这里是最容易造成性能丢失的地方。因此，如果为了图方便，写一个 Log 工具类，在工具类内部去判断是否应该开启或关闭 Log，事实上已经造成了不少的性能丢失。正确的使用姿势应该是：</p>
+<h2 id="Log相关的一些问题"><a href="#Log相关的一些问题" class="headerlink" title="Log相关的一些问题"></a>Log相关的一些问题</h2><h3 id="没有关闭调试用的LOG"><a href="#没有关闭调试用的LOG" class="headerlink" title="没有关闭调试用的LOG"></a>没有关闭调试用的LOG</h3><p>许多同学喜欢在开发阶段用Log输出当前的一些环境数据，用于调试代码，但是在调试完成后却忘了关闭这些Log，导致发版出去的应用里面还会继续输出这些LOG，这样不仅会造成不必要的性能丢失，也会暴露一些敏感的数据，这些都是我们不愿看到的。</p>
+<p>首先，我们要给Log进行分级，规定“DEBUG版本输出哪一些级别的LOG并屏蔽哪一些级别的LOG，而RELEASE版本又输出另一些级别的LOG并屏蔽另一些级别的LOG”，这样在开发阶段能够输出我们调试需要的LOG，而同时又能保证放送的版本能够屏蔽这些敏感的LOG。但是在开发阶段我们不应该特意去注意这些细节，所以必须开发一个Log工具库，在框架层级解决这个需求。</p>
+<p>同时，需要注意的是，<strong>用于作为“开启/关闭Log”的开关必须是一个常量</strong>，而不能是一个变量（使用常量的话，在编译代码的时候，如果常量为false），编译器会直接把调试部分的Log代码直接去掉，而使用变量作为开关的话，这个判断逻辑会继续保留，一方面会造成性能丢失，另一方面在运行时也可以通过Hack手段强行开启这部分Log代码。</p>
+<p>另外，“开启/关闭Log”的开关必须写在Log方法外部，也就是说必须先判断“开启/关闭Log”条件，再调用Log方法，因为在调用Log方法的时候已经造成了性能丢失，而且调用方法的时候，会先构造好改方法需要的参数（按照参数顺序从右往左），再调用方法，而许多人喜欢在调用Log方法的时候计算需要打印出来的内容，这里是最容易造成性能丢失的地方。因此，如果为了图方便，写一个Log工具类，在工具类内部去判断是否应该开启或关闭Log，事实上已经造成了不少的性能丢失。正确的使用姿势应该是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">  Log.v(TAG, <span class="string">"log something"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="在循环体内部打印-LOG"><a href="#在循环体内部打印-LOG" class="headerlink" title="在循环体内部打印 LOG"></a>在循环体内部打印 LOG</h3><p>尽管 Log 造成的性能损失很小，但是如果在循环体内部循环调用 Log 方法的话，那总体的丢失的非常可观了，所以不应该在循环体内部使用 Log，正确的做法是在循环体内部拼接需要打印的内容，等跳出循环体再一次打印出来。</p>
-<p>除了常见的循环体外，还要一个需要注意的场景就是 Adapter。ListView/RecyclerView 是 Android 开发中最常用的控件，因此 Adapter 使用的情景也很多。滚动屏幕的时候，ListView/RecyclerView 会在通过 Adapter 频繁地绑定 ItemView 和数据，而且这些都是在 UI 线程里进行的，所以如果在绑定的过程中调用 Log，可能会造成明显的卡顿。</p>
-<p>至于 Log 到底会丢失多少性能，一般情况下，Log 的性能丢失很小，毕竟是这么常见的系统 Api，肯定是身经百战，早就是 “best performance” 了。不过我曾经有个 RecyclerView 在 <strong>MIUI</strong> 上非常卡，一开始我是 RecyclerView 布局没优化好，最终定位到 Adapter 内部的一处 Log 上，卡顿的地方出现在 Log 的 Native 实现。<strong>MIUI</strong> 到底对用户输出的日志做了什么处理呢？非常神奇。</p>
-<h3 id="无法获取重要-LOG-内容"><a href="#无法获取重要-LOG-内容" class="headerlink" title="无法获取重要 LOG 内容"></a>无法获取重要 LOG 内容</h3><p>在调试代码的时候，我们经常通过 LOG 来定位 Bug。同理，当线上的版本出现问题的时候，我们也希望能通过 LOG 来定位问题所在。但是问题是用户的设备上的打印出来的 LOG 我们根本没有方法获取，唯一的手段就是当用户设备出现问题的时候，把设备借过来连上 IDE 用 LogCat 查看输出的 LOG…… 显然这是不可行的。</p>
-<p>这种时候，我们可以在打印重要 LOG（比如重要路径的触发点、或者一些异常类的信息）的时候，一并把这些信息记录到文件里。在用户反馈系统里面，一并将这些文件上传到我们的用户反馈服务器，这样在处理反馈问题的时候，就能拿到重要的参考日志了。</p>
+<h3 id="在循环体内部打印LOG"><a href="#在循环体内部打印LOG" class="headerlink" title="在循环体内部打印LOG"></a>在循环体内部打印LOG</h3><p>尽管Log造成的性能损失很小，但是如果在循环体内部循环调用Log方法的话，那总体的丢失的非常可观了，所以不应该在循环体内部使用Log，正确的做法是在循环体内部拼接需要打印的内容，等跳出循环体再一次打印出来。</p>
+<p>除了常见的循环体外，还要一个需要注意的场景就是Adapter。ListView/RecyclerView是Android开发中最常用的控件，因此Adapter使用的情景也很多。滚动屏幕的时候，ListView/RecyclerView会在通过Adapter频繁地绑定ItemView和数据，而且这些都是在UI线程里进行的，所以如果在绑定的过程中调用Log，可能会造成明显的卡顿。</p>
+<p>至于Log到底会丢失多少性能，一般情况下，Log的性能丢失很小，毕竟是这么常见的系统Api，肯定是身经百战，早就是“best performance”了。不过我曾经有个RecyclerView在<strong>MIUI</strong>上非常卡，一开始我是RecyclerView布局没优化好，最终定位到Adapter内部的一处Log上，卡顿的地方出现在Log的Native实现。<strong>MIUI</strong> 到底对用户输出的日志做了什么处理呢？非常神奇。</p>
+<h3 id="无法获取重要LOG内容"><a href="#无法获取重要LOG内容" class="headerlink" title="无法获取重要LOG内容"></a>无法获取重要LOG内容</h3><p>在调试代码的时候，我们经常通过LOG来定位Bug。同理，当线上的版本出现问题的时候，我们也希望能通过LOG来定位问题所在。但是问题是用户的设备上的打印出来的LOG我们根本没有方法获取，唯一的手段就是当用户设备出现问题的时候，把设备借过来连上IDE用LogCat查看输出的LOG……显然这是不可行的。</p>
+<p>这种时候，我们可以在打印重要LOG（比如重要路径的触发点、或者一些异常类的信息）的时候，一并把这些信息记录到文件里。在用户反馈系统里面，一并将这些文件上传到我们的用户反馈服务器，这样在处理反馈问题的时候，就能拿到重要的参考日志了。</p>
 <h2 id="BLog"><a href="#BLog" class="headerlink" title="BLog"></a>BLog</h2><p>BLog 是 Android SDK 的 LOG 工具 {@link android.util.Log} 的加强版，以方便在开发时用来 操作调试日志。</p>
 <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>简单易用的 API；</li>
+<li>简单易用的API；</li>
 <li>支持输出线程信息；</li>
-<li>支持设置 LogLevel，方便在生产环境关闭调试用的 LOG；</li>
-<li>支持将 LOG 内容写入文件，以便通过文件 LOG 定位用户反馈的问题；</li>
+<li>支持设置LogLevel，方便在生产环境关闭调试用的LOG；</li>
+<li>支持将LOG内容写入文件，以便通过文件LOG定位用户反馈的问题；</li>
 </ol>
-<p>注意，尽管 BLog 支持关闭 Log 的输出，但是在你调用 <code>BLog.v (String)</code> 的时候，其实已经造成了性能 丢失，所以请尽量使用正确的姿势来使用 BLog，比如</p>
+<p>注意，尽管BLog支持关闭Log的输出，但是在你调用 <code>BLog.v(String)</code> 的时候，其实已经造成了性能 丢失，所以请尽量使用正确的姿势来使用BLog，比如</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</span><br><span class="line">  BLog.v(TAG, <span class="string">"log verbose"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h3><p><a href="https://github.com/kaedea/b-log" target="_blank" rel="noopener">https://github.com/kaedea/b-log</a><br>补充 2016-11-20 因为现在公司项目上也采用了 BLog 这个工具，开源公司项目相关的代码需要安装既定的流程来，所以暂时不公开源码。有兴趣的同学可以试下联系我交♂流。</p>
+<h3 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h3><p><a href="https://github.com/kaedea/b-log" target="_blank" rel="noopener">https://github.com/kaedea/b-log</a><br>补充 2016-11-20 因为现在公司项目上也采用了BLog这个工具，开源公司项目相关的代码需要安装既定的流程来，所以暂时不公开源码。有兴趣的同学可以试下联系我交♂流。</p>
 <!-- Generated by HexoWriter
-notion-down.version = 0.1.0
-notion-down.revision = b'349007a'
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
 Title = Android Logging 的正确姿势
 Date = 2016-10-02 00:00:00
 Published = true
@@ -463,551 +167,91 @@ hexo.comments = true
       
     </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/APM/" rel="tag"># APM</a>
-          
-            <a href="/tags/Logging/" rel="tag"># Logging</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/09/23/living/living-hackintosh-lh532/" rel="next" title="黑苹果初体验 - 富士通 LH532">
-                <i class="fa fa-chevron-left"></i> 黑苹果初体验 - 富士通 LH532
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/11/android/multidex-source-code/" rel="prev" title="MultiDex 工作原理分析和优化方案">
-                MultiDex 工作原理分析和优化方案 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/Logging/">Logging</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
-          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
-          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">43</span>
-              <span class="site-state-item-name">posts</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/rurin" title="微博" target="_blank">
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
-                  
-                  SegmentFault
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
-                  
-                  HaoMoe
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
-                  
-                  Pixiv
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
-                  
-                  Twitter
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="/about/" title="友情链接">友情链接</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
 
 
-      </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
 
-            
-              
-            
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Log-相关的一些问题"><span class="nav-number">1.</span> <span class="nav-text">Log 相关的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#没有关闭调试用的-LOG"><span class="nav-number">1.1.</span> <span class="nav-text">没有关闭调试用的 LOG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在循环体内部打印-LOG"><span class="nav-number">1.2.</span> <span class="nav-text">在循环体内部打印 LOG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法获取重要-LOG-内容"><span class="nav-number">1.3.</span> <span class="nav-text">无法获取重要 LOG 内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BLog"><span class="nav-number">2.</span> <span class="nav-text">BLog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getting-Started"><span class="nav-number">2.2.</span> <span class="nav-text">Getting Started</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <!-- update loading -->
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'60%'}, 150);
-    </script>
+    &copy; 2022 Kaede Akatsuki
     
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
-</div>
-
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <!-- update loading -->
+  </p>
+</footer>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'80%'}, 150);
-    </script>
-    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'kidhaibara';
-      var disqus_identifier = '2016/10/02/android/log-utility/';
-
-      var disqus_title = "Android Logging 的正确姿势";
-
-
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-
-  <!-- update loading -->
-  
-  <script type="text/javascript">
-      $('.headband').animate({'width':'100%'}, 150);
-  </script>
-  
-
-  <!-- pangu auto space -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
-  <script> pangu.spacingPage(); </script>
-
+  </div>
+</div>
 </body>
 </html>

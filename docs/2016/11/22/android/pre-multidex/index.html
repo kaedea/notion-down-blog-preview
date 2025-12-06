@@ -1,478 +1,177 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE HTML>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
+  
+  <title>通过预安装给 MultiDex 加速 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
+  <meta name="author" content="Kaede Akatsuki">
   
 
   
-    
-    
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
   
 
   
-
+  
+  <meta name="keywords" content="Android,APM,MultiDex,启动速度">
   
 
-  
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="通过预安装给 MultiDex 加速">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <meta property="og:image" content="/favicon.ico">
   
 
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="Android,APM,MultiDex,启动速度,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “65535 方法数超标 ” 以及 “INSTALL_FAILED_DEXOPT” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 给 App 启用 MultiDex 功能，而 MultiDex Suppo">
-<meta name="keywords" content="Android,APM,MultiDex,启动速度">
-<meta property="og:type" content="article">
-<meta property="og:title" content="通过预安装给 MultiDex 加速">
-<meta property="og:url" content="http://kaedea.com/2016/11/22/android/pre-multidex/index.html">
-<meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “65535 方法数超标 ” 以及 “INSTALL_FAILED_DEXOPT” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 给 App 启用 MultiDex 功能，而 MultiDex Suppo">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http://kaedea.com/assets/006y8lvagw1fam9ukwfv1j30jr0vvgpm.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/006y8lvagw1fam9pz6n4rj30kr19aq9o.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/006y8lvagw1fam9polrlrj30k313jwjf.jpg">
-<meta property="og:image" content="http://kaedea.com/assets/006y8lvagw1fam9pce8p3j30dt0lognc.jpg">
-<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="通过预安装给 MultiDex 加速">
-<meta name="twitter:description" content="在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “65535 方法数超标 ” 以及 “INSTALL_FAILED_DEXOPT” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 给 App 启用 MultiDex 功能，而 MultiDex Suppo">
-<meta name="twitter:image" content="http://kaedea.com/assets/006y8lvagw1fam9ukwfv1j30jr0vvgpm.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: "",
-      labels: ""
-    }
-  };
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
 </script>
 
 
+<body>
+<div class="blog">
+  <div class="content">
 
-  <link rel="canonical" href="http://kaedea.com/2016/11/22/android/pre-multidex/">
-
-
-
-
-
-  <title> 通过预安装给 MultiDex 加速 | 中二病也要开发ANDROID </title>
-</head>
-
-<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
-<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//tajs.qq.com/stats?sId=58507383";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'10%'}, 150);
-    </script>
-    
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">中二病也要开发ANDROID</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
   </div>
-  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
+        <li><a href="/archives">归档</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          
-          <a href="/archives" rel="section">
-            
-            Archives
-          </a>
-        </li>
+        <li><a href="/categories">分类</a></li>
       
-        
-        <li class="menu-item menu-item-categories">
-          
-          <a href="/categories" rel="section">
-            
-            Categories
-          </a>
-        </li>
+        <li><a href="/about">关于</a></li>
       
-        
-        <li class="menu-item menu-item-tags">
-          
-          <a href="/tags" rel="section">
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          
-          <a href="/about" rel="section">
-            
-            About
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-            Search
-          </a>
-        </li>
+        <li><a href="/atom.xml">订阅</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-    <div class="site-search">
+    
+    <h3 class="article-title"><span>通过预安装给 MultiDex 加速</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/22/android/pre-multidex/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-22T00:00:00.000Z">
+          2016-11-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
-</form>
+        
 
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
 </script>
 
 
-
-    </div>
-  
-</nav>
- </div>
-    </header>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'30%'}, 150);
-    </script>
-    
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2016/11/22/android/pre-multidex/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                通过预安装给 MultiDex 加速
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-22T00:00:00+00:00">
-              2016-11-22
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/22/android/pre-multidex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/22/android/pre-multidex/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/22/android/pre-multidex/" class="leancloud_visitors" data-flag-title="通过预安装给 MultiDex 加速">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MultiDex是如何判断是否需要重新解压和优化dex的"><span class="toc-text">MultiDex是如何判断是否需要重新解压和优化dex的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预解压（PreMultiDex）详细的流程图"><span class="toc-text">预解压（PreMultiDex）详细的流程图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装新Apk前先解压和优化dex"><span class="toc-text">安装新Apk前先解压和优化dex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次运行新Apk时，移动预先安装好的dex文件"><span class="toc-text">第一次运行新Apk时，移动预先安装好的dex文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一次运行新Apk后，检查dex文件是否正确"><span class="toc-text">第一次运行新Apk后，检查dex文件是否正确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复MultiDex"><span class="toc-text">恢复MultiDex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些小细节"><span class="toc-text">一些小细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dex文件、odex文件？"><span class="toc-text">dex文件、odex文件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dexopt缓存"><span class="toc-text">dexopt缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于dex文件校验"><span class="toc-text">关于dex文件校验</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
 
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
-
-      
-        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
-<p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
+        <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
+<p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
 <a id="more"></a>
-<h2 id="MultiDex-是如何判断是否需要重新解压和优化-dex-的"><a href="#MultiDex-是如何判断是否需要重新解压和优化-dex-的" class="headerlink" title="MultiDex 是如何判断是否需要重新解压和优化 dex 的"></a>MultiDex 是如何判断是否需要重新解压和优化 dex 的</h2><p>在之前的章节里面讲到，MultiDex 在第一次做完解压和优化 dex 之后，会保留当前 Apk 的一些信息，下一次启动时候后读取这些配置信息再判断是否需要重新解压和优化 dex 文件。<br>这个判断主要是在 MultiDexExtractor#load (Context, ApplicationInfo, File, boolean) 方法里进行。</p>
+<h2 id="MultiDex是如何判断是否需要重新解压和优化dex的"><a href="#MultiDex是如何判断是否需要重新解压和优化dex的" class="headerlink" title="MultiDex是如何判断是否需要重新解压和优化dex的"></a>MultiDex是如何判断是否需要重新解压和优化dex的</h2><p>在之前的章节里面讲到，MultiDex在第一次做完解压和优化dex之后，会保留当前Apk的一些信息，下一次启动时候后读取这些配置信息再判断是否需要重新解压和优化dex文件。<br>这个判断主要是在MultiDexExtractor#load(Context, ApplicationInfo, File, boolean)方法里进行。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> List&lt;File&gt; <span class="title">load</span><span class="params">(Context context, ApplicationInfo applicationInfo, File dexDir,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">boolean</span> forceReload)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (!forceReload &amp;&amp; !isModified(context, sourceApk, currentCrc)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                files = loadExistingExtractions(context, sourceApk, dexDir);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException ioe) &#123;</span><br><span class="line">                ...</span><br><span class="line">                files = performExtractions(sourceApk, dexDir);</span><br><span class="line">                putStoredApkInfo(context,</span><br><span class="line">                        getTimeStamp(sourceApk), currentCrc, files.size() + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ...</span><br><span class="line">            files = performExtractions(sourceApk, dexDir);</span><br><span class="line">            putStoredApkInfo(context, getTimeStamp(sourceApk), currentCrc, files.size() + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> files;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一次调用这个方法的时候，forceReload 为 false，则不需要强制重新解压 dex。然后调用了 <code>isModified</code> 这个方法判断当前 App 的 Apk 包是否被修改过。</p>
+<p>第一次调用这个方法的时候，forceReload为false，则不需要强制重新解压dex。然后调用了<code>isModified</code>这个方法判断当前App的Apk包是否被修改过。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isModified</span><span class="params">(Context context, File archive, <span class="keyword">long</span> currentCrc)</span> </span>&#123;</span><br><span class="line">    SharedPreferences prefs = getMultiDexPreferences(context);</span><br><span class="line">    <span class="keyword">return</span> (prefs.getLong(KEY_TIME_STAMP, NO_VALUE) != getTimeStamp(archive))</span><br><span class="line">            || (prefs.getLong(KEY_CRC, NO_VALUE) != currentCrc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>isModified</code> 方法主要是判断当前 App 的 Apk 包的 CRC 值是否和上一次解压 dex 时记录的 Apk 包 CRC 一样（CRC 值可以认为是一个稀疏的 MD5 算法，它的时间复杂度低很多，但是计算结果容易产生冲突），以及 Apk 文件的修改时间（文件的 Last Modified Time）是否一致。如果这两项都一致的话就认为 Apk 文件没有产生变化（没有覆盖安装过），因此上一次解压和优化 dex 得到的缓存文件可以复用。</p>
-<p>当然，光 Apk 包没有修改过这一项条件还不够，接下来调用了这个判断主要是在 MultiDexExtractor#loadExistingExtractions (Context, File, File)。</p>
+<p><code>isModified</code>方法主要是判断当前App的Apk包的CRC值是否和上一次解压dex时记录的Apk包CRC一样（CRC值可以认为是一个稀疏的MD5算法，它的时间复杂度低很多，但是计算结果容易产生冲突），以及Apk文件的修改时间（文件的Last Modified Time）是否一致。如果这两项都一致的话就认为Apk文件没有产生变化（没有覆盖安装过），因此上一次解压和优化dex得到的缓存文件可以复用。</p>
+<p>当然，光Apk包没有修改过这一项条件还不够，接下来调用了这个判断主要是在MultiDexExtractor#loadExistingExtractions(Context, File, File)。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;File&gt; <span class="title">loadExistingExtractions</span><span class="params">(Context context, File sourceApk, File dexDir)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> String extractedFilePrefix = sourceApk.getName() + EXTRACTED_NAME_EXT;</span><br><span class="line">    <span class="keyword">int</span> totalDexNumber = getMultiDexPreferences(context).getInt(KEY_DEX_NUMBER, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">final</span> List&lt;File&gt; files = <span class="keyword">new</span> ArrayList&lt;File&gt;(totalDexNumber);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> secondaryNumber = <span class="number">2</span>; secondaryNumber &lt;= totalDexNumber; secondaryNumber++) &#123;</span><br><span class="line">        String fileName = extractedFilePrefix + secondaryNumber + EXTRACTED_SUFFIX;</span><br><span class="line">        File extractedFile = <span class="keyword">new</span> File(dexDir, fileName);</span><br><span class="line">        <span class="keyword">if</span> (extractedFile.isFile()) &#123;</span><br><span class="line">            files.add(extractedFile);</span><br><span class="line">            <span class="keyword">if</span> (!verifyZipFile(extractedFile)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Invalid ZIP file."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">"Missing extracted secondary dex file '"</span> +</span><br><span class="line">                    extractedFile.getPath() + <span class="string">"'"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> files;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里先通过 SharePreference 读取上一次 MultiDex 保存的 Apk 包的 dex 数量 totalDexNumber，然后挨个加载预定的文件路径上的 dex 文件，加载文件的的同时还通过 <code>verifyZipFile</code> 方法判断 dex 文件的合法性。如果这个过程出现异常就认为获取上一次缓存的 dex 文件失败，需要重新解压。</p>
+<p>这里先通过SharePreference读取上一次MultiDex保存的Apk包的dex数量totalDexNumber，然后挨个加载预定的文件路径上的dex文件，加载文件的的同时还通过<code>verifyZipFile</code>方法判断dex文件的合法性。如果这个过程出现异常就认为获取上一次缓存的dex文件失败，需要重新解压。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">verifyZipFile</span><span class="params">(File file)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ZipFile zipFile = <span class="keyword">new</span> ZipFile(file);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            zipFile.close();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            Log.w(TAG, <span class="string">"Failed to close zip file: "</span> + file.getAbsolutePath());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ZipException ex) &#123;</span><br><span class="line">        Log.w(TAG, <span class="string">"File "</span> + file.getAbsolutePath() + <span class="string">" is not a valid zip file."</span>, ex);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">        Log.w(TAG, <span class="string">"Got an IOException trying to open zip file: "</span> + file.getAbsolutePath(), ex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>verifyZipFile</code> 这个方法非常简单，解压 dex 文件的时候，解压出来的文件被保存成 Zip 包，这个方法这是检查缓存的 dex 文件是否是 Zip 包。感觉不靠谱，虽然检查 MD5 值比较耗时不适合这种情景，不过好歹也像检查 Apk 包的 CRC 值和修改时间一样，检查 dex 缓存文件的 CRC 和修改时间啊。不过读取 SharePreference 配置是一个 IO 操作，如果保存的数值太多的话，也是有增加耗时和 IO 异常的风险的。</p>
+<p><code>verifyZipFile</code>这个方法非常简单，解压dex文件的时候，解压出来的文件被保存成Zip包，这个方法这是检查缓存的dex文件是否是Zip包。感觉不靠谱，虽然检查MD5值比较耗时不适合这种情景，不过好歹也像检查Apk包的CRC值和修改时间一样，检查dex缓存文件的CRC和修改时间啊。不过读取SharePreference配置是一个IO操作，如果保存的数值太多的话，也是有增加耗时和IO异常的风险的。</p>
 <p>到这里我们的方案就清晰了：</p>
 <ol>
-<li>在安装新 Apk 前，先做好 dex 的解压和优化，得到 dex 压缩包（.zip）列表和 dexopt 后的 odex 文件（.dex）列表。</li>
-<li>把 dex/odex 文件保存到一个内部存储路径 PATH_A，同时使用 SP 记录新版本 Apk 的 CRC、dex 数量，以及解压出来的每一个 dex 的 CRC 值。</li>
-<li>安装新版本 Apk 后，启动时在执行 MultiDex 前，把 PATH_A 路径上的缓存文件移动（rename）到 MultiDex 的缓存路径 PATH_B 上，同时保存当前 Apk 的 CRC、修改时间以及 dex 数量到 MultiDex 对应的 SP 配置上。</li>
-<li>执行原有 MultiDex 逻辑，让 MultiDex 以为之前已经做过解压和优化 dex 工作，从而绕开第一次 MultiDex 时候的耗时。</li>
-<li>第一次成功启动新 Apk 后，对 dex 进行校验工作，如果校验失败则清除 dex 缓存，强制让 App 在下一次启动的时候再执行一遍 MultiDex。</li>
+<li>在安装新Apk前，先做好dex的解压和优化，得到dex压缩包（.zip）列表和dexopt后的odex文件（.dex）列表。</li>
+<li>把dex/odex文件保存到一个内部存储路径PATH_A，同时使用SP记录新版本Apk的CRC、dex数量，以及解压出来的每一个dex的CRC值。</li>
+<li>安装新版本Apk后，启动时在执行MultiDex前，把PATH_A路径上的缓存文件移动（rename）到MultiDex的缓存路径PATH_B上，同时保存当前Apk的CRC、修改时间以及dex数量到MultiDex对应的SP配置上。</li>
+<li>执行原有MultiDex逻辑，让MultiDex以为之前已经做过解压和优化dex工作，从而绕开第一次MultiDex时候的耗时。</li>
+<li>第一次成功启动新Apk后，对dex进行校验工作，如果校验失败则清除dex缓存，强制让App在下一次启动的时候再执行一遍MultiDex。</li>
 </ol>
 <h2 id="预解压（PreMultiDex）详细的流程图"><a href="#预解压（PreMultiDex）详细的流程图" class="headerlink" title="预解压（PreMultiDex）详细的流程图"></a>预解压（PreMultiDex）详细的流程图</h2><p>注：</p>
 <ol>
 <li>流程图的绿色部分为文件锁（FileLock）操作，主要是为了多进程同步。</li>
 <li>红色部分为耗时的操作。</li>
-<li>Dex 路径为 MultiDex 过程中用于存储解压出来的 dex 文件的路径（/data/data//code_cache）。</li>
-<li>PreDex 路径为存储预解压得到的缓存文件的内部路径（/data/data//code_cache_pre）。</li>
-<li>MultiDex 从 Apk 包解压出来的 dex 文件会被压缩成 Zip 包（.zip），而执行 dexopt 操作后生成的 odex 文件文件名为.dex，这两个容易搞混。</li>
+<li>Dex路径为MultiDex过程中用于存储解压出来的dex文件的路径（/data/data//code_cache）。</li>
+<li>PreDex路径为存储预解压得到的缓存文件的内部路径（/data/data//code_cache_pre）。</li>
+<li>MultiDex从Apk包解压出来的dex文件会被压缩成Zip包（.zip），而执行dexopt操作后生成的odex文件文件名为.dex，这两个容易搞混。</li>
 </ol>
-<h3 id="安装新-Apk-前先解压和优化-dex"><a href="#安装新-Apk-前先解压和优化-dex" class="headerlink" title="安装新 Apk 前先解压和优化 dex"></a>安装新 Apk 前先解压和优化 dex</h3><p>这个环节必须在升级 Apk 前，由旧版本的 Apk 进行，也就是要求 App 拥有 <strong> 自主更新 </strong> 的逻辑。</p>
+<h3 id="安装新Apk前先解压和优化dex"><a href="#安装新Apk前先解压和优化dex" class="headerlink" title="安装新Apk前先解压和优化dex"></a>安装新Apk前先解压和优化dex</h3><p>这个环节必须在升级Apk前，由旧版本的Apk进行，也就是要求App拥有<strong>自主更新</strong>的逻辑。</p>
 <p><img src="/assets/006y8lvagw1fam9ukwfv1j30jr0vvgpm.jpg" alt></p>
-<h3 id="第一次运行新-Apk-时，移动预先安装好的-dex-文件"><a href="#第一次运行新-Apk-时，移动预先安装好的-dex-文件" class="headerlink" title="第一次运行新 Apk 时，移动预先安装好的 dex 文件"></a>第一次运行新 Apk 时，移动预先安装好的 dex 文件</h3><p>从旧版的 Apk 覆盖安装新的 Apk 后，第一次运行 App 时 MultiDex 主要的耗时过程。这时需要把在旧版本 Apk 预安装得到的 dex 缓存文件移动到 MultiDex 使用的存储路径上。</p>
+<h3 id="第一次运行新Apk时，移动预先安装好的dex文件"><a href="#第一次运行新Apk时，移动预先安装好的dex文件" class="headerlink" title="第一次运行新Apk时，移动预先安装好的dex文件"></a>第一次运行新Apk时，移动预先安装好的dex文件</h3><p>从旧版的Apk覆盖安装新的Apk后，第一次运行App时MultiDex主要的耗时过程。这时需要把在旧版本Apk预安装得到的dex缓存文件移动到MultiDex使用的存储路径上。</p>
 <p><img src="/assets/006y8lvagw1fam9pz6n4rj30kr19aq9o.jpg" alt></p>
-<h3 id="第一次运行新-Apk-后，检查-dex-文件是否正确"><a href="#第一次运行新-Apk-后，检查-dex-文件是否正确" class="headerlink" title="第一次运行新 Apk 后，检查 dex 文件是否正确"></a>第一次运行新 Apk 后，检查 dex 文件是否正确</h3><p>原有的 MultiDex，dex 文件时同步从 Apk 包里解压出来的，所以不存在 dex 文件和 Apk 版本对不上的问题。而 <strong>PreMultiDex</strong> 的方案的一个问题 ui 是，解压 dex 文件和使用 dex 文件这两个过程是分开的，无论版本控制做得再精确，理论上也存在版本出错的问题（比如从 A 版本解压得到了 dex 文件，而用户却选择覆盖安装了 B 版本，这时候由于代码逻辑的不严谨导致 B 版本的 Apk 使用了 A 版本解压出来的 dex 文件）。如果想要确保 dex 文件的正确性，需要对 Apk 包里面的 dex 文件和解压出来的 dex 文件做一下 MD5 值校验，而这个过程比较耗时，不适合在 App 启动的时候做，不然 <strong>PreMultiDex</strong> 就失去了意义。因此，需要在第一次运行新 Apk 后，启动 dex 的校验工作，在 Worker 线程对 dex 进行校验，如果校验失败则清除 dex 缓存，强制让 App 在下一次启动的时候再执行一遍 MultiDex。</p>
+<h3 id="第一次运行新Apk后，检查dex文件是否正确"><a href="#第一次运行新Apk后，检查dex文件是否正确" class="headerlink" title="第一次运行新Apk后，检查dex文件是否正确"></a>第一次运行新Apk后，检查dex文件是否正确</h3><p>原有的MultiDex，dex文件时同步从Apk包里解压出来的，所以不存在dex文件和Apk版本对不上的问题。而<strong>PreMultiDex</strong>的方案的一个问题ui是，解压dex文件和使用dex文件这两个过程是分开的，无论版本控制做得再精确，理论上也存在版本出错的问题（比如从A版本解压得到了dex文件，而用户却选择覆盖安装了B版本，这时候由于代码逻辑的不严谨导致B版本的Apk使用了A版本解压出来的dex文件）。如果想要确保dex文件的正确性，需要对Apk包里面的dex文件和解压出来的dex文件做一下MD5值校验，而这个过程比较耗时，不适合在App启动的时候做，不然<strong>PreMultiDex</strong>就失去了意义。因此，需要在第一次运行新Apk后，启动dex的校验工作，在Worker线程对dex进行校验，如果校验失败则清除dex缓存，强制让App在下一次启动的时候再执行一遍MultiDex。</p>
 <p><img src="/assets/006y8lvagw1fam9polrlrj30k313jwjf.jpg" alt></p>
-<h3 id="恢复-MultiDex"><a href="#恢复-MultiDex" class="headerlink" title="恢复 MultiDex"></a>恢复 MultiDex</h3><p>在 MultiDex 校验失败后，需要清空 MultiDex 的缓存文件，禁用 <strong>PreMultiDex</strong> 功能，并且强制让 App 在下一次启动的时候再执行一遍 MultiDex。</p>
+<h3 id="恢复MultiDex"><a href="#恢复MultiDex" class="headerlink" title="恢复MultiDex"></a>恢复MultiDex</h3><p>在MultiDex校验失败后，需要清空MultiDex的缓存文件，禁用<strong>PreMultiDex</strong>功能，并且强制让App在下一次启动的时候再执行一遍MultiDex。</p>
 <p><img src="/assets/006y8lvagw1fam9pce8p3j30dt0lognc.jpg" alt></p>
-<h2 id="一些小细节"><a href="#一些小细节" class="headerlink" title="一些小细节"></a>一些小细节</h2><h3 id="dex-文件、odex-文件？"><a href="#dex-文件、odex-文件？" class="headerlink" title="dex 文件、odex 文件？"></a>dex 文件、odex 文件？</h3><p>dex 文件是 Android 虚拟机使用的可执行文件（从 Java 类编译得到），相当于 JVM 虚拟机用的 class 文件。但是与 class 文件不同，Android 系统并不能直接使用 dex 文件，需要先使用 dexopt 工具对 dex 文件进行一次优化工作（Optimize），优化得到的 odex 文件才能被虚拟机加载。不同的 Android 设备需要不同格式的 odex 文件，所以这个过程只能在 Android 设备上进行，而不能在构建 Apk 的时候就处理好。</p>
-<p>dex 文件在 Apk 包里的文件后缀名是 <strong>.dex</strong>，MultiDex 从 Apk 包里解压出 dex 文件后会压缩成 Zip 包，文件后缀名是 <strong>.zip</strong>。对 dex 文件进行 dexopt 操作后，会生成相同文件名的 odex 文件，后缀名是 <strong>.dex</strong>，odex 文件会比 dex 文件大许多，不要搞混这些文件。</p>
-<p>至于为什么 MultiDex 解压 dex 文件时会进行压缩工作，可能是因为压缩后的压缩包会占用比较小的内部存储空间，因为 MultiDex 本来就是给旧版本的 Android 系统使用，一些早期的 Android 设备拥有的内部存储空间非常有限，而这些 dex 文件对于 App 的运行时必须的，所以才需要尽量压缩 dex 的体积。压缩过程会有明显的耗时，经过测试，如果不进行压缩，直接从 Apk 里解压 dex 文件，则 MultiDex 过程会有大约 <strong>1/3</strong> 的加速效果。</p>
-<h3 id="dexopt-缓存"><a href="#dexopt-缓存" class="headerlink" title="dexopt 缓存"></a>dexopt 缓存</h3><p>MultiDex 其实并没有刻意保留 dexopt 后的缓存，如果只保留 dex 文件，而不保留 odex 文件，那么下一次启动执行 MultiDex 的时候，不需要重新解压 dex 文件，但是依然需要 dexopt 并产生 odex 文件，这个过程大概会占用 MultiDex 总耗时的一般左右。如果 odex 文件存在，但是已经损坏了，或者是一个非法的 odex 文件，依然会触发 dexopt 工作。也就是说，加载 dex 文件并创建 DexFile 对象的时候，Android 系统会判断 odex 的缓存，以及缓存文件是否正确，具体过程在 <a href="https://android.googlesource.com/platform/dalvik/+/0dcf6bb/vm/native/dalvik_system_DexFile.cpp" target="_blank" rel="noopener">dalvik_system_DexFile.cpp</a> 里实现，有兴趣的同学可以找找 dex 文件结构分析的文章，这里就不挖坑了。</p>
-<h3 id="关于-dex-文件校验"><a href="#关于-dex-文件校验" class="headerlink" title="关于 dex 文件校验"></a>关于 dex 文件校验</h3><p>其实，如果 dex 文件和 Apk 的版本对不上的话，一般在启动 App 的时候就会出现 ClassNotFound 异常而导致 App 崩溃，接着再次启动由于没有重新 MultiDex 也会继续崩溃。而崩溃的时候，可能 App 崩溃上报系统还没来得及初始化，所以没有办法发现崩溃的问题。</p>
-<p>为了防止这种问题，可以开发一个 <strong> 恢复模式 </strong> 或者 <strong> 安全模式 </strong> 的功能，当 App 出现连续的崩溃的时候，会进入恢复模式的状态，清空一些可能导致异常的数据（比如 PreMultiDex 的缓存），这样就能避免 App 因为连续崩溃而不能使用。至于怎么实现恢复，这已经是另一个领域的功能了，这里不再展开。<br>参考链接： <a href="https://android.googlesource.com/platform/frameworks/multidex/" target="_blank" rel="noopener">Google Multidex</a></p>
+<h2 id="一些小细节"><a href="#一些小细节" class="headerlink" title="一些小细节"></a>一些小细节</h2><h3 id="dex文件、odex文件？"><a href="#dex文件、odex文件？" class="headerlink" title="dex文件、odex文件？"></a>dex文件、odex文件？</h3><p>dex文件是Android虚拟机使用的可执行文件（从Java类编译得到），相当于JVM虚拟机用的class文件。但是与class文件不同，Android系统并不能直接使用dex文件，需要先使用dexopt工具对dex文件进行一次优化工作（Optimize），优化得到的odex文件才能被虚拟机加载。不同的Android设备需要不同格式的odex文件，所以这个过程只能在Android设备上进行，而不能在构建Apk的时候就处理好。</p>
+<p>dex文件在Apk包里的文件后缀名是<strong>.dex</strong>，MultiDex从Apk包里解压出dex文件后会压缩成Zip包，文件后缀名是<strong>.zip</strong>。对dex文件进行dexopt操作后，会生成相同文件名的odex文件，后缀名是<strong>.dex</strong>，odex文件会比dex文件大许多，不要搞混这些文件。</p>
+<p>至于为什么MultiDex解压dex文件时会进行压缩工作，可能是因为压缩后的压缩包会占用比较小的内部存储空间，因为MultiDex本来就是给旧版本的Android系统使用，一些早期的Android设备拥有的内部存储空间非常有限，而这些dex文件对于App的运行时必须的，所以才需要尽量压缩dex的体积。压缩过程会有明显的耗时，经过测试，如果不进行压缩，直接从Apk里解压dex文件，则MultiDex过程会有大约<strong>1/3</strong>的加速效果。</p>
+<h3 id="dexopt缓存"><a href="#dexopt缓存" class="headerlink" title="dexopt缓存"></a>dexopt缓存</h3><p>MultiDex其实并没有刻意保留dexopt后的缓存，如果只保留dex文件，而不保留odex文件，那么下一次启动执行MultiDex的时候，不需要重新解压dex文件，但是依然需要dexopt并产生odex文件，这个过程大概会占用MultiDex总耗时的一般左右。如果odex文件存在，但是已经损坏了，或者是一个非法的odex文件，依然会触发dexopt工作。也就是说，加载dex文件并创建DexFile对象的时候，Android系统会判断odex的缓存，以及缓存文件是否正确，具体过程在<a href="https://android.googlesource.com/platform/dalvik/+/0dcf6bb/vm/native/dalvik_system_DexFile.cpp" target="_blank" rel="noopener">dalvik_system_DexFile.cpp</a>里实现，有兴趣的同学可以找找dex文件结构分析的文章，这里就不挖坑了。</p>
+<h3 id="关于dex文件校验"><a href="#关于dex文件校验" class="headerlink" title="关于dex文件校验"></a>关于dex文件校验</h3><p>其实，如果dex文件和Apk的版本对不上的话，一般在启动App的时候就会出现ClassNotFound异常而导致App崩溃，接着再次启动由于没有重新MultiDex也会继续崩溃。而崩溃的时候，可能App崩溃上报系统还没来得及初始化，所以没有办法发现崩溃的问题。</p>
+<p>为了防止这种问题，可以开发一个<strong>恢复模式</strong>或者<strong>安全模式</strong>的功能，当App出现连续的崩溃的时候，会进入恢复模式的状态，清空一些可能导致异常的数据（比如PreMultiDex的缓存），这样就能避免App因为连续崩溃而不能使用。至于怎么实现恢复，这已经是另一个领域的功能了，这里不再展开。<br>参考链接： <a href="https://android.googlesource.com/platform/frameworks/multidex/" target="_blank" rel="noopener">Google Multidex</a></p>
 <!-- Generated by HexoWriter
-notion-down.version = 0.1.0
-notion-down.revision = b'349007a'
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
 Title = 通过预安装给 MultiDex 加速
 Date = 2016-11-22 00:00:00
 Published = true
@@ -486,553 +185,91 @@ hexo.comments = true
       
     </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/APM/" rel="tag"># APM</a>
-          
-            <a href="/tags/MultiDex/" rel="tag"># MultiDex</a>
-          
-            <a href="/tags/启动速度/" rel="tag"># 启动速度</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/11/11/android/multidex-source-code/" rel="next" title="MultiDex 工作原理分析和优化方案">
-                <i class="fa fa-chevron-left"></i> MultiDex 工作原理分析和优化方案
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/01/tools/comment-formatter/" rel="prev" title="IDEA 注释优化插件：Comment Formatter">
-                IDEA 注释优化插件：Comment Formatter <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/MultiDex/">MultiDex</a><a href="/tags/启动速度/">启动速度</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
-          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
-          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">43</span>
-              <span class="site-state-item-name">posts</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/rurin" title="微博" target="_blank">
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
-                  
-                  SegmentFault
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
-                  
-                  HaoMoe
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
-                  
-                  Pixiv
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
-                  
-                  Twitter
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="/about/" title="友情链接">友情链接</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
 
 
-      </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
 
-            
-              
-            
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MultiDex-是如何判断是否需要重新解压和优化-dex-的"><span class="nav-number">1.</span> <span class="nav-text">MultiDex 是如何判断是否需要重新解压和优化 dex 的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预解压（PreMultiDex）详细的流程图"><span class="nav-number">2.</span> <span class="nav-text">预解压（PreMultiDex）详细的流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装新-Apk-前先解压和优化-dex"><span class="nav-number">2.1.</span> <span class="nav-text">安装新 Apk 前先解压和优化 dex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次运行新-Apk-时，移动预先安装好的-dex-文件"><span class="nav-number">2.2.</span> <span class="nav-text">第一次运行新 Apk 时，移动预先安装好的 dex 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次运行新-Apk-后，检查-dex-文件是否正确"><span class="nav-number">2.3.</span> <span class="nav-text">第一次运行新 Apk 后，检查 dex 文件是否正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#恢复-MultiDex"><span class="nav-number">2.4.</span> <span class="nav-text">恢复 MultiDex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些小细节"><span class="nav-number">3.</span> <span class="nav-text">一些小细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dex-文件、odex-文件？"><span class="nav-number">3.1.</span> <span class="nav-text">dex 文件、odex 文件？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dexopt-缓存"><span class="nav-number">3.2.</span> <span class="nav-text">dexopt 缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于-dex-文件校验"><span class="nav-number">3.3.</span> <span class="nav-text">关于 dex 文件校验</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <!-- update loading -->
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'60%'}, 150);
-    </script>
+    &copy; 2022 Kaede Akatsuki
     
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
-</div>
-
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <!-- update loading -->
+  </p>
+</footer>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'80%'}, 150);
-    </script>
-    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'kidhaibara';
-      var disqus_identifier = '2016/11/22/android/pre-multidex/';
-
-      var disqus_title = "通过预安装给 MultiDex 加速";
-
-
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-
-  <!-- update loading -->
-  
-  <script type="text/javascript">
-      $('.headband').animate({'width':'100%'}, 150);
-  </script>
-  
-
-  <!-- pangu auto space -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
-  <script> pangu.spacingPage(); </script>
-
+  </div>
+</div>
 </body>
 </html>

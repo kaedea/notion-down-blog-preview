@@ -1,465 +1,169 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE HTML>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-  <meta name="google-site-verification" content="iDSz_YkBSa7GqfDFeXoplWWgBDonn-55CL3LvWTuK4k">
-
-
-
-
-
-
-
-
-
+  <meta charset="utf-8">
+  
+  <title>西方程序员跑得比谁都快 | Kaede Akatsuki | 中二病也要开发 Android</title>
 
   
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
+  <meta name="author" content="Kaede Akatsuki">
   
 
   
-    
-    
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
   
 
   
-
+  
+  <meta name="keywords" content="Android,ProGuard,Annotation,AGP">
   
 
-  
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="西方程序员跑得比谁都快">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
 
   
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <meta property="og:image" content="/favicon.ico">
   
 
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="Android,ProGuard,Annotation,AGP,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="中二病也要开发ANDROID" type="application/atom+xml">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon-03-padding.png?v=5.0.1">
-
-
-
-
-
-
-<meta name="description" content="昨天刚刚发表了一篇文章（ProGuard 又搞了个大新闻），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 .dex 文件的时候报错。 本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件">
-<meta name="keywords" content="Android,ProGuard,Annotation,AGP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="西方程序员跑得比谁都快">
-<meta property="og:url" content="http://kaedea.com/2017/03/21/android/naughty-proguard-tuduki/index.html">
-<meta property="og:site_name" content="中二病也要开发ANDROID">
-<meta property="og:description" content="昨天刚刚发表了一篇文章（ProGuard 又搞了个大新闻），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 .dex 文件的时候报错。 本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-08-24T16:41:12.647Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="西方程序员跑得比谁都快">
-<meta name="twitter:description" content="昨天刚刚发表了一篇文章（ProGuard 又搞了个大新闻），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 .dex 文件的时候报错。 本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 'undefined',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: "",
-      labels: ""
-    }
-  };
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
 </script>
 
 
+<body>
+<div class="blog">
+  <div class="content">
 
-  <link rel="canonical" href="http://kaedea.com/2017/03/21/android/naughty-proguard-tuduki/">
-
-
-
-
-
-  <title> 西方程序员跑得比谁都快 | 中二病也要开发ANDROID </title>
-</head>
-
-<!-- move jquery here for loading (originally placed in "_scripts/vendors.swig") -->
-<script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
-  
-
-
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//tajs.qq.com/stats?sId=58507383";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'10%'}, 150);
-    </script>
-    
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">中二病也要开发ANDROID</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
   </div>
-  <p class="site-subtitle">Moe Stuido・願いの叶う場所</p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
+  <nav class="site-navigation">
+    <ul>
       
-        
-        <li class="menu-item menu-item-home">
-          
-          <a href="/" rel="section">
-            
-            Home
-          </a>
-        </li>
+        <li><a href="/archives">归档</a></li>
       
-        
-        <li class="menu-item menu-item-archives">
-          
-          <a href="/archives" rel="section">
-            
-            Archives
-          </a>
-        </li>
+        <li><a href="/categories">分类</a></li>
       
-        
-        <li class="menu-item menu-item-categories">
-          
-          <a href="/categories" rel="section">
-            
-            Categories
-          </a>
-        </li>
+        <li><a href="/about">关于</a></li>
       
-        
-        <li class="menu-item menu-item-tags">
-          
-          <a href="/tags" rel="section">
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          
-          <a href="/about" rel="section">
-            
-            About
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-            Search
-          </a>
-        </li>
+        <li><a href="/atom.xml">订阅</a></li>
       
     </ul>
-  
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
 
   
-    <div class="site-search">
+    
+    <h3 class="article-title"><span>西方程序员跑得比谁都快</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/21/android/naughty-proguard-tuduki/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-21T00:00:00.000Z">
+          2017-03-21
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
       
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
-</form>
+        
 
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'oCoTxxFvwzZyiv48ioJ5','2.0.0');
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
 </script>
 
 
-
-    </div>
-  
-</nav>
- </div>
-    </header>
-
-    <!-- update loading -->
-    
-    <script type="text/javascript">
-        $('.headband').animate({'width':'30%'}, 150);
-    </script>
-    
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://kaedea.com/2017/03/21/android/naughty-proguard-tuduki/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Kaede Akatsuki">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/assets/images/avatar-anzu.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="中二病也要开发ANDROID">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="中二病也要开发ANDROID" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                西方程序员跑得比谁都快
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-21T00:00:00+00:00">
-              2017-03-21
-            </time>
-
-            &nbsp;|&nbsp;
-
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-check-o"></i>
-            </span>
-            <time title="Post modified" itemprop="dateModified" datetime="2021-08-24T16:41:12+00:00">
-              2021-08-24
-            </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/03/21/android/naughty-proguard-tuduki/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/21/android/naughty-proguard-tuduki/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/03/21/android/naughty-proguard-tuduki/" class="leancloud_visitors" data-flag-title="西方程序员跑得比谁都快">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">Visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-          
-          
-
-        </div>
-      </header>
-    
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#被雪藏的问题真正原因"><span class="toc-text">被雪藏的问题真正原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结一些人参经验"><span class="toc-text">总结一些人参经验</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
 
 
-    <div class="post-body" itemprop="articleBody">
 
-      
-      
-
-      
-        <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard 又搞了个大新闻</a>），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 <code>.dex</code> 文件的时候报错。</p>
-<p>本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java 源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
+        <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard又搞了个大新闻</a>），主要吐槽的是项目里面使用ProGuard工具导致的一个诡异的坑。其中根本的原因就是，ProGuard混淆Java注解类的时候，把两个方法混淆成同样的名字，导致dx工具在打包<code>.dex</code>文件的时候报错。</p>
+<p>本来以为这件事情算是告一段落了，没想到自己还是太Naive了。今天早上突然收到了ProGuard开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
 <a id="more"></a>
 <h2 id="被雪藏的问题真正原因"><a href="#被雪藏的问题真正原因" class="headerlink" title="被雪藏的问题真正原因"></a>被雪藏的问题真正原因</h2><p>在上一篇文章里，我分析到这次问题的原因是</p>
 <blockquote>
-<p>ProGuard 工具在混淆注解类类 Route.java 的时候，把它的两个字段都混淆成 a 了，按道理应该是一个 a 和一个 b，不知道是不是 ProGuard 的 BUG，还是 Route 与其他库冲突了。</p>
+<p>ProGuard工具在混淆注解类类Route.java的时候，把它的两个字段都混淆成a了，按道理应该是一个a和一个b，不知道是不是ProGuard的BUG，还是Route与其他库冲突了。</p>
 </blockquote>
-<p>本来我以为是 ProGuard 的 BUG，把注解类的两个字段都混淆成一样的名字，或者是 ProGuard 受到别的库的影响才出现了这个 BUG。显然，在 Java 代码里面，是不允许有两个名字相同且形参一样的方法的，哪怕是它们的返回值不同。</p>
+<p>本来我以为是ProGuard的BUG，把注解类的两个字段都混淆成一样的名字，或者是ProGuard受到别的库的影响才出现了这个BUG。显然，在Java代码里面，是不允许有两个名字相同且形参一样的方法的，哪怕是它们的返回值不同。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String[] foo() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String[]&#123;<span class="string">"wor"</span>, <span class="string">"ld"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"world"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这两个方法是无法重载的，IDE 会提示错误并且无法编译。虽然现在不少的新编程语言支持这样返回值类型不同的方法重载，但是在 Java 里行不通，原因也很简单，类似下面的方法立刻就会产生歧义。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span> <span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">// 无法确定调用的是哪个方法。</span></span><br><span class="line">    foo ();&#125;</span><br></pre></td></tr></table></figure>
-<p>问题的原因虽然只是这么简单，但是其实在 <code>.class</code> 文件的字节码（bytecode）里，这样的重载方法是被允许的。为什么呢？简单点说，在字节码里面，对类的文件结构的描述十分严谨，方法调用必须有指定的返回类型，所以像上面那样的调用是不存在的，自然也就不存在产生歧义的问题。</p>
+<p>这两个方法是无法重载的，IDE会提示错误并且无法编译。虽然现在不少的新编程语言支持这样返回值类型不同的方法重载，但是在Java里行不通，原因也很简单，类似下面的方法立刻就会产生歧义。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">// 无法确定调用的是哪个方法。</span></span><br><span class="line">    foo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题的原因虽然只是这么简单，但是其实在<code>.class</code>文件的字节码（bytecode）里，这样的重载方法是被允许的。为什么呢？简单点说，在字节码里面，对类的文件结构的描述十分严谨，方法调用必须有指定的返回类型，所以像上面那样的调用是不存在的，自然也就不存在产生歧义的问题。</p>
 <p>假设现在有这样一个正常的类（上面的示例代码的正常版）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String[] foo1() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String[]&#123;<span class="string">"wor"</span>, <span class="string">"ld"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">foo2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"world"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        foo1();</span><br><span class="line">        String s = foo2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个类编译成 <code>.class</code> 字节码文件后，它的文件结构大概是这样的。</p>
+<p>这个类编译成<code>.class</code>字节码文件后，它的文件结构大概是这样的。</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">+ Program class: com/bilibili/routertest/Hello</span><br><span class="line"> ...</span><br><span class="line">Interfaces (count = 0):</span><br><span class="line">Constant Pool (count = 30):</span><br><span class="line"> ...</span><br><span class="line">Fields (count = 0):</span><br><span class="line"></span><br><span class="line">Methods (count = 4):</span><br><span class="line">  - Method:       &lt;init&gt;()V</span><br><span class="line">    Access flags: 0x1</span><br><span class="line">      = public Hello()</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">  + Method:       foo1()[Ljava/lang/String;</span><br><span class="line">    Access flags: 0x1</span><br><span class="line">      = public java.lang.String[] foo1()</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">  + Method:       foo2()Ljava/lang/String;</span><br><span class="line">    Access flags: 0x1</span><br><span class="line">      = public java.lang.String foo2()</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">  + Method:       main()V</span><br><span class="line">    Access flags: 0x1</span><br><span class="line">      = public void main()</span><br><span class="line">    Class member attributes (count = 1):</span><br><span class="line">    + Code attribute instructions (code length = 11, locals = 2, stack = 1):</span><br><span class="line">      [0] aload_0 v0</span><br><span class="line">      [1] invokevirtual#7</span><br><span class="line">        + Methodref [com/bilibili/routertest/Hello.foo1 ()[Ljava/lang/String;]</span><br><span class="line">      [4] pop</span><br><span class="line">      [5] aload_0 v0</span><br><span class="line">      [6] invokevirtual#8</span><br><span class="line">        + Methodref [com/bilibili/routertest/Hello.foo2 ()Ljava/lang/String;]</span><br><span class="line">      [9] astore_1 v1</span><br><span class="line">      [10] return</span><br><span class="line">      Code attribute exceptions (count = 0):</span><br><span class="line">      Code attribute attributes (attribute count = 1):</span><br><span class="line">      + Line number table attribute (count = 3)</span><br><span class="line">        [0] -&gt; line 12</span><br><span class="line">        [5] -&gt; line 13</span><br><span class="line">        [10] -&gt; line 14</span><br><span class="line"></span><br><span class="line">Class file attributes (count = 1):</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<p>我们重点关心其中的 <code>main () V</code> 方法，可以清楚的看到，上面的 Java 源码中，main 方法调用了 foo1 方法，虽然没有处理返回值，但是在字节码文件结构对应的方法里明确地指明了改该方法的的返回值类型是 <code>[Ljava/lang/String</code>，区别于 foo2 方法的 <code>Ljava/lang/String</code>。也就是说，字节码里面并不会存在我们上面提到的方法调用的歧义问题，因此可以支持相同形参不同返回值的方法的重载。</p>
-<p>对于这个课题感兴趣的同学可以参考这篇出自 Oracle 的调研文章：<a href="https://community.oracle.com/docs/DOC-983207" target="_blank" rel="noopener">Return-Type-Based Method Overloading in Java Blog</a>。</p>
+<p>我们重点关心其中的<code>main()V</code>方法，可以清楚的看到，上面的Java源码中，main方法调用了foo1方法，虽然没有处理返回值，但是在字节码文件结构对应的方法里明确地指明了改该方法的的返回值类型是<code>[Ljava/lang/String</code>，区别于foo2方法的<code>Ljava/lang/String</code>。也就是说，字节码里面并不会存在我们上面提到的方法调用的歧义问题，因此可以支持相同形参不同返回值的方法的重载。</p>
+<p>对于这个课题感兴趣的同学可以参考这篇出自Oracle的调研文章：<a href="https://community.oracle.com/docs/DOC-983207" target="_blank" rel="noopener">Return-Type-Based Method Overloading in Java Blog</a>。</p>
 <h2 id="总结一些人参经验"><a href="#总结一些人参经验" class="headerlink" title="总结一些人参经验"></a>总结一些人参经验</h2><p>关于造成该问题原因的一些阐述。</p>
 <ol>
-<li>上一篇文章提到的 ProGuard 构建问题其实不是 ProGuard 的 BUG，而是 Android SDK 的 dx 工具的 BUG。</li>
-<li>不是只有在开启 MultiDex 的时候才会出现这个问题，不开启问题也会存在，这个问题与 MultiDex 完全没有关系。</li>
-<li>ProGuard 混淆的是字节码而不是 Java 源码，字节码支持相同形参不同返回值的方法的重载，ProGuard 为了最大限度压缩代码量，对后者的重载提供了支持。</li>
+<li>上一篇文章提到的ProGuard构建问题其实不是ProGuard的BUG，而是Android SDK的dx工具的BUG。</li>
+<li>不是只有在开启MultiDex的时候才会出现这个问题，不开启问题也会存在，这个问题与MultiDex完全没有关系。</li>
+<li>ProGuard混淆的是字节码而不是Java源码，字节码支持相同形参不同返回值的方法的重载，ProGuard为了最大限度压缩代码量，对后者的重载提供了支持。</li>
 <li>不仅注解类，普通的类也会出现类似的问题。</li>
 </ol>
 <p>解决该问题的一些方法。</p>
 <ol>
-<li>如果不开启 ProGuard 的 <code>overloadaggressively</code> 功能，ProGuard 不会对字节码中相同形参不同返回值的方法进行重载（这个功能默认不开启）。</li>
-<li>尝试将注解类的 RetentionPolicy 级别降级为 SOURCE 级别。</li>
+<li>如果不开启ProGuard的<code>overloadaggressively</code>功能，ProGuard不会对字节码中相同形参不同返回值的方法进行重载（这个功能默认不开启）。</li>
+<li>尝试将注解类的RetentionPolicy级别降级为SOURCE级别。</li>
 <li>不要让注解类出现相同形参不同返回值不同名字的方法，不然可能被混淆成重载的方法。</li>
-<li>Keep 住相应的注解类。</li>
+<li>Keep住相应的注解类。</li>
 </ol>
-<p>以下是 ProGuard 开发者给出的建议。</p>
+<p>以下是ProGuard开发者给出的建议。</p>
 <figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Unfortunately, dx has a bug: it crashes on this overloading. Workarounds:</span><br><span class="line"></span><br><span class="line">- Do not use the option &apos;-overloadaggressively&apos; in your ProGuard configuration.</span><br><span class="line"></span><br><span class="line">- Alternatively, keep the original annotation method names:</span><br><span class="line"></span><br><span class="line">    -keepclassmembernames @interface * &#123; &lt;methods&gt;; &#125;</span><br><span class="line"></span><br><span class="line">The dx tool should then accept the code.</span><br><span class="line"></span><br><span class="line">If it works, you can post this solution in your blog.</span><br></pre></td></tr></table></figure>
 <p>最后，感叹作者的反馈这么迅速。引用作者的一句原话，<code>It&#39;s a fast world!</code>，西方程序员跑的比谁都快。</p>
 <!-- Generated by HexoWriter
-notion-down.version = 0.1.0
-notion-down.revision = b'349007a'
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
 Title = 西方程序员跑得比谁都快
 Date = 2017-03-21 00:00:00
 Published = true
@@ -473,553 +177,91 @@ hexo.comments = true
       
     </div>
 
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/ProGuard/" rel="tag"># ProGuard</a>
-          
-            <a href="/tags/Annotation/" rel="tag"># Annotation</a>
-          
-            <a href="/tags/AGP/" rel="tag"># AGP</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/03/20/android/naughty-proguard/" rel="next" title="ProGuard 又搞了个大新闻">
-                <i class="fa fa-chevron-left"></i> ProGuard 又搞了个大新闻
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/09/android/global-accessing-context/" rel="prev" title="一种Android应用内全局获取Context实例的装置">
-                一种Android应用内全局获取Context实例的装置 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
+  <div class="article-footer">
+    <div class="article-meta pull-left">
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/ProGuard/">ProGuard</a><a href="/tags/Annotation/">Annotation</a><a href="/tags/AGP/">AGP</a>
+    </span>
+    
+
+    </div>
+
     
   </div>
+</article>
 
-
-        </div>
-        
-          
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/assets/images/avatar-anzu.jpg" alt="Kaede Akatsuki">
-          <p class="site-author-name" itemprop="name">Kaede Akatsuki</p>
-          <p class="site-description motion-element" itemprop="description">A TASTE OF CODING & NIHON.</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">43</span>
-              <span class="site-state-item-name">posts</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/kaedea" title="GitHub" target="_blank">
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://zhuanlan.zhihu.com/kaede" title="知乎" target="_blank">
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/rurin" title="微博" target="_blank">
-                  
-                  微博
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://segmentfault.com/blog/kaede" title="SegmentFault" target="_blank">
-                  
-                  SegmentFault
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://moe.kaedea.com" title="HaoMoe" target="_blank">
-                  
-                  HaoMoe
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://www.pixiv.net/member.php?id=1820813" title="Pixiv" target="_blank">
-                  
-                  Pixiv
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://twitter.com/kidhaibara" title="Twitter" target="_blank">
-                  
-                  Twitter
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-          <div class="cc-license motion-element" itemprop="license">
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
-            </a>
-          </div>
-        
-
-        
-        
-          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-globe"></i>
-              
-            </div>
-            <ul class="links-of-blogroll-list">
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://android.googlesource.com/platform/frameworks/" title="AOSP" target="_blank">AOSP</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://square.github.io/" title="Square" target="_blank">Square</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="https://code.facebook.com/projects/" title="Facebook" target="_blank">Facebook</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="http://blog.csdn.net/luoshengyang/article/" title="老罗的Android之旅" target="_blank">老罗的Android之旅</a>
-                </li>
-              
-                <li class="links-of-blogroll-item">
-                  <a href="/about/" title="友情链接">友情链接</a>
-                </li>
-              
-            </ul>
-          </div>
-        
-
-        
 
 
-      </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
 
-            
-              
-            
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
 
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#被雪藏的问题真正原因"><span class="nav-number">1.</span> <span class="nav-text">被雪藏的问题真正原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结一些人参经验"><span class="nav-number">2.</span> <span class="nav-text">总结一些人参经验</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
 
 
-        
-      </div>
+
     </main>
 
-    <!-- update loading -->
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'60%'}, 150);
-    </script>
+    &copy; 2022 Kaede Akatsuki
     
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Kaede Akatsuki</span>
-</div>
-
-
-
-        
-
-        
-      </div>
-    </footer>
-
-    <!-- update loading -->
+  </p>
+</footer>
     
-    <script type="text/javascript">
-        $('.headband').animate({'width':'80%'}, 150);
-    </script>
-    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'kidhaibara';
-      var disqus_identifier = '2017/03/21/android/naughty-proguard-tuduki/';
-
-      var disqus_title = "西方程序员跑得比谁都快";
-
-
-      function run_disqus_script(disqus_script) {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
-      
-
-    </script>
-  
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("KLg6wotxM23RhoBRegWn4XL0-gzGzoHsz", "zvuRltQD5FzgtwhN1d4VG3QK");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-
-  <!-- update loading -->
-  
-  <script type="text/javascript">
-      $('.headband').animate({'width':'100%'}, 150);
-  </script>
-  
-
-  <!-- pangu auto space -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/3.2.1/pangu.min.js"></script>
-  <script> pangu.spacingPage(); </script>
-
+  </div>
+</div>
 </body>
 </html>
