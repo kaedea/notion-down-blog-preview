@@ -1,0 +1,62 @@
+name: Deploy Homepages
+
+on:
+  push:
+    branches:
+      - release/deploy
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-homepages:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout blog-preview repository
+        uses: actions/checkout@v4
+      
+      - name: Clone kaedea.github.io repository
+        run: |
+          echo "Clone kaedea.github.io"
+          git clone -b circleci-bot https://github.com/kaedea/kaedea.github.io.git deploy
+          cd deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Copy preview pages
+        run: |
+          cp -rv docs/. deploy
+          ls -l deploy
+      
+      - name: Check for modifications
+        id: check_changes
+        run: |
+          cd deploy
+          pwd && ls -l
+          ret=$(git status)
+          echo "git status: ${ret}"
+          has_modified=true
+          if [[ $ret == *"nothing to commit"* ]]; then
+              has_modified=false
+          fi
+          echo "has_modified: ${has_modified}"
+          echo "has_modified=${has_modified}" >> $GITHUB_OUTPUT
+          
+          if [ "$has_modified" == "false" ]; then
+              echo "Nothing modified, will skip push."
+          fi
+      
+      - name: Commit and push to kaedea.github.io
+        if: steps.check_changes.outputs.has_modified == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          cd deploy
+          pwd && ls -l
+          git add .
+          git status
+          git commit -m "GitHub Actions deploy homepages - ${{ github.run_number }}"
+          git push --force --quiet "https://${GH_TOKEN}@github.com/kaedea/kaedea.github.io.git"
+          echo "Deploy success 🍺"
