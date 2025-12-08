@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | Kaede Akatsuki | 中二病也要开发 Android</title>
+
+  
+  <meta name="author" content="Kaede Akatsuki">
+  
+
+  
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
+  
+
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
+</script>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+        <li><a href="/atom.xml">订阅</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/06/04/android-so-loading-2/"><span>动态下发 so 库在 Android APK 安装包瘦身方面的应用</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/06/04/android-so-loading-2/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-06-04T00:00:00.000Z">
+          2018-06-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>众所周知 Android 加载 so 文件本身就是一种运行时动态加载可执行代码的行为，所以把 so 做成动态下发的没有什么技术风险，不过要把这项技术稳定落地到实际生产项目中还是有不少麻烦的问题。本文根据实际项目经验，分享一些 so 动态化关键技术点和需要避免的坑。</p>
+        
+          <p><a class="excerpt-btn" href="/2018/06/04/android-so-loading-2/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/so-库/">so 库</a><a href="/tags/动态加载/">动态加载</a><a href="/tags/插件化/">插件化</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/06/04/android-so-loading-2/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2018/04/01/devops/incremental-spa/"><span>增量静态检查（SPA）在代码合入检查里的应用</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/04/01/devops/incremental-spa/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-04-01T00:00:00.000Z">
+          2018-04-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <!-- draft
+Android静态代码扫描效率优化与实践 - 美团
+[https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA](https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA)
+1. 背景
+2. 思考
+3. 实践
+4. 结果
+5. 沉淀
+6. 总结
+文章源代码计划：
+1. 高亮
+2. 多渠道
+3. 注释
+-->
+<p>静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供的 References。</p>
+        
+          <p><a class="excerpt-btn" href="/2018/04/01/devops/incremental-spa/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/DevOps/">DevOps</a><a href="/tags/SPA/">SPA</a><a href="/tags/自动化，静态检查/">自动化，静态检查</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/04/01/devops/incremental-spa/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2017/04/09/android/global-accessing-context/"><span>一种Android应用内全局获取Context实例的装置</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/04/09/android/global-accessing-context/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-04-09T00:00:00.000Z">
+          2017-04-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>哥白尼·罗斯福·马丁路德·李开复·嫁衣曾经说过</p>
+<blockquote>
+<p>Where there is an Android App, there is an Application context.</p>
+</blockquote>
+<p>没毛病，扎心了。App运行的时候，肯定是存在至少一个Application实例的。同时，Context我们再熟悉不过了，写代码的时候经常需要使用到Context实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过attach方法传递进我们需要用到的类。Context实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然App运行的时候，Application实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取Context实例，这样以来就不需要上面那些繁琐的传递方式。</p>
+<p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。<br>
+        
+          <p><a class="excerpt-btn" href="/2017/04/09/android/global-accessing-context/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/Context/">Context</a><a href="/tags/Hook/">Hook</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2017/04/09/android/global-accessing-context/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2017/03/21/android/naughty-proguard-tuduki/"><span>西方程序员跑得比谁都快</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/21/android/naughty-proguard-tuduki/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-21T00:00:00.000Z">
+          2017-03-21
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard又搞了个大新闻</a>），主要吐槽的是项目里面使用ProGuard工具导致的一个诡异的坑。其中根本的原因就是，ProGuard混淆Java注解类的时候，把两个方法混淆成同样的名字，导致dx工具在打包<code>.dex</code>文件的时候报错。</p>
+<p>本来以为这件事情算是告一段落了，没想到自己还是太Naive了。今天早上突然收到了ProGuard开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
+        
+          <p><a class="excerpt-btn" href="/2017/03/21/android/naughty-proguard-tuduki/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/ProGuard/">ProGuard</a><a href="/tags/Annotation/">Annotation</a><a href="/tags/AGP/">AGP</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2017/03/21/android/naughty-proguard-tuduki/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2017/03/20/android/naughty-proguard/"><span>ProGuard 又搞了个大新闻</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/20/android/naughty-proguard/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-20T00:00:00.000Z">
+          2017-03-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。</p>
+<p>ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我们往往无法察觉BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。<br>不过今天被ProGuard坑的不是混淆API导致的BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
+        
+          <p><a class="excerpt-btn" href="/2017/03/20/android/naughty-proguard/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/ProGuard/">ProGuard</a><a href="/tags/Annotation/">Annotation</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2017/03/20/android/naughty-proguard/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="https://github.com/kaedea/comment-formatter" target="_blank"><span>IDEA 注释优化插件：Comment Formatter</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/12/01/tools/comment-formatter/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-12-01T00:00:00.000Z">
+          2016-12-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA; // xxx  |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC; // xxx               |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD; // xxx      |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE; // xxx                      |</span></span><br><span class="line"><span class="comment">//               |                     |                       |</span></span><br><span class="line"><span class="comment">//               |                     v                       |</span></span><br><span class="line"><span class="comment">//               | public static final FiledA mFiledA;  // xxx |</span></span><br><span class="line"><span class="comment">//               | private static final FiledB mFiledB; // xxx |</span></span><br><span class="line"><span class="comment">//               | public FiledC mFiledC;               // xxx |</span></span><br><span class="line"><span class="comment">//               | protected final FiledD mFiledD;      // xxx |</span></span><br><span class="line"><span class="comment">//               | FiledE mFiledE;                      // xxx |</span></span><br><span class="line"><span class="comment">//               +---------------------------------------------+</span></span><br></pre></td></tr></table></figure>
+<p>Comment Formatter is an IntelliJ IDEA plugin (also works in Android Studio) that formats comments as above. It will force all the comments to align to the longest one.</p>
+<p><strong>Getting Started</strong></p>
+<ol>
+<li>Install <code>CommentFormatter</code> from <a href="https://github.com/kaedea/comment-formatter/releases" target="_blank" rel="noopener">release</a> or <a href="https://plugins.jetbrains.com/plugin/9337?pr=idea" target="_blank" rel="noopener">IntelliJ Plugin Repository</a>.</li>
+<li>Select all the lines which you wanna format.</li>
+<li>Select <code>Tool - Format comment</code> or toggle <code>Ctrl + Cmd + L</code> to format.</li>
+</ol>
+<p><a href="https://github.com/kaedea/comment-formatter" target="_blank" rel="noopener">Check it out</a>.</p>
+<!-- Generated by HexoWriter
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
+Title = IDEA 注释优化插件：Comment Formatter
+Date = 2016-12-01
+Published = true
+Category = Utility
+Tag = ['生产工具', 'IDEA Plugin']
+FileLocate = tools
+FileName = comment-formatter
+hexo.comments = true
+hexo.layout = link
+hexo.link = https://github.com/kaedea/comment-formatter
+-->
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Utility/">Utility</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/生产工具/">生产工具</a><a href="/tags/IDEA-Plugin/">IDEA Plugin</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/12/01/tools/comment-formatter/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2016/11/22/android/pre-multidex/"><span>通过预安装给 MultiDex 加速</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/22/android/pre-multidex/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-22T00:00:00.000Z">
+          2016-11-22
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
+<p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
+        
+          <p><a class="excerpt-btn" href="/2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/MultiDex/">MultiDex</a><a href="/tags/启动速度/">启动速度</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/11/22/android/pre-multidex/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2016/11/11/android/multidex-source-code/"><span>MultiDex 工作原理分析和优化方案</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/11/11/android/multidex-source-code/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-11-11T00:00:00.000Z">
+          2016-11-11
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
+<p>MultiDex 是Google 为了解决 “<strong>65535方法数超标</strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
+        
+          <p><a class="excerpt-btn" href="/2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/源码分析/">源码分析</a><a href="/tags/MultiDex/">MultiDex</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/11/11/android/multidex-source-code/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2016/10/02/android/log-utility/"><span>Android Logging 的正确姿势</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/10/02/android/log-utility/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-10-02T00:00:00.000Z">
+          2016-10-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <blockquote>
+<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 Hello, World!。<br>有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。<br>毕竟爱情需要书写，不能是一整张白纸。</p>
+</blockquote>
+<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
+        
+          <p><a class="excerpt-btn" href="/2016/10/02/android/log-utility/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/Logging/">Logging</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/10/02/android/log-utility/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2016/09/23/living/living-hackintosh-lh532/"><span>黑苹果初体验 - 富士通 LH532</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/09/23/living/living-hackintosh-lh532/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-09-23T00:00:00.000Z">
+          2016-09-23
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="/assets/bb50f6df_4c0f_424a_b9b3_04870fa7b35c_untitled.png" alt></p>
+<p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
+<p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
+        
+          <p><a class="excerpt-btn" href="/2016/09/23/living/living-hackintosh-lh532/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Life/">Life</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Hackintosh/">Hackintosh</a><a href="/tags/黑苹果/">黑苹果</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/09/23/living/living-hackintosh-lh532/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+
+<section class="pagination">
+  
+    <a class="extend prev" rel="prev" href="/"><</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">></a>
+  
+</section>
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
+    
+    &copy; 2022 Kaede Akatsuki
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div>
+</body>
+</html>

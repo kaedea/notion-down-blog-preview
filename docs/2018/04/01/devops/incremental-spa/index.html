@@ -1,0 +1,395 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>增量静态检查（SPA）在代码合入检查里的应用 | Kaede Akatsuki | 中二病也要开发 Android</title>
+
+  
+  <meta name="author" content="Kaede Akatsuki">
+  
+
+  
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
+  
+
+  
+  
+  <meta name="keywords" content="DevOps,SPA,自动化，静态检查">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="增量静态检查（SPA）在代码合入检查里的应用">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
+</script>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+        <li><a href="/atom.xml">订阅</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>增量静态检查（SPA）在代码合入检查里的应用</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/04/01/devops/incremental-spa/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-04-01T00:00:00.000Z">
+          2018-04-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#名词解释"><span class="toc-text">名词解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题背景"><span class="toc-text">问题背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决思路"><span class="toc-text">解决思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-如何让静态检查工具只检查出新增部分代码带来的问题"><span class="toc-text">1. 如何让静态检查工具只检查出新增部分代码带来的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-如何提高静态检查的效率"><span class="toc-text">2. 如何提高静态检查的效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体方案实现"><span class="toc-text">具体方案实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-通过-git-计算增量代码的信息"><span class="toc-text">1. 通过 git 计算增量代码的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-基于-AGP-插件的-Lint-增量检查方案"><span class="toc-text">2. 基于 AGP 插件的 Lint 增量检查方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-检查的工作流程"><span class="toc-text">Lint 检查的工作流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-自定义检查规则"><span class="toc-text">Lint 自定义检查规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lint-增量检查的实现方案"><span class="toc-text">Lint 增量检查的实现方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-整体工作流程图"><span class="toc-text">3. 整体工作流程图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果沉淀"><span class="toc-text">结果沉淀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾巴"><span class="toc-text">尾巴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
+        <!-- draft
+Android静态代码扫描效率优化与实践 - 美团
+[https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA](https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA)
+1. 背景
+2. 思考
+3. 实践
+4. 结果
+5. 沉淀
+6. 总结
+文章源代码计划：
+1. 高亮
+2. 多渠道
+3. 注释
+-->
+<p>静态程序分析，是指在不运行程序的情况下分析检查代码里存在的问题。这项技术在代码质量、漏洞扫描等领域有广泛的使用。常见分析工具包括 CheckStyle、Lint、FindBugs 等，也有商用的 Coverity。本文主要讲述为我们在 Android 项目 Merge Request 合入检查里对静态程序分析技术的应用，核心内容是增量代码的静态分析方案，至于各种检查工具的对比筛选，请参考文末提供的 References。</p>
+<a id="more"></a>
+<h2 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h2><ol>
+<li>静态程序分析：SPA (Static Program Analysis)，也称静态代码检查、静态扫描、静态检查等（下文统称 “静态检查”）</li>
+<li>代码合入检查：泛指代码提交进主干分支前的一些列检查流程，比较有代表性的是 GitHub PR (Pull Request) 或者 GitLab MR (Merge Request) 合并前进行自动化检查流水线、或者 Code Review 工作（下文统称 “静态检查”，指 MR 合并前的代码检查）</li>
+</ol>
+<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><!-- draft
+
+ - 提高代码质量
+ - 为 CodeReview 提供支撑
+ - 效率
+ - 历史包袱
+
+-->
+<p>微信相关 Android 项目的 DevOps 实践中，我们在合入检查方向已经先后完成了 “需求合法性检查”、“代码冲突检查”、“编译检查”、“编译后 WeTest 自动化 UI 测试” 等检查项目，代码合入检查流程已经比较完善。接下来，我们想尝试在检查流程里加入静态检查环节，看看能不能在 “统一代码风格、提高代码质量” 方面实现一些突破。</p>
+<p>传统上，代码风格检查普遍比较依赖于人工的 Code Review，而 DevOps 实践给我们的经验是，代码格式、一般向代码错误等问题交给工具自动化处理比较合适，人工 Review 的主要目的应该是项目方案评审，以及优秀代码学习，不然的话 Code Review 很可能会变成政治任务，流于形式。因此，我们希望借助静态检查工具，先过滤大部分的一般代码问题，再交由人工进行代码设计方面的 Review 或者学习（注意，本文侧重于静态检查工具的使用，至于具体 Code Review 标准、流程请参考其他文献）。</p>
+<p>静态检查对 Code Review 起到一个支撑作用：</p>
+<blockquote>
+<p>先由静态检查工具过滤常见的错误，工具无法判断的问题可以给出先 warning log，人工 Review 再根据静态检查的 log，重点排查可疑代码。</p>
+</blockquote>
+<p>不过实际应用上，静态检查工具的接入还是存在许多麻烦的问题，特别是对于一些比较成熟、历史包袱严重的项目。一方面，我们相信有不少人已经尝试过使用一些静态检查工具，这些工具在一些小项目上，经常一下子就能跑出一大堆问题，而对于比较庞大的项目，扫描出太多问题基本相当于扫描不出问题，所以我们不得不想办法让检查工具专注于我们关心的问题。另一方面，一般的静态检查工具的分析过程都比较耗时，少则几分钟，一些需要依赖编译产物的工具耗时可能达到十几分钟（类似 Coverity 这种商业功能需要依赖多维度的数据作为数据流分析的依据，耗时更是可能达到小时的级别），这种量级的时间要求对合入检查流程来说是不可接受的，特别是封版前这种时间十分紧迫的版本阶段，更不用说我们的最终目标是希望在用户本地开发代码阶段就把检查流程添加进来，因此在这个流程上我们需要对静态检查工具的性能提一个非常高的要求。</p>
+<p>总结一下问题，现在摆在我们面的主要有 “两个矛盾”：</p>
+<ol>
+<li>静态检查通常会检查出大量的 “陈年老代码” 带来的历史遗留问题，而这些问题大部分没人维护，也不能随意修改；而合入检查则要求只检查出新增代码带来的新问题。</li>
+<li>静态检查耗时普遍比较 “可观”，越是要求检查精准，越是需要更多耗时；而静态检查则要求越快越好。</li>
+</ol>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><!-- draft
+
+ - 代码差分算法
+ - CheckStyle/Lint 增量方案
+ - 增量报告方案
+
+-->
+<h3 id="1-如何让静态检查工具只检查出新增部分代码带来的问题"><a href="#1-如何让静态检查工具只检查出新增部分代码带来的问题" class="headerlink" title="1. 如何让静态检查工具只检查出新增部分代码带来的问题"></a>1. 如何让静态检查工具只检查出新增部分代码带来的问题</h3><p>介绍我们的方案之前，先说一说两个使用得比较普遍的方案：其一，根据代码提交的时间（例如 git 工具就可以检查每一行代码最近的时间），约定一个起始点时间（比如上一个稳定版本）作为 baseline，静态检查工具检查出来的问题，其对应的代码提交记录如果早于这个 baseline 则自动忽略该问题，这样就能从一大堆问题里面筛选出比较 “新鲜” 的问题。其二，选一个稳定版本作为 baseversion，扫描出这个版本所有的问题并把结果记录下来，以后每次静态扫描都和前面 baseversion 保留的记录做比对，屏蔽存量问题（或者直接编写脚本，根据 baseversion 扫描出来的结果，给全部存量问题自动加上 suppression 注释以便后续静态检查在扫描阶段就屏蔽问题）。</p>
+<p>公司内部部分静态扫描服务使用的就是以上两个方案之一（比如 CodeCC 使用的是 baseversion 方案），这样做的好是思路清晰接入点也简单，几乎对于所有的静态检查工具都可以使用这些方案，也不用担心静态检查工具版本升级带来的兼容性问题。不过缺点也是显而易见的，首先是依然要重复检查老问题，白白浪费资源，而且有些新问题结果表现可能和老问题一样，导致这些问题会被当成老问题忽视。</p>
+<p>再来说说我们现在使用的方案：DevOps 实践中，我们需要计算出用户改了哪些代码或文件（也就是用户提交的 “增量代码”），用来检查用户的行为是否合法（比如改了不允许修改的问题，或者动了别人的代码需要 @owner 过来 Review），因此我们首先想到的是可以直接利用这些增量代码，在静态检查结果中匹配出增量代码带来的问题，这样虽然无法一下解决检查效率的问题，但是也能保证匹配出来的问题大概率是和用户改动的代码相关的。再做进一步思考，既然我们已经得到代码的增量数据，我们是不是可以直接对这部分增量的代码做静态检查？这样既不用重复检查那一大堆成年老问题，也可以直接暴露出增量代码带来的问题。答案是肯定的，我们最终采取了这两种方式结合的思路：</p>
+<blockquote>
+<p>直接对增量代码做检查得到一批问题报告，再从中匹配出增量代码带来的问题。</p>
+</blockquote>
+<h3 id="2-如何提高静态检查的效率"><a href="#2-如何提高静态检查的效率" class="headerlink" title="2. 如何提高静态检查的效率"></a>2. 如何提高静态检查的效率</h3><p>静态检查的效率，一方面跟扫描的文件数量相关，另一方面也受工具自身扫描算法、扫描内容、检测规则的粒度、规则的数量等影响。想要提高效率，一方面我们需要尽量减少输入的文件数，而我们上面提到的增量检查思路刚好把这个方面的问题做到最优解。另一方面，至于扫描算法，自己开发更加高效的检查工具显然不太现实，所以我们把目光放到扫描内容和检测规则，好在现在主流的静态检查工具，其检查规则甚至检查粒度，大都支持用户自定义。简单地说，针对源码类型做扫描的工具比如 CheckStyle 和 Lint，需要经过词法分析、语法分析生成抽象语法树，再遍历抽象语法树跟定义的检测规则去匹配，其工作效率会比较高；而像针对 .class 字节码文件做扫描的工具 FindBugs，需要先编译源码成 .class 文件，再通过 BCEL 分析字节码指令并与探测器规则匹配，效率就会大打折扣（Lint 也支持这种检查方式，这里不做展开）。除了以上谈到的两点外，像 Android 这种 Gradle 项目，如果项目 Module 比较多，Gradle Configure 阶段也会需要比较多的耗时。</p>
+<p>实际上，第一个问题的解决思路，已经给现在这个问题指明了一个方向：针对增量代码做检查，既减少输入文件，又降低需要执行检查任务的 Module 数。万事俱备，接下来的事就是选用合适的静态检查工具了。</p>
+<p>对于我们的项目，目标是 “统一代码风格、提高代码质量”。统一风格方面，CheckStyle 当仁不让， 它支持直接对代码源文件进行扫描，并且内置许多成熟的 Style Guides/Conventions 方案（比如 Google/Sun/Oracle），而且自定义规则也非常简单，完全可以自定义自己的代码格式和变量命名规则。剩下的就是如何提高代码质量，我们选用的是 Lint，理由非常简单，Lint 是 Android 官方深度定制工具，和 Android 项目相性最好，功能极其强大，且可定制性和扩展性以及全面性都表现均超乎我们期待。平时编写代码过程中，Android Stuido 智能标注的各种红色（Error）、黄色（Warning）警告，大部分都是 Lint 检查的结果（所以有事没事推荐大家多按 F2 试试，自动跳到下一处 Lint 检查出问题的地方）。除了跟 IDE/Gradle 插件相结合得很好之外，Lint 也像 CheckStyle 一样，支持直接对代码源文件、甚至 XML 资源文件进行检查，不需要计算依赖或者 API References，效率比较理想。而且 Lint 自定义检查规则的功能也非常强大，几乎覆盖对大部分 Java 代码、XML 资源格式的检查。</p>
+<p>我们的整体方案是：</p>
+<ol>
+<li>计算增量代码。</li>
+<li>以增量代码涉及的源文件作为输入（粒度是文件），给项目相关 Module 配置相应的 CheckStyle 和 Lint 任务。</li>
+<li>运行检查任务，根据预置的检查规则进行扫描，得到检查结果。</li>
+<li>从检查结果中筛选出和增量代码相关的问题（粒度是文件修改行数）</li>
+</ol>
+<h2 id="具体方案实现"><a href="#具体方案实现" class="headerlink" title="具体方案实现"></a><strong>具体</strong>方案<strong>实现</strong></h2><!-- draft
+
+ - 本地增量代码计算
+ - Lint 增量
+
+-->
+<h3 id="1-通过-git-计算增量代码的信息"><a href="#1-通过-git-计算增量代码的信息" class="headerlink" title="1. 通过 git 计算增量代码的信息"></a><strong>1. 通过 git 计算</strong>增量<strong>代码的信息</strong></h3><p>在计算代码增量信息方面，我们需要解决以下几个问题：</p>
+<ol>
+<li>需要计算本地修改代码的增量信息，在体检代码前检查一下有没有新增问题。</li>
+<li>需要计算提交 MR 时，开发分支与主干分支之间代码的增量信息，用于检查 MR 带来的新增问题。</li>
+<li>当用户 MR 检查出问题后在本地修改代码，我们需要计算出 “开发分支与主干分支之间代码的增量信息” 叠加 “用户新修改问题带来的增量信息” 后的最终结果，以便用户检查自己是否已把问题修复。</li>
+</ol>
+<p>我们计算代码增量信息的方案，全靠 <code>git diff</code> 命令：</p>
+<p><img src="/assets/man_git_diff_img_git_diff.png" alt="man: git diff"></p>
+<p>这里先简单介绍一下我们方案需要用到的这几个参数的作用：</p>
+<ol>
+<li><code>name-only</code>：只显示修改文件的名字，不显示内容，这个参数分别刚好满足上面提到的方案的 “文件粒度” 和“文件修改行数粒度”。</li>
+<li><code>-cached</code>：只显示被 staged 过的文件（也就是已经被 add 到 git index 里），计算本地修改代码的时候，需要通过这个参数计算 “已 staged” 和“未 staged”两种文件的综合数据。</li>
+<li><code>-diff-filter=ACMR</code>： 显示哪类文件：Added (A)、Copied (C)、 Modified (M)、Renamed (R)，具体配置请参看官方文档。</li>
+<li><code>-ignore-space-at-eol</code>: 忽略行尾空格或者换行符等修改信息，这里额外说明一下，MR 计算代码修改信息用的也是 git diff 工具而且默认不带这个参数，而 IDEA 的 Annotate 默认是带这个参数的，所以有时候会看到有人提交 MR 显示修改了大量代码（比如批量代码格式化导致修改文件换行符），而当事人本地 IDEA 又看不出自己改了代码。</li>
+<li><code>M100%</code>：这是一个阈值，用来计算前后两个不同名字的文件，内容相似度达到哪个百分比就认为这是一个被 Renamed (R) 的文件。</li>
+</ol>
+<p>关于参数解释，这里推荐一个工具 <a href="https://explainshell.com/explain?cmd=git+diff+--name-only+--cached+--diff-filter%3DACMR+--ignore-space-at-eol+-M100%25" target="_blank" rel="noopener">explainshell.com</a>，不在赘述。现在回答上面提到的几个问题。</p>
+<p>对第一个问题，通过 <code>git diff --diff-filter=ACMR --ignore-space-at-eol -M100%</code> 和 <code>git diff --cached --diff-filter=ACMR --ignore-space-at-eol -M100%</code> 两个命令组合起来，可以综合计算出本地变动代码的增量信息。至于第二个问题，可以先通过 <code>git merge-base &lt;main_branch_revision&gt; HEAD</code> 计算出当前分支跟主干分支之间的共同节点 merge_base_revision，再通过 <code>git diff &lt;merge_base_revision&gt; HEAD</code>，就可以计算出当前开发分支从主干分支拉出来之后的代码变动情况。</p>
+<p>这个方案里最难也最容易被忽略的是第三个问题，不像第一个问题里只要分别计算 staged 和 unstaged 两种文件再加起来就完事了，这里的本地的修改数据不是简单的叠加问题：用户修改了个文件 X，代码提交后，开发分支和主干之间就有一份确定的文件 X 的修改信息 A，这时候用户在本地继续修改文件 X，那本地修改记录里文件 X 也有另一份修改信息 B，这时候 B 跟 A 的修改信息是完全冲突的，我们要的是用户修改文件后本地文件最终状态跟主干之间的代码差异 C，而 A 跟 B 都是错误的信息，而且很明显 C ≠ A + B。</p>
+<p>为了解决第三个问题，我们前后设计了两套方案：</p>
+<ol>
+<li>计算增量信息的时候，先 <code>git add -A &amp;&amp; git commit</code> 自动提交本地修改代码，然后计算 <code>git merge-base &lt;main_branch_revision&gt; HEAD</code>，最后 <code>git reset --soft HEAD~1</code> 把自动提交撤销掉。更详细的操作，还可以先计算修改文件哪些是 staged 的，reset 之后需要把 staged 状态恢复，全面还原文件状态。</li>
+<li>依次计算修改信息 A 和修改信息 B，遍历修改信息 B 的每一行文件修改内容，然后一次拓扑更新 A 的内容，直到遍历完全 B，这时候拓扑后的 A 就是目标的信息 C 了。</li>
+</ol>
+<p>方案 1 的好处就是逻辑清晰，但是提交和撤销动作涉及本地文件修改，容易出现文件修改冲突破坏现场。方案 2 逻辑和算法都比 1 要复杂得多，好在经过几次迭代后我们证明这个路子是可行，现在稳定投产中。</p>
+<p>作为补充说明，<code>git diff</code> 命令输出的格式不太适合直接参与后面的计算工作，需要先转换成程序友好的格式（比如 JSON），这里推荐一款基于 Python 的 git diff 解析工具：<a href="https://github.com/nathforge/gitdiffparser" target="_blank" rel="noopener">git-diff-parser</a>。项目中我们采用的是 Gradle 插件，所以也用 Groovy 实现了类似的解析工作。假设我们修改了 <code>MainActivity.java</code> 文件，新增了 <code>basepacks.txt</code> 文件，<code>git diff</code> 解析前格式是：</p>
+<figure class="highlight plain"><figcaption><span>Text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">diff --git a/app/src/main/java/com/example/app/MainActivity.java b/app/src/main/java/com/example/app/MainActivity.java</span><br><span class="line">index d3151dd..80ba56b 100644</span><br><span class="line">--- a/app/src/main/java/com/example/app/MainActivity.java</span><br><span class="line">+++ b/app/src/main/java/com/example/app/MainActivity.java</span><br><span class="line">@@ -7,6 +7,8 @@ import android.widget.Toast;</span><br><span class="line"></span><br><span class="line"> import com.jianghongkui.customelint.R;</span><br><span class="line"></span><br><span class="line">+import java.io.IOException;</span><br><span class="line">+</span><br><span class="line"> public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">     @Override</span><br><span class="line">@@ -15,11 +17,26 @@ public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">         setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-         Toast.makeText(this, &quot;&quot;, 20);</span><br><span class="line">-         assert true;</span><br><span class="line">+        Toast.makeText(this, &quot;&quot;, 20);</span><br><span class="line">+        assert true;</span><br><span class="line">+        String hello = &quot;hello&quot;;</span><br><span class="line">+        System.out.println(hello);</span><br><span class="line">+        Integer.parseInt(&quot;2&quot;);</span><br><span class="line">+        Float.parseFloat(&quot;2&quot;);</span><br><span class="line">+        System.loadLibrary(&quot;hello&quot;);</span><br><span class="line">+        try &#123;</span><br><span class="line">+            getAssets().open(&quot;hello&quot;);</span><br><span class="line">+        &#125; catch (IOException e) &#123;</span><br><span class="line">+            e.printStackTrace();</span><br><span class="line">+        &#125;</span><br><span class="line">+</span><br><span class="line">+        foo(&quot;hello2&quot;);</span><br><span class="line">+        foo(&quot;libandromeda&quot;);</span><br><span class="line">+        System.out.println(&quot;libflutter&quot;);</span><br><span class="line">+        System.out.println(&quot;libflutter_v7.so&quot;);</span><br><span class="line">+    &#125;</span><br><span class="line"></span><br><span class="line">-         System.out.println(&quot;hello&quot;);</span><br><span class="line">-         Integer.parseInt(&quot;2&quot;);</span><br><span class="line">-         Float.parseFloat(&quot;2&quot;);</span><br><span class="line">+    private void foo(String str) &#123;</span><br><span class="line">+        System.loadLibrary(str);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line">diff --git a/add.txt b/add.txt</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..9b07058</span><br><span class="line">--- /dev/null</span><br><span class="line">+++ b/add.txt</span><br><span class="line">@@ -0,0 +1,2 @@</span><br><span class="line">+asad</span><br><span class="line">+asdasd</span><br><span class="line">\ No newline at end of file</span><br></pre></td></tr></table></figure>
+<p>经过解析之后变成：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"file"</span>: <span class="string">"app/src/main/java/com/example/app/MainActivity.java"</span>,</span><br><span class="line">        <span class="attr">"changed_lines"</span>: [</span><br><span class="line">            <span class="number">10</span>,</span><br><span class="line">            <span class="number">11</span>,</span><br><span class="line">            <span class="number">20</span>,</span><br><span class="line">            <span class="number">21</span>,</span><br><span class="line">            <span class="number">22</span>,</span><br><span class="line">            <span class="number">23</span>,</span><br><span class="line">            <span class="number">24</span>,</span><br><span class="line">            <span class="number">25</span>,</span><br><span class="line">            <span class="number">26</span>,</span><br><span class="line">            <span class="number">27</span>,</span><br><span class="line">            <span class="number">28</span>,</span><br><span class="line">            <span class="number">29</span>,</span><br><span class="line">            <span class="number">30</span>,</span><br><span class="line">            <span class="number">31</span>,</span><br><span class="line">            <span class="number">32</span>,</span><br><span class="line">            <span class="number">33</span>,</span><br><span class="line">            <span class="number">34</span>,</span><br><span class="line">            <span class="number">35</span>,</span><br><span class="line">            <span class="number">36</span>,</span><br><span class="line">            <span class="number">37</span>,</span><br><span class="line">            <span class="number">39</span>,</span><br><span class="line">            <span class="number">40</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"deleted_lines"</span>: [</span><br><span class="line">            <span class="number">18</span>,</span><br><span class="line">            <span class="number">19</span>,</span><br><span class="line">            <span class="number">21</span>,</span><br><span class="line">            <span class="number">22</span>,</span><br><span class="line">            <span class="number">23</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"is_new_file"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"file"</span>: <span class="string">"add.txt"</span>,</span><br><span class="line">        <span class="attr">"changed_lines"</span>: [</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="number">2</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"deleted_lines"</span>: [],</span><br><span class="line">        <span class="attr">"is_new_file"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>具体代码请参考文末提供的代码仓库。</p>
+<h3 id="2-基于-AGP-插件的-Lint-增量检查方案"><a href="#2-基于-AGP-插件的-Lint-增量检查方案" class="headerlink" title="2. 基于 AGP 插件的 Lint 增量检查方案"></a>2. 基于 AGP 插件的 Lint 增量检查方案</h3><!-- draft
+1. Android Studio 自带的 lint 检查流程
+2. 如何实现增量检查
+3. 如何实现自定义检查规则
+4. 一些需要注意的点
+-->
+<p>在增量检查的具体实现上，我们采用的是自定义 Gradle 插件，增加了 <code>:checkIncremental</code> 任务来执行增量的检查任务。其中 CheckStyle 检查的实现是基于 Gradle Api 提供相关 Checkstyle Task，这个本身就支持增量检查，直接配置输入文件就好。Lint 的增量检查就要复杂得多，主要是基于 Android 官方的 AGP (Android Gradle Plugin) 插件提供的 <code>com.android.tools.lint:lint-gradle</code> 库进行实现，以下介绍几个关键的技术点。</p>
+<h4 id="Lint-检查的工作流程"><a href="#Lint-检查的工作流程" class="headerlink" title="Lint 检查的工作流程"></a>Lint 检查的工作流程</h4><p>Android Lint 的工作过程比较简单，由一个基础的 Lint 过程由 Lint Tool（检测工具），Source Files（项目源文件） 和 lint.xml（配置文件） 三个部分组成：Lint Tool 读取 Source Files，根据 lint.xml 配置的规则（issue）输出结果，如下图：</p>
+<p><img src="/assets/lint_gong_zuo_liu_cheng_shi_yi_tu_image_lint_workflow.png" alt="Lint 工作流程示意图"></p>
+<p>Android 项目中，一般我们有三种方式运行 Lint 检查：命令行、IDEA 的 Inspections 检查功能、Gradle Lint 任务，他们都由 <a href="http://tools.android.com/tips/lint" target="_blank" rel="noopener">AGP Android Lint</a> 提供，并由 Android 官方进行维护，虽然检查入口各不相同，但是底层都是同一套 Lint API 实现（提供 Lint 检查实现的 lint-api.jar 和封装好一些常用检查规则的 lint-check.jar，三种工作方式都是基于这两个类库实现）。</p>
+<p>届于 Lint API 涉及的类库比较复杂，这里不做深入讨论，主要介绍一下几个比较关键的 API：</p>
+<ol>
+<li><code>LintDriver</code>: 三种工作方式最后都通过 LintDriver#analyse() 执行实际上的检查工作。</li>
+<li><code>IssueRegistry</code>：管理 Lint 检查规则，配合 lint.xml 使用。Android 有内置的 BuiltinIssueRegistry，用户自定义检查的话，需要重写该类。</li>
+<li><code>LintRequest</code>：执行 Lint 检查时的一个请求类，封装好了需要检查的文件内容，我们需要实现的增量检查，也是要从这里下手。</li>
+<li><code>LintClient</code>：Lint 客户端，集成 Lint 检查的操作、配置，对应某一种具体的工作方式，比如 LintCliClient 对应命令行方式，LintIdeClient 对应 IDEA 的 Inspections，LintGradleClient 对应 Gradle Lint Task。</li>
+</ol>
+<p>用伪代码表示的话大概是：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> registry = <span class="keyword">new</span> IssueRegistry()</span><br><span class="line"><span class="keyword">def</span> client = <span class="keyword">new</span> LintClient(registry) &#123;</span><br><span class="line">    override createLintRequest(file) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LintRequest(file)</span><br><span class="line">    &#125;</span><br><span class="line">    override run() &#123;</span><br><span class="line">        LintDriver.analyze()  <span class="comment">// super impl</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">client.run()</span><br></pre></td></tr></table></figure>
+<h4 id="Lint-自定义检查规则"><a href="#Lint-自定义检查规则" class="headerlink" title="Lint 自定义检查规则"></a><strong>Lint 自</strong>定义<strong>检查规则</strong></h4><p>自定义检查规则，就是要自定义各种检查 Detector 类，具体可以参考官方的指导文档 <a href="http://tools.android.com/tips/lint/writing-a-lint-check" target="_blank" rel="noopener">Writing a Lint Check</a> 或者美团的几篇 Lint 实践文章 <a href="https://tech.meituan.com/tags/lint.html" target="_blank" rel="noopener">美团 Lint</a>。老实说，这方面官方给出的 Example 并不是很详细，具体怎么写还是要靠自己去看官方 Lint API 的源码，以及参考别人的开源代码（如果你比较熟悉 Visitor 访问者模式，或者写过 ASM 插件，应该比较容易上手）。</p>
+<p>这里给出一个我们自己自定义的检查规则作参考：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 检查 Log 的使用规范</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogIssue</span> <span class="keyword">extends</span> <span class="title">Detector</span> <span class="keyword">implements</span> <span class="title">Detector</span>.<span class="title">UastScanner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Issue ISSUE = Issue.create(</span><br><span class="line">            <span class="string">"WxLog"</span>,</span><br><span class="line">            <span class="string">"Log 使用不规范, 请使用 platformtools.Log"</span>,</span><br><span class="line">            <span class="string">"请使用项目共用的Log函数, 输出console及xlog文件请使用platformtools.Log, 不希望输出xlog文件请使用android.util.Log"</span>,</span><br><span class="line">            Category.CORRECTNESS,</span><br><span class="line">            <span class="number">9</span>,</span><br><span class="line">            Severity.ERROR,</span><br><span class="line">            <span class="keyword">new</span> Implementation(LogIssue<span class="class">.<span class="keyword">class</span>, <span class="title">Scope</span>.<span class="title">JAVA_FILE_SCOPE</span>))</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visitMethod</span><span class="params">(@NotNull JavaContext context, @NotNull UCallExpression node, @NotNull PsiMethod method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (context.getEvaluator().isMemberInClass(method, <span class="string">"java.io.PrintStream"</span>)) &#123;</span><br><span class="line">            context.report(ISSUE, context.getLocation(node), ISSUE.getBriefDescription(TextFormat.TEXT));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getApplicableMethodNames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(<span class="string">"print"</span>, <span class="string">"println"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Lint-增量检查的实现方案"><a href="#Lint-增量检查的实现方案" class="headerlink" title="Lint 增量检查的实现方案"></a>Lint 增量检查的实现方案</h4><p>上面提到，“我们需要实现的增量检查，需要从 LintRequest 下手”，通过重写 LintClient 中的 createLintRequest 方法，传入我们需要增量检查的文件，以下给出关键的代码，具体的实现细节，请参考我们的代码库。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LintToolClient</span> <span class="keyword">extends</span> <span class="title">LintCliClient</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> LintRequest createLintRequest(List&lt;File&gt; files) &#123;</span><br><span class="line">        LintRequest request = <span class="keyword">super</span>.createLintRequest(files)</span><br><span class="line">        <span class="keyword">for</span> (Project <span class="string">project :</span> request.getProjects()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (File <span class="string">file :</span> files) &#123;</span><br><span class="line">                project.addFile(file) <span class="comment">// 具体需要检查的文件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LintRequest(<span class="keyword">this</span>, files)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面提到有三种 Lint 的工作方式，我们采用的是扩展第三种 Lint Gradle 方式（因为这种方式能直接复用现成的 lint.xml 配置文件和 Lint Output 报告格式），最终整体的工作流程是：</p>
+<ol>
+<li>通过 git diff 获得需要检查文件作为 Source Files。</li>
+<li>根据自己的检查需要自定义 LintIssueRegistry（增加了一批自定义的 Detector，考虑的性能需要，移除了那些需要依赖编译产物的内置 Detectors）。</li>
+<li>自定义继承 LintGradleClient 的 LintIncrementalClient（也就是采用 Lint Gradle 工作方式）。</li>
+<li>根据 Source Files，为每一个有文件变动的 Module 创建增量检查用的 Gradle Task；运行检查任务的时候，执行 LintIncrementalClient#run() 实现增量检查</li>
+</ol>
+<p>除了我们采用的第三种 Lint Gradle 方式，这里补充说明一下第二种 IDEA 的 Inspections 功能：通过 “IDEA - Analyse - Inspect Code” 可以迅速针对一个指定的文件做 Lint 检查。如下：</p>
+<p><img src="/assets/idea_inspect_code_image_idea_inspect_code.png" alt="IDEA Inspect Code"></p>
+<p>经过挖掘，我们发现其实现的关键代码在 <a href="https://github.com/JetBrains/android/blob/master/android/src/com/android/tools/idea/lint/LintIdeClient.java" target="_blank" rel="noopener">LintIdeClient.java</a>。通过 Inspections 方案，我们能直接对指定文件进行 Lint 检查，而不需要依赖于 Gradle 环境，这是 Lint 增量检查的最佳方案。不过考虑到 IDEA 版本之间的兼容性问题，而且我们还需要将检查工作合入到 DevOps 自动化流程里，所以最终还是选择了 Gradle Lint 方案。</p>
+<p>最后，关于具体的 Lint 实现有一点需要补充说明：Lint API 25 到 26 之间，无论是 API 接口还是具体的实现，变化都非常大，所以各位参考别人的具体实现代码的时候，一定要先分清当前的 API 版本是多少。</p>
+<h3 id="3-整体工作流程图"><a href="#3-整体工作流程图" class="headerlink" title="3. 整体工作流程图"></a>3<strong>. 整体</strong>工作<strong>流程图</strong></h3><p>没有流程图的方案是没有灵魂的，如下：</p>
+<p><img src="/assets/workflow_image_workflows.png" alt="workflow"></p>
+<h2 id="结果沉淀"><a href="#结果沉淀" class="headerlink" title="结果沉淀"></a>结果沉淀</h2><!-- draft
+
+ - 检查结果展示
+ - Incrementals
+ - 专利
+ - 检查时间
+
+-->
+<p>以代码仓库的 Demo 项目为例，如果执行一遍默认的 <code>:app:clean :app:lint</code> 检查任务，耗时 Configure + 检查任务整体耗时大概在 10s 左右，如下：</p>
+<p><img src="/assets/app_clean_app_lint_time_consumed_image_demo_1.png" alt=":app:clean :app:lint time consumed"></p>
+<p>接入增量 Lint 方案后，耗时已经能压缩到 1s 左右：</p>
+<p>![<a href="/assets/app_clean_app_checklint_time_consumed_image_demo_1.png">:app:clean :app:checkLint time consumed</a></p>
+<p>即使加上增量的 CheckStyle 检查任务，再最终补上一个用来做检查结果报告的 <code>checkReport</code> 任务，整体增量检查耗时也能稳定在 1s：</p>
+<p><img src="/assets/checkincremental_time_consumde_image_demo_1.png" alt=":checkIncremental time consumde"></p>
+<p>在实际项目 MR 合入检查流水线里的应用效果如下：</p>
+<p><img src="/assets/mr_he_ru_jian_cha_pipelines_1579101129_18.png" alt="MR 合入检查 Pipelines"></p>
+<p><img src="/assets/mr_dai_ma_zeng_liang_jian_cha_jie_guo_1579101164_53.png" alt="MR 代码增量检查结果"></p>
+<p>在 MR 代码合入检查的静态检查环节上，我们目前一共实现了 CheckStyle、Lint、文件格式（LF/CRLF 换行符问题）、非法文件修改（文件权限）四种检查内容，其中 Lint 增量带来的收益最明显，时间成本从原本的几分钟、十几分钟级别下降到几秒到几十秒的级别（通常只要在封版前涉及大量代码修改的 MR 才需要几十秒的耗时），已经基本满足了我们 DevOps 合入检查的要求（考虑到静态检查环节是我们合入检查几个并行的 Stages 之间耗时最小的一个，可以说相当于没有时间成本）。而且除了时间成本之外，Lint 自定义检查的功能相当于给我们的平台提供了一种定制性比较强的检查工具，比如 Dark Mode 对 XML 的颜色值有使用规范，通过自定义 Detector 可以很轻松得检查每一个新增 XML 文件的 color 属性。</p>
+<h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><p>本文主要以介绍静态检查整体的应用方案为主，以及分享方案落地流程里一些问题，主要是一己的经验之谈。如果你希望了解现有静态检查工具的对比和应用，这方面市场上已经有大量的科普和评测文章请自行检索，如果你希望试用各种检查工具，这里推荐一下公司内部的静态检查服务 CodeCC 和 CodeDog，他们都有详细的使用文档。又或者你想研究 Lint API 具体的工作细节，这里推荐一下美团技术团队编写的几篇 Lint 相关技术文章 <a href="https://tech.meituan.com/tags/lint.html" target="_blank" rel="noopener">美团 Lint</a>。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li><a href="http://tools.android.com/tips/lint" target="_blank" rel="noopener">http://tools.android.com/tips/lint</a> （官方文档）</li>
+<li><a href="https://tech.meituan.com/tags/lint.html" target="_blank" rel="noopener">https://tech.meituan.com/tags/lint.html</a> （美团 Lint 实践）</li>
+<li><a href="https://www.jianshu.com/p/a0f28fbef73f" target="_blank" rel="noopener">https://www.jianshu.com/p/a0f28fbef73f</a> （自定义 Lint 规则）</li>
+<li><a href="https://blog.csdn.net/ouyang_peng/article/details/80374867" target="_blank" rel="noopener">https://blog.csdn.net/ouyang_peng/article/details/80374867</a> （自定义 Lint 规则）</li>
+<li><a href="https://www.jianshu.com/p/4833a79e9396" target="_blank" rel="noopener">https://www.jianshu.com/p/4833a79e9396</a> （增量 Lint 实现）</li>
+<li><a href="https://github.com/lingochamp/okcheck" target="_blank" rel="noopener">https://github.com/lingochamp/okcheck</a> （增量检查，粒度是有代码改动的 Module，一个折中的方案，优点是侵入性小)</li>
+</ol>
+<!-- Generated by HexoWriter
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
+Title = 增量静态检查（SPA）在代码合入检查里的应用
+Date = 2018-04-01
+Published = true
+Category = DevOps
+Tag = ['DevOps', 'SPA', '自动化，静态检查']
+FileLocate = devops
+FileName = incremental-spa
+hexo.comments = true
+-->
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/DevOps/">DevOps</a><a href="/tags/SPA/">SPA</a><a href="/tags/自动化，静态检查/">自动化，静态检查</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
+    
+    &copy; 2022 Kaede Akatsuki
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div>
+</body>
+</html>

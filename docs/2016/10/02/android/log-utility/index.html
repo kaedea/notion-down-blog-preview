@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Android Logging 的正确姿势 | Kaede Akatsuki | 中二病也要开发 Android</title>
+
+  
+  <meta name="author" content="Kaede Akatsuki">
+  
+
+  
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
+  
+
+  
+  
+  <meta name="keywords" content="Android,APM,Logging">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Android Logging 的正确姿势">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
+</script>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+        <li><a href="/atom.xml">订阅</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Android Logging 的正确姿势</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/10/02/android/log-utility/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-10-02T00:00:00.000Z">
+          2016-10-02
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Log相关的一些问题"><span class="toc-text">Log相关的一些问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#没有关闭调试用的LOG"><span class="toc-text">没有关闭调试用的LOG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在循环体内部打印LOG"><span class="toc-text">在循环体内部打印LOG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无法获取重要LOG内容"><span class="toc-text">无法获取重要LOG内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BLog"><span class="toc-text">BLog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a></li></ol></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
+        <blockquote>
+<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 Hello, World!。<br>有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。<br>毕竟爱情需要书写，不能是一整张白纸。</p>
+</blockquote>
+<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
+<a id="more"></a>
+<h2 id="Log相关的一些问题"><a href="#Log相关的一些问题" class="headerlink" title="Log相关的一些问题"></a>Log相关的一些问题</h2><h3 id="没有关闭调试用的LOG"><a href="#没有关闭调试用的LOG" class="headerlink" title="没有关闭调试用的LOG"></a>没有关闭调试用的LOG</h3><p>许多同学喜欢在开发阶段用Log输出当前的一些环境数据，用于调试代码，但是在调试完成后却忘了关闭这些Log，导致发版出去的应用里面还会继续输出这些LOG，这样不仅会造成不必要的性能丢失，也会暴露一些敏感的数据，这些都是我们不愿看到的。</p>
+<p>首先，我们要给Log进行分级，规定“DEBUG版本输出哪一些级别的LOG并屏蔽哪一些级别的LOG，而RELEASE版本又输出另一些级别的LOG并屏蔽另一些级别的LOG”，这样在开发阶段能够输出我们调试需要的LOG，而同时又能保证放送的版本能够屏蔽这些敏感的LOG。但是在开发阶段我们不应该特意去注意这些细节，所以必须开发一个Log工具库，在框架层级解决这个需求。</p>
+<p>同时，需要注意的是，<strong>用于作为“开启/关闭Log”的开关必须是一个常量</strong>，而不能是一个变量（使用常量的话，在编译代码的时候，如果常量为false），编译器会直接把调试部分的Log代码直接去掉，而使用变量作为开关的话，这个判断逻辑会继续保留，一方面会造成性能丢失，另一方面在运行时也可以通过Hack手段强行开启这部分Log代码。</p>
+<p>另外，“开启/关闭Log”的开关必须写在Log方法外部，也就是说必须先判断“开启/关闭Log”条件，再调用Log方法，因为在调用Log方法的时候已经造成了性能丢失，而且调用方法的时候，会先构造好改方法需要的参数（按照参数顺序从右往左），再调用方法，而许多人喜欢在调用Log方法的时候计算需要打印出来的内容，这里是最容易造成性能丢失的地方。因此，如果为了图方便，写一个Log工具类，在工具类内部去判断是否应该开启或关闭Log，事实上已经造成了不少的性能丢失。正确的使用姿势应该是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> DEBUG = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">  Log.v(TAG, <span class="string">"log something"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在循环体内部打印LOG"><a href="#在循环体内部打印LOG" class="headerlink" title="在循环体内部打印LOG"></a>在循环体内部打印LOG</h3><p>尽管Log造成的性能损失很小，但是如果在循环体内部循环调用Log方法的话，那总体的丢失的非常可观了，所以不应该在循环体内部使用Log，正确的做法是在循环体内部拼接需要打印的内容，等跳出循环体再一次打印出来。</p>
+<p>除了常见的循环体外，还要一个需要注意的场景就是Adapter。ListView/RecyclerView是Android开发中最常用的控件，因此Adapter使用的情景也很多。滚动屏幕的时候，ListView/RecyclerView会在通过Adapter频繁地绑定ItemView和数据，而且这些都是在UI线程里进行的，所以如果在绑定的过程中调用Log，可能会造成明显的卡顿。</p>
+<p>至于Log到底会丢失多少性能，一般情况下，Log的性能丢失很小，毕竟是这么常见的系统Api，肯定是身经百战，早就是“best performance”了。不过我曾经有个RecyclerView在<strong>MIUI</strong>上非常卡，一开始我是RecyclerView布局没优化好，最终定位到Adapter内部的一处Log上，卡顿的地方出现在Log的Native实现。<strong>MIUI</strong> 到底对用户输出的日志做了什么处理呢？非常神奇。</p>
+<h3 id="无法获取重要LOG内容"><a href="#无法获取重要LOG内容" class="headerlink" title="无法获取重要LOG内容"></a>无法获取重要LOG内容</h3><p>在调试代码的时候，我们经常通过LOG来定位Bug。同理，当线上的版本出现问题的时候，我们也希望能通过LOG来定位问题所在。但是问题是用户的设备上的打印出来的LOG我们根本没有方法获取，唯一的手段就是当用户设备出现问题的时候，把设备借过来连上IDE用LogCat查看输出的LOG……显然这是不可行的。</p>
+<p>这种时候，我们可以在打印重要LOG（比如重要路径的触发点、或者一些异常类的信息）的时候，一并把这些信息记录到文件里。在用户反馈系统里面，一并将这些文件上传到我们的用户反馈服务器，这样在处理反馈问题的时候，就能拿到重要的参考日志了。</p>
+<h2 id="BLog"><a href="#BLog" class="headerlink" title="BLog"></a>BLog</h2><p>BLog 是 Android SDK 的 LOG 工具 {@link android.util.Log} 的加强版，以方便在开发时用来 操作调试日志。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>简单易用的API；</li>
+<li>支持输出线程信息；</li>
+<li>支持设置LogLevel，方便在生产环境关闭调试用的LOG；</li>
+<li>支持将LOG内容写入文件，以便通过文件LOG定位用户反馈的问题；</li>
+</ol>
+<p>注意，尽管BLog支持关闭Log的输出，但是在你调用 <code>BLog.v(String)</code> 的时候，其实已经造成了性能 丢失，所以请尽量使用正确的姿势来使用BLog，比如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</span><br><span class="line">  BLog.v(TAG, <span class="string">"log verbose"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h3><p><a href="https://github.com/kaedea/b-log" target="_blank" rel="noopener">https://github.com/kaedea/b-log</a><br>补充 2016-11-20 因为现在公司项目上也采用了BLog这个工具，开源公司项目相关的代码需要安装既定的流程来，所以暂时不公开源码。有兴趣的同学可以试下联系我交♂流。</p>
+<!-- Generated by HexoWriter
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
+Title = Android Logging 的正确姿势
+Date = 2016-10-02 00:00:00
+Published = true
+Category = Android
+Tag = ['Android', 'Logging', 'APM']
+FileLocate = android
+FileName = log-utility
+hexo.comments = true
+-->
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/APM/">APM</a><a href="/tags/Logging/">Logging</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
+    
+    &copy; 2022 Kaede Akatsuki
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div>
+</body>
+</html>

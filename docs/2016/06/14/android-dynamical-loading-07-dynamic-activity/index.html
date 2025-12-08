@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>动态创建 Activity 模式 | Kaede Akatsuki | 中二病也要开发 Android</title>
+
+  
+  <meta name="author" content="Kaede Akatsuki">
+  
+
+  
+  <meta name="description" content="A TASTE OF ACG (Anime/Coding/Games).">
+  
+
+  
+  
+  <meta name="keywords" content="Android,动态化">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="动态创建 Activity 模式">
+
+  <meta property="og:site_name" content="Kaede Akatsuki">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Kaede Akatsuki" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  
+  <link href="https://fonts.lug.ustc.edu.cn/css?family=Lato|Rubik" rel="stylesheet">
+  <script src="/js/pangu-407.min.js"></script>
+</head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    pangu.autoSpacingPage();
+  });
+</script>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Kaede Akatsuki</a>
+    </h1>
+    <p class="site-description">中二病也要开发 Android</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+        <li><a href="/atom.xml">订阅</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>动态创建 Activity 模式</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/06/14/android-dynamical-loading-07-dynamic-activity/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-06-14T00:00:00.000Z">
+          2016-06-14
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        
+
+<script type="text/javascript">
+    function convertRemToPixels(rem) {    
+        return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > convertRemToPixels(40)) {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'visible';
+        } else {
+            document.getElementsByClassName('toc-article')[0].style.visibility = 'hidden';
+        }
+    }
+</script>
+
+
+<div id="toc" class="toc-article">
+      <div class="toc-content">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本信息"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建Activity模式"><span class="toc-text">动态创建Activity模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用DexMaker动态创建一个类"><span class="toc-text">使用DexMaker动态创建一个类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改需要启动的目标Activity"><span class="toc-text">修改需要启动的目标Activity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态创建Activity开源项目-android-pluginmgr"><span class="toc-text">动态创建Activity开源项目 android-pluginmgr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代理Activity模式与动态创建Activity模式的区别"><span class="toc-text">代理Activity模式与动态创建Activity模式的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a></li></ol>
+      </div>
+</div>
+<style>
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+
+
+        <p>还记得我们在代理Activity模式里谈到启动插件APK里的Activity的两个难题吗，由于插件里的Activity没在主项目的Manifest里面注册，所以无法经历系统Framework层级的一系列初始化过程，最终导致获得的Activity实例并没有生命周期和无法使用res资源。</p>
+<p>使用代理Activity能够解决这两个问题，但是有一些限制：</p>
+<ul>
+<li>实际运行的Activity实例其实都是ProxyActivity，并不是真正想要启动的Activity；</li>
+<li>ProxyActivity只能指定一种LaunchMode，所以插件里的Activity无法自定义LaunchMode；</li>
+<li>不支持静态注册的BroadcastReceiver；</li>
+<li>往往不是所有的APK都可作为插件被加载，插件项目需要依赖特定的框架，还有需要遵循一定的”开发规范”；</li>
+</ul>
+<p>特别是最后一个，无法直接把一个普通的APK作为插件使用。这个其实也不算是限制，如果我们需要进行插件化开发，我们总希望能够通过一些框架限制和规范插件的行为，在加载插件前就知道插件大概有哪些功能，这样不仅能方便对插件行为的控制，还能在一定程度上确保插件的安全（运行一个完全未知的可执行文件鬼知道它会做些什么）。不过这样做就要求插件必须依赖特定的框架，这对插件是一种侵入式开发，也就是说，开发插件时不能像开发普通APP那样自由。</p>
+<p>那么有办法避开这些限制，做到完全非侵入式开发吗？比如，通过动态加载框架，不用安装就直接运行《Flappy Bird》的APK安装包。这听起来好像是只有获得ROOT权限才能做到的事情，要不然随便写个空壳的APK加载别人的游戏安装包就直接能运行了。不过，确实有人做到了，通过动态生成Activity类的方式。</p>
+<a id="more"></a>
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>
+<li>Author : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a></li>
+<li>Index : <a href="http://kaedea.com/2016/02/05/android-dynamical-loading-00-index">ANDROID动态加载系列</a></li>
+<li>GitHub : <a href="https://github.com/kaedea/android-dynamical-loading" target="_blank" rel="noopener">kaedea/android-dynamical-loading</a></li>
+</ul>
+<h2 id="动态创建Activity模式"><a href="#动态创建Activity模式" class="headerlink" title="动态创建Activity模式"></a>动态创建Activity模式</h2><p>插件的Activity不是标准的Activity对象才会有上述的这些限制，使其成为标准的Activity是解决问题的关键，而要使其成为标准的Activity，则需要在主项目里注册这些Activity。总不能把插件APK所有的Activity都事先注册到宿主项目里面吧，想到代理模式需要注册一个代理的ProxyActivity，那么能不能在主项目里 <strong>注册一个通用的Activity</strong>（比如TargetActivity）给插件里所有的Activity用呢？解决对策就是，在需要启动插件的某一个Activity（比如PlugActivity）的时候，动态创建一个TargetActivity，新创建的TargetActivity会继承PlugActivity的所有共有行为，而这个TargetActivity的包名与类名刚好与我们事先注册的TargetActivity一致，我们就能以标准的方式启动这个Activity。</p>
+<p>运行时动态创建并编译一个Activity类，这种想法不是天方夜谭，动态创建类的工具有<a href="https://github.com/crittercism/dexmaker" target="_blank" rel="noopener">dexmaker</a>和<a href="http://asm.ow2.org/" target="_blank" rel="noopener">asmdex</a>，二者均能实现动态字节码操作，最大的区别是前者是创建DEX文件，而后者是创建CLASS文件。</p>
+<h2 id="使用DexMaker动态创建一个类"><a href="#使用DexMaker动态创建一个类" class="headerlink" title="使用DexMaker动态创建一个类"></a>使用DexMaker动态创建一个类</h2><p>这种运行时创建一个编译好并能运行的类的方式叫做“动态字节码操作”（runtime bytecode manipulation），使用DexMaker工具能创建一个DEX文件，之后我们再反编译这个DEX看看创建出来的类是什么样子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMakeDex</span><span class="params">(View view)</span></span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			DexMaker dexMaker = <span class="keyword">new</span> DexMaker();</span><br><span class="line"><span class="comment">// Generate a HelloWorld class.</span></span><br><span class="line">			TypeId&lt;?&gt; helloWorld = TypeId.get(<span class="string">"LHelloWorld;"</span>);</span><br><span class="line">			dexMaker.declare(helloWorld, <span class="string">"HelloWorld.generated"</span>, Modifier.PUBLIC, TypeId.OBJECT);</span><br><span class="line">			generateHelloMethod(dexMaker, helloWorld);</span><br><span class="line"><span class="comment">// Create the dex file and load it.</span></span><br><span class="line">			File outputDir = <span class="keyword">new</span> File(Environment.getExternalStorageDirectory() + File.separator + <span class="string">"dexmaker"</span>);</span><br><span class="line">			<span class="keyword">if</span> (!outputDir.exists())outputDir.mkdir();</span><br><span class="line">			ClassLoader loader = dexMaker.generateAndLoad(<span class="keyword">this</span>.getClassLoader(), outputDir);</span><br><span class="line">			Class&lt;?&gt; helloWorldClass = loader.loadClass(<span class="string">"HelloWorld"</span>);</span><br><span class="line"><span class="comment">// Execute our newly-generated code in-process.</span></span><br><span class="line">			helloWorldClass.getMethod(<span class="string">"hello"</span>).invoke(<span class="keyword">null</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			Log.e(<span class="string">"MainActivity"</span>,<span class="string">"[onMakeDex]"</span>,e);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Generates Dalvik bytecode equivalent to the following method.</span></span><br><span class="line"><span class="comment">	 *    public static void hello() &#123;</span></span><br><span class="line"><span class="comment">	 *        int a = 0xabcd;</span></span><br><span class="line"><span class="comment">	 *        int b = 0xaaaa;</span></span><br><span class="line"><span class="comment">	 *        int c = a - b;</span></span><br><span class="line"><span class="comment">	 *        String s = Integer.toHexString(c);</span></span><br><span class="line"><span class="comment">	 *        System.out.println(s);</span></span><br><span class="line"><span class="comment">	 *        return;</span></span><br><span class="line"><span class="comment">	 *    &#125;</span></span><br><span class="line"><span class="comment">	 */</span><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">generateHelloMethod</span><span class="params">(DexMaker dexMaker, TypeId&lt;?&gt; declaringType)</span> </span>&#123;</span><br><span class="line"><span class="comment">// Lookup some types we'll need along the way.</span></span><br><span class="line">		TypeId&lt;System&gt; systemType = TypeId.get(System<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		TypeId&lt;PrintStream&gt; printStreamType = TypeId.get(PrintStream<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Identify the 'hello()' method on declaringType.</span></span><br><span class="line">		MethodId hello = declaringType.getMethod(TypeId.VOID, <span class="string">"hello"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Declare that method on the dexMaker. Use the returned Code instance// as a builder that we can append instructions to.</span></span><br><span class="line">		Code code = dexMaker.declare(hello, Modifier.STATIC | Modifier.PUBLIC);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Declare all the locals we'll need up front. The API requires this.</span></span><br><span class="line">		Local&lt;Integer&gt; a = code.newLocal(TypeId.INT);</span><br><span class="line">		Local&lt;Integer&gt; b = code.newLocal(TypeId.INT);</span><br><span class="line">		Local&lt;Integer&gt; c = code.newLocal(TypeId.INT);</span><br><span class="line">		Local&lt;String&gt; s = code.newLocal(TypeId.STRING);</span><br><span class="line">		Local&lt;PrintStream&gt; localSystemOut = code.newLocal(printStreamType);</span><br><span class="line"></span><br><span class="line"><span class="comment">// int a = 0xabcd;</span></span><br><span class="line">		code.loadConstant(a, <span class="number">0xabcd</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// int b = 0xaaaa;</span></span><br><span class="line">		code.loadConstant(b, <span class="number">0xaaaa</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// int c = a - b;</span></span><br><span class="line">		code.op(BinaryOp.SUBTRACT, c, a, b);</span><br><span class="line"></span><br><span class="line"><span class="comment">// String s = Integer.toHexString(c);</span></span><br><span class="line">		MethodId&lt;Integer, String&gt; toHexString</span><br><span class="line">				= TypeId.get(Integer.class).getMethod(TypeId.STRING, "toHexString", TypeId.INT);</span><br><span class="line">		code.invokeStatic(toHexString, s, c);</span><br><span class="line"></span><br><span class="line"><span class="comment">// System.out.println(s);</span></span><br><span class="line">		FieldId&lt;System, PrintStream&gt; systemOutField = systemType.getField(printStreamType, <span class="string">"out"</span>);</span><br><span class="line">		code.sget(systemOutField, localSystemOut);</span><br><span class="line">		MethodId&lt;PrintStream, Void&gt; printlnMethod = printStreamType.getMethod(</span><br><span class="line">				TypeId.VOID, <span class="string">"println"</span>, TypeId.STRING);</span><br><span class="line">		code.invokeVirtual(printlnMethod, <span class="keyword">null</span>, localSystemOut, s);</span><br><span class="line"></span><br><span class="line"><span class="comment">// return;</span></span><br><span class="line">		code.returnVoid();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行后在SD卡的dexmaker目录下找到刚创建的文件“Generated1532509318.jar”，把里面的“classes.dex”解压出来，然后再用“dex2jar”工具转化成jar文件，最后再用“jd-gui”工具反编译jar的源码。</p>
+<p><img src="/assets/c9b4ef05_95fa_4e01_836e_7f7b47707341_untitled.png" alt></p>
+<p>至此，我们已经成功在运行时创建一个编译好的类（的DEX）。</p>
+<h2 id="修改需要启动的目标Activity"><a href="#修改需要启动的目标Activity" class="headerlink" title="修改需要启动的目标Activity"></a>修改需要启动的目标Activity</h2><p>接下来的问题是如何把需要启动的、在Manifest里面没有注册的PlugActivity换成有注册的TargetActivity。<br>在Android，虚拟机加载类的时候，是通过ClassLoader的loadClass方法，而loadClass方法并不是final类型的，这意味着我们可以创建自己的类去继承ClassLoader，以重载loadClass方法并改写类的加载逻辑，在需要加载PlugActivity的时候，偷偷把其换成TargetActivity。</p>
+<p>大致思路如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CJClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">@override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Class <span class="title">loadClass</span><span class="params">(String className)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(当前上下文插件不为空) &#123;</span><br><span class="line">        <span class="keyword">if</span>( className 是 TargetActivity)&#123;</span><br><span class="line">             找到当前实际要加载的原始PlugActivity，动态创建类（TargetActivity extends PlugActivity ）的dex文件</span><br><span class="line">             <span class="keyword">return</span>  从dex文件中加载的TargetActivity</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">             <span class="keyword">return</span>  使用对应的PluginClassLoader加载普通类</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">super</span>.loadClass()<span class="comment">//使用原来的类加载方法</span></span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就能把启动插件里的PlugActivity变成启动动态创建的TargetActivity。</p>
+<p>不过还有一个问题，主项目启动插件Activity的时候，我们可以替换Activity，但是如果在插件Activity（比如MainActivity）启动另一个Activity（SubActivity）的时候怎么办？插件时普通的第三方APK，我们无法更改里面跳转Activity的逻辑。其实，从主项目启动插件MainActivity的时候，其实启动的是我们动态创建的TargetActivity（extends MainActivity），而我们知道Activity启动另一个Activity的时候都是使用其“startActivityForResult”方法，所以我们可以在创建TargetActivity时，重写其“startActivityForResult”方法，让它在启动其他Activity的时候，也采用动态创建Activity的方式，这样就能解决问题。</p>
+<h2 id="动态创建Activity开源项目-android-pluginmgr"><a href="#动态创建Activity开源项目-android-pluginmgr" class="headerlink" title="动态创建Activity开源项目 android-pluginmgr"></a>动态创建Activity开源项目 <a href="https://github.com/houkx/android-pluginmgr/" target="_blank" rel="noopener">android-pluginmgr</a></h2><p>这种脑洞大开的动态加载思路来自于 <strong>houkx</strong> 的开源项目 <strong>android-pluginmgr</strong>。</p>
+<p><img src="/assets/f2613714_411d_4793_8ff0_5e317f1a706d_untitled.png" alt></p>
+<p><code>android-pluginmgr</code>项目中有三种ClassLoader，一是用于替换宿主APK的Application的<code>CJClassLoader</code>，二是用于加载插件APK的<code>PluginClassLoader</code>，再来是用于加载启动插件Activity时动态生成的PlugActivity的dex包的<code>DexClassLoader</code>（存放在Map集合<code>proxyActivityLoaderMap</code>里面）。其中<code>CJClassLoader</code>是<code>PluginClassLoader</code>的Parent，而<code>PluginClassLoader</code>又是第三种<code>DexClassLoader</code>的Parent。</p>
+<p>ClassLoader类加载Class的时候，会先使用Parent的<code>ClassLoader</code>，但Parent不能完成加载工作时，才会调用Child的<code>ClassLoader</code>去完成工作。</p>
+<blockquote>
+<p>java.lang.ClassLoader Loads classes and resources from a repository. One or more class loaders are installed at runtime. These are consulted whenever the runtime system needs a specific class that is not yet available in-memory. Typically, class loaders are grouped into a tree where child class loaders delegate all requests to parent class loaders. Only if the parent class loader cannot satisfy the request, the child class loader itself tries to handle it.</p>
+</blockquote>
+<p>具体分析请参考 <a href="http://segmentfault.com/a/1190000004062880" target="_blank" rel="noopener">Android动态加载基础 ClassLoader的工作机制</a>。</p>
+<p>所以每加载一个Activity的时候都会调用到最上级的<code>CJClassLoader</code>的<code>loadClass</code>方法，从而保证启动插件Activity的时候能顺利替换成PlugActivity。当然如何控制着三种ClassLoader的加载工作，也是<code>pluginmgr</code>项目的设计难度之一。</p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>动态类创建的方式，使得注册一个通用的Activity就能给多给Activity使用，对这种做法存在的问题也是明显的：</p>
+<ol>
+<li>使用同一个注册的Activity，所以一些需要在Manifest注册的属性无法做到每个Activity都自定义配置；</li>
+<li>插件中的权限，无法动态注册，插件需要的权限都得在宿主中注册，无法动态添加权限；</li>
+<li>插件的Activity无法开启独立进程，因为这需要在Manifest里面注册；</li>
+<li>动态字节码操作涉及到Hack开发，所以相比代理模式起来不稳定；</li>
+</ol>
+<p>其中不稳定的问题出现在对Service的支持上，使用动态创建类的方式可以搞定Activity和Broadcast Receiver，但是使用类似的方式处理Service却不行，因为“ContextImpl.getApplicationContext” 期待得到一个非ContextWrapper的context，如果不是则继续下次循环，目前的Context实例都是wrapper，所以会进入死循环。</p>
+<p>据 <strong>houkx</strong> 称他现在有另外的思路实现“启动为安装的普通第三方APK”的目的，而且不是基于动态类创建的原理，期待他的开源项目的更新。</p>
+<h2 id="代理Activity模式与动态创建Activity模式的区别"><a href="#代理Activity模式与动态创建Activity模式的区别" class="headerlink" title="代理Activity模式与动态创建Activity模式的区别"></a>代理Activity模式与动态创建Activity模式的区别</h2><p>简单地说，最大的不同是代理模式使用了一个 <strong>代理的Activity</strong>，而动态创建Activity模式使用了一个 <strong>通用的Activity</strong>。</p>
+<p>代理模式中，使用一个代理Activity去完成本应该由插件Activity完成的工作，这个代理Activity是一个标准的Android Activity组件，具有生命周期和上下文环境（ContextWrapper和ContextCompl），但是它自身只是一个空壳，并没有承担什么业务逻辑；而插件Activity其实只是一个普通的Java对象，它没有上下文环境，但是却能正常执行业务逻辑的代码。代理Activity和不同的插件Activity配合起来，就能完成不同的业务逻辑了。所以代理模式其实还是使用常规的Android开发技术，只是在处理插件资源的时候强制调用了系统的隐藏API（除非某些ROM蛋疼修改了这个API），因此这种模式还是可以稳定工作和升级的。</p>
+<p>动态创建Activity模式，被动态创建出来的Activity类是有在主项目里面注册的，它是一个标准的Activity，它有自己的Context和生命周期，不需要代理的Activity。</p>
+<p>(这个系列的下个文章开始介绍插件化框架“Android Frontia”的设计和开发过程。)</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://blog.csdn.net/hkxxx/article/details/42194387" target="_blank" rel="noopener">http://blog.csdn.net/hkxxx/article/details/42194387</a></li>
+</ul>
+<!-- Generated by HexoWriter
+notion-down.version = 0.2.2
+notion-down.revision = b'd0a04b0'
+Title = 动态创建 Activity 模式
+Date = 2016-06-14 00:00:00
+Published = true
+Category = Android
+Tag = ['Android', '动态化']
+FileLocate = 
+FileName = android-dynamical-loading-07-dynamic-activity
+hexo.comments = true
+hexo.metaAlignment = center
+-->
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/动态化/">动态化</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+	<section id="comment" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'kidhaibara';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Deployed by <a href="https://github.com/kaedea/notion-down" target="_blank">notion-down</a> and
+    Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
+    </br>
+    
+    &copy; 2022 Kaede Akatsuki
+    
+  </p>
+</footer>
+    
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'G-J38N5N288S', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+  </div>
+</div>
+</body>
+</html>

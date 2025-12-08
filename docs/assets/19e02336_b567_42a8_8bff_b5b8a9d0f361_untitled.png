@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>InvalidArgument</Code><Message>Requests specifying Server Side Encryption with AWS KMS managed keys must be made over a secure connection.</Message><ArgumentName>x-amz-server-side-encryption</ArgumentName><ArgumentValue>null</ArgumentValue><RequestId>D02PHW3AD8P6P0NN</RequestId><HostId>MK5LgaaG861K9dgunwhm4n8TcFjRRv+Ld/0zf5sZbLBtRV6oiWjo37UWKmWad5B/xNscyXPTd8o=</HostId></Error>
