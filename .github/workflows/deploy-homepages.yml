@@ -17,6 +17,11 @@ jobs:
       - name: Checkout blog-preview repository
         uses: actions/checkout@v4
       
+      - name: Checkout HEAD (reset to main)
+        run: |
+          echo "Checkout HEAD"
+          git reset --hard origin/main
+      
       - name: Clone kaedea.github.io repository
         run: |
           echo "Clone kaedea.github.io"
@@ -25,10 +30,22 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       
-      - name: Copy preview pages
+      - name: Copy preview pages into kaedea.github.io
         run: |
+          echo "Copy preview pages into kaedea.github.io"
           cp -rv docs/. deploy
           ls -l deploy
+          
+          echo "Configure CNAME"
+          if [ -f "deploy/CNAME" ]; then
+              rm deploy/CNAME
+          fi
+          echo "kaedea.com" > deploy/CNAME
+          
+          echo "Configure robots.txt"
+          if [ -f "deploy/robots.txt" ]; then
+              rm deploy/robots.txt
+          fi
       
       - name: Check for modifications
         id: check_changes
@@ -55,8 +72,8 @@ jobs:
         run: |
           cd deploy
           pwd && ls -l
-          git add .
+          git add *
           git status
-          git commit -m "GitHub Actions deploy homepages - ${{ github.run_number }}"
-          git push --force --quiet "https://${GH_TOKEN}@github.com/kaedea/kaedea.github.io.git"
+          git commit -a -m "GitHub Actions deploy homepages - ${{ github.run_number }}"
+          git push --force --quiet "https://${GH_TOKEN}@github.com/kaedea/kaedea.github.io.git" circleci-bot:circleci-bot
           echo "Deploy success 🍺"
