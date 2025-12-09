@@ -77,3 +77,46 @@ jobs:
           git commit -a -m "GitHub Actions deploy homepages - ${{ github.run_number }}"
           git push --force --quiet "https://${GH_TOKEN}@github.com/kaedea/kaedea.github.io.git" circleci-bot:circleci-bot
           echo "Deploy success 🍺"
+      
+      - name: Create Pull Request to master
+        if: steps.check_changes.outputs.has_modified == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "=== Creating PR from circleci-bot to master ==="
+          
+          # Check if PR already exists
+          existing_pr=$(curl -s -H "Authorization: token ${GH_TOKEN}" \
+            "https://api.github.com/repos/kaedea/kaedea.github.io/pulls?state=open&head=kaedea:circleci-bot&base=master" \
+            | jq -r '.[0].number // empty')
+          
+          if [ -n "$existing_pr" ]; then
+            echo "✅ PR #${existing_pr} already exists, skipping creation"
+            echo "PR URL: https://github.com/kaedea/kaedea.github.io/pull/${existing_pr}"
+          else
+            echo "Creating new PR..."
+            pr_response=$(curl -s -X POST \
+              -H "Authorization: token ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/kaedea/kaedea.github.io/pulls \
+              -d @- << EOF
+          {
+            "title": "Deploy homepages - Run ${{ github.run_number }}",
+            "body": "Automated deployment from GitHub Actions\n\n**Source:** notion-down-blog-preview\n**Workflow:** ${{ github.workflow }}\n**Run:** ${{ github.run_number }}\n**Commit:** ${{ github.sha }}\n\nThis PR merges the latest homepage updates from the circleci-bot branch to master.",
+            "head": "circleci-bot",
+            "base": "master"
+          }
+          EOF
+            )
+            
+            pr_number=$(echo "$pr_response" | jq -r '.number // empty')
+            pr_url=$(echo "$pr_response" | jq -r '.html_url // empty')
+            
+            if [ -n "$pr_number" ]; then
+              echo "✅ PR #${pr_number} created successfully"
+              echo "PR URL: ${pr_url}"
+            else
+              echo "⚠️  Failed to create PR or PR already exists"
+              echo "Response: $pr_response"
+            fi
+          fi
