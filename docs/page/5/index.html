@@ -73,6 +73,78 @@
 
   
     
+    <h3 class="article-title"><a href="/2016/02/06/android-dynamical-loading-01-introduction/"><span>Android 动态加载简单易懂的介绍方式</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/02/06/android-dynamical-loading-01-introduction/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-02-06T00:00:00.000Z">
+          2016-02-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>我们很早开始就在 Android 项目中采用了动态加载技术，主要目的是为了达到让用户不用重新安装 APK 就能升级应用的功能（特别是 SDK 项目），这样一来不但可以大大提高应用新版本的覆盖率，也减少了服务器对旧版本接口兼容的压力，同时如果也可以快速修复一些线上的 BUG。</p>
+<p>这种技术并不是常规的 Android 开发方式，早期并没有完善的解决方案。从 “不明觉厉” 到稳定投入生产，一直以来我总想对此编写一些文档，这也是这篇日志的由来，没想到前前后后竟然拖沓着编辑了一年多，所以日志里有的地方思路可能有点衔接得不是很好，如果有修正建议请直接回复。</p>
+        
+          <p><a class="excerpt-btn" href="/2016/02/06/android-dynamical-loading-01-introduction/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android/">Android</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Android/">Android</a><a href="/tags/动态化/">动态化</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2016/02/06/android-dynamical-loading-01-introduction/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2016/02/05/android-dynamical-loading-00-index/"><span>Android 动态加载系列索引</span></a></h3>
     
   
@@ -94,9 +166,9 @@
     <div class="entry">
       
         <p><img src="/assets/9228cd65_dd51_4de4_a55a_a5f0cf0226bc_untitled.png" alt></p>
-<p>说到动态加载，我们经常使用“插件化”、“热修复”、“热部署”等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
-<p>在Android开发中采用动态加载技术，可以达到不安装新的APK就升级APP功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急BUG。</p>
-<p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在Android项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
+<p>说到动态加载，我们经常使用 “插件化”、“热修复”、“热部署” 等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
+<p>在 Android 开发中采用动态加载技术，可以达到不安装新的 APK 就升级 APP 功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急 BUG。</p>
+<p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在 Android 项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
         
           <p><a class="excerpt-btn" href="/2016/02/05/android-dynamical-loading-00-index/"><span>阅读全文</span></a></p>
         
@@ -167,7 +239,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Android开发中，可以在Java代码里给View设置点击事件，也可以直接在XML布局里通过<code>android:onClick</code>属性设置回调，这篇日志注意是从源码角度分析后者的实现方式。</p>
+        <p>Android 开发中，可以在 Java 代码里给 View 设置点击事件，也可以直接在 XML 布局里通过 <code>android:onClick</code> 属性设置回调，这篇日志注意是从源码角度分析后者的实现方式。</p>
         
           <p><a class="excerpt-btn" href="/2015/12/23/android-set-onclicklistener-in-xml/"><span>阅读全文</span></a></p>
         
@@ -238,7 +310,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的“有坏味道”的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是“千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的Code Review，最好的做法是把“性能优化”的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong>这个贴的目的在于想骗一些高质量的干货</strong>（我从未见过如此厚颜无耻之人+脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个DEMO之类的放到Github骗骗粉之类的。</p>
+        <p>最近一个星期居然没有产品的需求，本来打算涂几个妹子过双 11，突然想到许多新人进项目组后会把项目以前踩的坑给再次踩一边，特别是一些会引发性能问题的 “有坏味道” 的代码，虽然一点有问题的代码暂时不管也不会有多大的影响，但是 “千里之堤，毁于蚁穴”，一旦问题严重了就不好处理了。不能指望每次都做好完整的 Code Review，最好的做法是把 “性能优化” 的技术点总结一下，输出一个文档，给那些新加入的小伙伴们看看，免得重复踩坑。<br>其实性能调优涉及到多方面的工作，一晚上也只能想到这么多，而且都是一些老生常谈、炒冷饭的东西，<strong> 这个贴的目的在于想骗一些高质量的干货 </strong>（我从未见过如此厚颜无耻之人 + 脑补诸葛孔明表情图），然后我再整合进来，接下来再把每一点都讲详细一点，配合项目中遇到的实例案例进行分析，最好再写个 DEMO 之类的放到 Github 骗骗粉之类的。</p>
 <p><img src="/assets/0efd2bee_959f_4e91_8c59_de8414022ba1_untitled.png" alt></p>
 <p>请大家补充要点啊，我一并处理。以下只是一时想到写的笔记，详细的分析还需要一点时间。</p>
         
@@ -311,7 +383,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>“一本正经地胡说八道”用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？<br>一直以来都想对Android APP开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。<br>“APP卡顿”是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为“如何定位APP中的性能问题”和“提高性能需要注意哪些点”这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。</p>
+        <p>“一本正经地胡说八道” 用日语怎么说？大概是「真面目にふざけている」吧。这篇日志大概就是这么一个意思？<br>一直以来都想对 Android APP 开发的性能调优做一下总结，其实性能调优涉及到多方面的工作，每次有一些心得我都会记录下来，零零散散记录了很多，最近发现许多地方重复了，感觉还是得做一下整理的，知识就是这么牢固起来的。<br>“APP 卡顿” 是一个问题，我们既需要知道怎么查找出哪里造成卡顿，也需要掌握规避这些卡顿的技巧，所以这个话题可以分为 “如何定位 APP 中的性能问题” 和 “提高性能需要注意哪些点” 这两部分，后续在陆续对这两点展开讨论吧，今天先从整体分析下问题存在的原因。</p>
         
           <p><a class="excerpt-btn" href="/2015/11/11/android-best-performance-whisper/"><span>阅读全文</span></a></p>
         
@@ -383,7 +455,7 @@
     <div class="entry">
       
         <p><img src="/assets/ceddf533_e36c_4640_aac1_7388048d9b20_untitled.png" alt></p>
-<p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco使用起来非常简单，也容易扩展，然而这并不是我喜欢Fresco的主要原因。</p>
+<p>现在市面上各种图片加载库，性能其实相差不是很大，最主要的区别还是使用方式的复杂程度。Fresco 使用起来非常简单，也容易扩展，然而这并不是我喜欢 Fresco 的主要原因。</p>
         
           <p><a class="excerpt-btn" href="/2015/11/08/android-fresco-demo/"><span>阅读全文</span></a></p>
         
@@ -454,7 +526,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>Android <strong>MVP模式</strong>[1]也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP模式</strong> 的优势就充分显示出来了。<br>MVP模式是MVC模式在Android上的一种变体，要介绍MVP就得先介绍MVC。在MVC模式中，Activity应该是属于View这一层。而实质上，它既承担了View，同时也包含一些Controller的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把Activity的View和Controller抽离出来就变成了View和Presenter，这就是MVP模式。</p>
+        <p>Android <strong>MVP 模式 </strong>[1] 也不是什么新鲜的东西了，我在自己的项目里也普遍地使用了这个设计模式。当项目越来越庞大、复杂，参与的研发人员越来越多的时候，<strong>MVP 模式 </strong> 的优势就充分显示出来了。<br>MVP 模式是 MVC 模式在 Android 上的一种变体，要介绍 MVP 就得先介绍 MVC。在 MVC 模式中，Activity 应该是属于 View 这一层。而实质上，它既承担了 View，同时也包含一些 Controller 的东西在里面。这对于开发与维护来说不太友好，耦合度大高了。把 Activity 的 View 和 Controller 抽离出来就变成了 View 和 Presenter，这就是 MVP 模式。</p>
         
           <p><a class="excerpt-btn" href="/2015/10/11/android-mvp-pattern/"><span>阅读全文</span></a></p>
         
@@ -526,7 +598,7 @@
     <div class="entry">
       
         <p><img src="/assets/27f9ca87_2f0c_4ae0_ae1e_1c18feb424b1_untitled.png" alt></p>
-<p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress时代，还是现在换成Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是<a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a>的响应式WP主题，但是如今Soma已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的Hexo主题翻了个边，连Fork的主题都没放过，发现最满意的还是TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a>是一个华丽的Hexo响应式主题，由<strong>LouisBarranqueiro</strong>开发的主题<a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a>的基础上改造而来，<strong>大部分功能都是原有主题的</strong>，只是为了我自己的需求做了小部分的修改。</p>
+<p>重新启动博客后，第一件事就是要选主题。 无论是空间时代、Wordpress 时代，还是现在换成 Hexo，每次我都要折腾好几天选一个喜欢的主题。<br>到目前为止，最喜欢的主题是 <a href="http://www.moesora.com/" target="_blank" rel="noopener">萌の空</a> 的响应式 WP 主题，但是如今 Soma 已经放弃该博客了，主题也没有开源出来，所以又得找新的主题了。把国内外大大小小的 Hexo 主题翻了个边，连 Fork 的主题都没放过，发现最满意的还是 TranquiPeak，不过我不喜欢直接拿来用，有不少地方还得改一改。<br><a href="https://github.com/kaedea/hexo-theme-themia" target="_blank" rel="noopener">Themia</a> 是一个华丽的 Hexo 响应式主题，由 <strong>LouisBarranqueiro</strong> 开发的主题 <a href="https://github.com/LouisBarranqueiro/tranquilpeak-hexo-theme" target="_blank" rel="noopener">TranquiPeak</a> 的基础上改造而来，<strong> 大部分功能都是原有主题的 </strong>，只是为了我自己的需求做了小部分的修改。</p>
         
           <p><a class="excerpt-btn" href="/2015/10/05/themia-demo-using-thmia/"><span>阅读全文</span></a></p>
         
@@ -597,7 +669,7 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>App启动MultiDex主要是为了解决“65535方法数超标”以及“INSTALL_FAILED_DEXOPT”问题，就目前来说，对于使用Android Studio的朋友来说，MultiDex这个术语应该不陌生。而对于那些从早期使用Eclipse开发Android的人来说，这个词语则更加再熟悉不过了，因为用Eclipse开启MultiDex功能实在是太坑爹了（默默给Eclipse加一把土）。</p>
+        <p>App 启动 MultiDex 主要是为了解决 “65535 方法数超标” 以及 “INSTALL_FAILED_DEXOPT” 问题，就目前来说，对于使用 Android Studio 的朋友来说，MultiDex 这个术语应该不陌生。而对于那些从早期使用 Eclipse 开发 Android 的人来说，这个词语则更加再熟悉不过了，因为用 Eclipse 开启 MultiDex 功能实在是太坑爹了（默默给 Eclipse 加一把土）。</p>
         
           <p><a class="excerpt-btn" href="/2015/09/02/android/enable-multidex/"><span>阅读全文</span></a></p>
         
@@ -668,14 +740,14 @@
   <div class="article-content">
     <div class="entry">
       
-        <p>“工欲善其事，必先利其器。” 使用<code>Android模拟器</code>开发和调试应用肯定比使用真机方便。但相比<code>XCODE</code>的<code>IOS模拟器</code>，Android SDK自带的<code>AVD</code>实在不争气，不过一些第三方的模拟器却表现不俗！</p>
-<p>10年我开始接触Android开发时候，手头上甚至连一部低端的Android手机都没有，那时候用的是Android SDK自带的AVD模拟器，相信任何Android开发者都对这货深恶痛绝。一直以来，Android开发都有以下的毛病：</p>
+        <p>“工欲善其事，必先利其器。” 使用 <code>Android 模拟器</code> 开发和调试应用肯定比使用真机方便。但相比 <code>XCODE</code> 的 <code>IOS 模拟器</code>，Android SDK 自带的 <code>AVD</code> 实在不争气，不过一些第三方的模拟器却表现不俗！</p>
+<p>10 年我开始接触 Android 开发时候，手头上甚至连一部低端的 Android 手机都没有，那时候用的是 Android SDK 自带的 AVD 模拟器，相信任何 Android 开发者都对这货深恶痛绝。一直以来，Android 开发都有以下的毛病：</p>
 <ul>
-<li>AVD模拟器奇卡无比；</li>
-<li>使用USB数据线链接手机经常无法设别设备，adb容易抽风；</li>
-<li>Log日志输出不全；</li>
+<li>AVD 模拟器奇卡无比；</li>
+<li>使用 USB 数据线链接手机经常无法设别设备，adb 容易抽风；</li>
+<li>Log 日志输出不全；</li>
 </ul>
-<p>一直以来都想找一款能够顺畅运行APP的Android模拟器，以下就介绍几款比较给力的。</p>
+<p>一直以来都想找一款能够顺畅运行 APP 的 Android 模拟器，以下就介绍几款比较给力的。</p>
         
           <p><a class="excerpt-btn" href="/2015/08/19/android-smooth-emulator-for-develop/"><span>阅读全文</span></a></p>
         
@@ -722,77 +794,6 @@
 
 
 
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2015/04/09/whisper-migrant-to-hexo/"><span>开始将博客迁移到 Hexo 静态博客框架</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2015/04/09/whisper-migrant-to-hexo/" rel="bookmark">
-        <time class="entry-date published" datetime="2015-04-09T02:04:58.000Z">
-          2015-04-09
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>平时要么在工作中学习，要么在家里学习，但是不知道自己进步到哪一步了，故准备重启博客系统，记录一些点滴以看清自己的成长。相比以前使用的<code>Wordpress</code>，更想尝试一下静态博客，对比多个博客系统后，决定采用<code>HEXO</code>。</p>
-        
-          <p><a class="excerpt-btn" href="/2015/04/09/whisper-migrant-to-hexo/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Life/">Life</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Blog/">Blog</a><a href="/tags/Hexo/">Hexo</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2015/04/09/whisper-migrant-to-hexo/#comment">评论</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
 
 <section class="pagination">
   
@@ -808,7 +809,7 @@
     Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
     </br>
     
-    &copy; 2022 Kaede Akatsuki
+    &copy; 2025 Kaede Akatsuki
     
   </p>
 </footer>

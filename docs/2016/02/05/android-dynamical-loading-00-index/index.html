@@ -114,7 +114,7 @@
 
 <div id="toc" class="toc-article">
       <div class="toc-content">
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关信息"><span class="toc-text">相关信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-简单易懂的介绍"><span class="toc-text">1. 简单易懂的介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-动态加载的分类"><span class="toc-text">2. 动态加载的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-类加载器ClassLoader的工作机制"><span class="toc-text">3. 类加载器ClassLoader的工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-加载SD卡的SO库"><span class="toc-text">4. 加载SD卡的SO库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用SO库时需要注意的一些问题"><span class="toc-text">5. 使用SO库时需要注意的一些问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-简单的动态加载模式"><span class="toc-text">6. 简单的动态加载模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-代理Activity的模式"><span class="toc-text">7. 代理Activity的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-动态创建Activity的模式"><span class="toc-text">8. 动态创建Activity的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-设计一个插件化框架Frontia"><span class="toc-text">9. 设计一个插件化框架Frontia</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#还未发布的内容"><span class="toc-text">还未发布的内容</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#相关信息"><span class="toc-text">相关信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-简单易懂的介绍"><span class="toc-text">1. 简单易懂的介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-动态加载的分类"><span class="toc-text">2. 动态加载的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-类加载器-ClassLoader-的工作机制"><span class="toc-text">3. 类加载器 ClassLoader 的工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-加载-SD-卡的-SO-库"><span class="toc-text">4. 加载 SD 卡的 SO 库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用-SO-库时需要注意的一些问题"><span class="toc-text">5. 使用 SO 库时需要注意的一些问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-简单的动态加载模式"><span class="toc-text">6. 简单的动态加载模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-代理-Activity-的模式"><span class="toc-text">7. 代理 Activity 的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-动态创建-Activity-的模式"><span class="toc-text">8. 动态创建 Activity 的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-设计一个插件化框架-Frontia"><span class="toc-text">9. 设计一个插件化框架 Frontia</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#还未发布的内容"><span class="toc-text">还未发布的内容</span></a></li></ol>
       </div>
 </div>
 <style>
@@ -127,75 +127,77 @@
 
 
         <p><img src="/assets/9228cd65_dd51_4de4_a55a_a5f0cf0226bc_untitled.png" alt></p>
-<p>说到动态加载，我们经常使用“插件化”、“热修复”、“热部署”等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
-<p>在Android开发中采用动态加载技术，可以达到不安装新的APK就升级APP功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急BUG。</p>
-<p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在Android项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
+<p>说到动态加载，我们经常使用 “插件化”、“热修复”、“热部署” 等词汇，所以大家应该不会陌生。本系列的文章的主要目的是分析一下整个动态加载的过程，重点分析其中的关键技术点，并且开发一个比较灵活的动态加载框架，用于满足不同程度的业务需求。</p>
+<p>在 Android 开发中采用动态加载技术，可以达到不安装新的 APK 就升级 APP 功能的目的，可以用来到达快速发版的目的，也可以用来修复一些紧急 BUG。</p>
+<p>现在使用得比较广泛的动态加载技术的核心一般都是使用 <strong>ClassLoader</strong> ，后者能够加载程序外部的类（已编译好的），从而达到升级代码逻辑的目的。虽然动态加载的核心原理比较简单，但是根据功能的复杂程度，实际在 Android 项目中使用的时候还要涉及许多其他方面的知识，这里分为几个篇幅分别进行介绍。</p>
 <a id="more"></a>
 <h3 id="相关信息"><a href="#相关信息" class="headerlink" title="相关信息"></a>相关信息</h3><ul>
-<li>Author : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a></li>
-<li>Index : <a href="http://kaedea.com/2016/02/05/android-dynamical-loading-00-index">ANDROID动态加载系列</a></li>
+<li>Author : <a href="https://github.com/kaedea" target="_blank" rel="noopener">Kaede</a><ul>
+<li>Index : <a href="http://kaedea.com/2016/02/05/android-dynamical-loading-00-index">ANDROID 动态加载系列</a></li>
+</ul>
+</li>
 <li>GitHub : <a href="https://github.com/kaedea/android-dynamical-loading" target="_blank" rel="noopener">kaedea/android-dynamical-loading</a></li>
 </ul>
 <h3 id="1-简单易懂的介绍"><a href="#1-简单易懂的介绍" class="headerlink" title="1. 简单易懂的介绍"></a>1. 简单易懂的介绍</h3><p>内容：</p>
 <ol>
-<li>动态加载技术在Android中的使用背景；</li>
-<li>Android的动态的加载大致可以分为“加载SO库”和“加载DEX/JAR/APK”两种；</li>
-<li>动态加载的基础是类加载器ClassLoader；</li>
+<li>动态加载技术在 Android 中的使用背景；</li>
+<li>Android 的动态的加载大致可以分为 “加载 SO 库” 和 “加载 DEX/JAR/APK” 两种；</li>
+<li>动态加载的基础是类加载器 ClassLoader；</li>
 <li>使用动态加载的三种模式；</li>
 <li>采用动态加载的作用与代价；</li>
-<li>除了ClassLoader之外的动态修改代码的技术（HotFix）；</li>
+<li>除了 ClassLoader 之外的动态修改代码的技术（HotFix）；</li>
 <li>一些动态加载的开源项目；</li>
 </ol>
 <p>地址：<a href="http://kaedea.com/2016/02/06/android-dynamical-loading-01-introduction/">简单易懂的介绍</a></p>
 <h3 id="2-动态加载的分类"><a href="#2-动态加载的分类" class="headerlink" title="2. 动态加载的分类"></a>2. 动态加载的分类</h3><p>内容：介绍一下动态加载的类型，理清一下动态加载、插件化、热部署、热修复等技术之间的关系。地址：<a href="http://kaedea.com/2016/05/14/android-dynamical-loading-02-type/">动态加载的分类</a></p>
-<h3 id="3-类加载器ClassLoader的工作机制"><a href="#3-类加载器ClassLoader的工作机制" class="headerlink" title="3. 类加载器ClassLoader的工作机制"></a>3. 类加载器ClassLoader的工作机制</h3><p>内容：</p>
+<h3 id="3-类加载器-ClassLoader-的工作机制"><a href="#3-类加载器-ClassLoader-的工作机制" class="headerlink" title="3. 类加载器 ClassLoader 的工作机制"></a>3. 类加载器 ClassLoader 的工作机制</h3><p>内容：</p>
 <ol>
-<li>类加载器ClassLoader的创建过程和加载类的过程；</li>
-<li>ClassLoader的双亲代理模式；</li>
-<li>DexClassLoader和PathClassLoader之间的区别；</li>
-<li>使用ClassLoader加载外部类需要注意的一些问题；</li>
-<li>自定义ClassLoader（Hack开发）</li>
+<li>类加载器 ClassLoader 的创建过程和加载类的过程；</li>
+<li>ClassLoader 的双亲代理模式；</li>
+<li>DexClassLoader 和 PathClassLoader 之间的区别；</li>
+<li>使用 ClassLoader 加载外部类需要注意的一些问题；</li>
+<li>自定义 ClassLoader（Hack 开发）</li>
 </ol>
-<p>地址：<a href="http://kaedea.com/2016/02/07/android-dynamical-loading-02-classloader/">ClassLoader的工作机制</a></p>
-<h3 id="4-加载SD卡的SO库"><a href="#4-加载SD卡的SO库" class="headerlink" title="4. 加载SD卡的SO库"></a>4. 加载SD卡的SO库</h3><p>内容：</p>
+<p>地址：<a href="http://kaedea.com/2016/02/07/android-dynamical-loading-02-classloader/">ClassLoader 的工作机制</a></p>
+<h3 id="4-加载-SD-卡的-SO-库"><a href="#4-加载-SD-卡的-SO-库" class="headerlink" title="4. 加载 SD 卡的 SO 库"></a>4. 加载 SD 卡的 SO 库</h3><p>内容：</p>
 <ol>
-<li>如何编译和使用SO库；</li>
-<li>分析Android中加载SO库相关的源码；</li>
-<li>如何加载SD卡中的SO库（也是动态加载APK需要解决的问题）；</li>
+<li>如何编译和使用 SO 库；</li>
+<li>分析 Android 中加载 SO 库相关的源码；</li>
+<li>如何加载 SD 卡中的 SO 库（也是动态加载 APK 需要解决的问题）；</li>
 </ol>
-<p>地址：<a href="http://kaedea.com/2016/06/01/android-dynamical-loading-03-so-in-sdcard/">加载SD卡的SO库</a></p>
-<h3 id="5-使用SO库时需要注意的一些问题"><a href="#5-使用SO库时需要注意的一些问题" class="headerlink" title="5. 使用SO库时需要注意的一些问题"></a>5. 使用SO库时需要注意的一些问题</h3><p>内容：介绍使用SO库开发时的一些坑，提供从网络下载并加载SO库的策略。地址：<a href="http://kaedea.com/2016/06/04/android-dynamical-loading-04-so-problems/">使用SO库时需要注意的一些问题</a></p>
+<p>地址：<a href="http://kaedea.com/2016/06/01/android-dynamical-loading-03-so-in-sdcard/">加载 SD 卡的 SO 库</a></p>
+<h3 id="5-使用-SO-库时需要注意的一些问题"><a href="#5-使用-SO-库时需要注意的一些问题" class="headerlink" title="5. 使用 SO 库时需要注意的一些问题"></a>5. 使用 SO 库时需要注意的一些问题</h3><p>内容：介绍使用 SO 库开发时的一些坑，提供从网络下载并加载 SO 库的策略。地址：<a href="http://kaedea.com/2016/06/04/android-dynamical-loading-04-so-problems/">使用 SO 库时需要注意的一些问题</a></p>
 <h3 id="6-简单的动态加载模式"><a href="#6-简单的动态加载模式" class="headerlink" title="6. 简单的动态加载模式"></a>6. 简单的动态加载模式</h3><p>内容：</p>
 <ol>
-<li>如何创建我们需要的dex文件；</li>
-<li>如何加载dex文件里面的类；</li>
-<li>动态加载dex文件在ART虚拟机的兼容性问题；</li>
+<li>如何创建我们需要的 dex 文件；</li>
+<li>如何加载 dex 文件里面的类；</li>
+<li>动态加载 dex 文件在 ART 虚拟机的兼容性问题；</li>
 </ol>
 <p>地址：<a href="http://kaedea.com/2016/06/05/android-dynamical-loading-05-so-simple-mode/">简单加载模式</a></p>
-<h3 id="7-代理Activity的模式"><a href="#7-代理Activity的模式" class="headerlink" title="7. 代理Activity的模式"></a>7. 代理Activity的模式</h3><p>内容：</p>
+<h3 id="7-代理-Activity-的模式"><a href="#7-代理-Activity-的模式" class="headerlink" title="7. 代理 Activity 的模式"></a>7. 代理 Activity 的模式</h3><p>内容：</p>
 <ol>
-<li>如何启动插件APK中没有注册的Activity</li>
-<li>代理Activity模式开源项目“dynamic-load-apk”</li>
+<li>如何启动插件 APK 中没有注册的 Activity</li>
+<li>代理 Activity 模式开源项目 “dynamic-load-apk”</li>
 </ol>
-<p>地址：<a href="http://kaedea.com/2016/06/10/android-dynamical-loading-06-proxy-activity/">代理Activity模式</a></p>
-<h3 id="8-动态创建Activity的模式"><a href="#8-动态创建Activity的模式" class="headerlink" title="8. 动态创建Activity的模式"></a>8. 动态创建Activity的模式</h3><p>内容：</p>
+<p>地址：<a href="http://kaedea.com/2016/06/10/android-dynamical-loading-06-proxy-activity/">代理 Activity 模式</a></p>
+<h3 id="8-动态创建-Activity-的模式"><a href="#8-动态创建-Activity-的模式" class="headerlink" title="8. 动态创建 Activity 的模式"></a>8. 动态创建 Activity 的模式</h3><p>内容：</p>
 <ol>
-<li>如何在运行时动态创建一个Activity；</li>
-<li>自定义ClassLoader并偷梁换柱替换想要加载的类；</li>
-<li>动态创建Activity模式开源项目“android-pluginmgr”</li>
+<li>如何在运行时动态创建一个 Activity；</li>
+<li>自定义 ClassLoader 并偷梁换柱替换想要加载的类；</li>
+<li>动态创建 Activity 模式开源项目 “android-pluginmgr”</li>
 <li>代理模式与动态创建类模式的区别；</li>
 </ol>
-<p>地址：<a href="http://kaedea.com/2016/06/14/android-dynamical-loading-07-dynamic-activity/">动态创建Activity模式</a></p>
-<h3 id="9-设计一个插件化框架Frontia"><a href="#9-设计一个插件化框架Frontia" class="headerlink" title="9. 设计一个插件化框架Frontia"></a>9. 设计一个插件化框架Frontia</h3><p>内容：结合动态加载系列文章的分析，设计并开发一个Android的插件化框架，命名为Frontia。地址：<a href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">设计一个插件化框架Frontia题</a></p>
+<p>地址：<a href="http://kaedea.com/2016/06/14/android-dynamical-loading-07-dynamic-activity/">动态创建 Activity 模式</a></p>
+<h3 id="9-设计一个插件化框架-Frontia"><a href="#9-设计一个插件化框架-Frontia" class="headerlink" title="9. 设计一个插件化框架 Frontia"></a>9. 设计一个插件化框架 Frontia</h3><p>内容：结合动态加载系列文章的分析，设计并开发一个 Android 的插件化框架，命名为 Frontia。地址：<a href="http://kaedea.com/2016/07/10/android-dynamical-loading-08-satrt-frontia/">设计一个插件化框架 Frontia 题</a></p>
 <h3 id="还未发布的内容"><a href="#还未发布的内容" class="headerlink" title="还未发布的内容"></a>还未发布的内容</h3><ol>
-<li>使用“环境注入”的模式；</li>
+<li>使用 “环境注入” 的模式；</li>
 <li>使用动态加载技术的情形；</li>
 <li>使用动态加载方式项目的项目结构调整和开发调试方式；</li>
-<li>开源项目“Android-Frontia”，动态加载框架的项目，特点是专注于“插件化”和“宿主与插件之间的通讯”、灵活的扩展和使用方式，并提供完整的插件更新、安装和管理策略；</li>
+<li>开源项目 “Android-Frontia”，动态加载框架的项目，特点是专注于 “插件化” 和 “宿主与插件之间的通讯”、灵活的扩展和使用方式，并提供完整的插件更新、安装和管理策略；</li>
 </ol>
 <!-- Generated by HexoWriter
 notion-down.version = 0.2.2
-notion-down.revision = b'd0a04b0'
+notion-down.revision = b'808ded4'
 Title = Android 动态加载系列索引
 Date = 2016-02-05 00:00:00
 Published = true
@@ -278,7 +280,7 @@ hexo.metaAlignment = center
     Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
     </br>
     
-    &copy; 2022 Kaede Akatsuki
+    &copy; 2025 Kaede Akatsuki
     
   </p>
 </footer>

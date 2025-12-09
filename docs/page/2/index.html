@@ -73,6 +73,79 @@
 
   
     
+    <h3 class="article-title"><a href="/2018/08/20/bash-is-untype/"><span>Bash 编程 - 从入门到入土</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/08/20/bash-is-untype/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-08-20T00:00:00.000Z">
+          2018-08-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="/assets/bash_mian_xiang_google_bian_cheng_bashy.png" alt="Bash，面向 Google 编程！"></p>
+<p>Bash，一门典型的面向 Google 编程的语言（类似的还有面向 StackOverflow 编程的 vim），最大的语言特性是其 “不确定性原理”（你要么学会了 Bash 了语法，要么写出了能正常运行的 Bash 脚本，但是不能即学会了语法又写出了脚本），你今天刚学会的语法，到了明天就不一定会记得了；今天刚写好的代码，到了明天就不一定能运行了。与其回忆昨天学了什么，还不如直接问 Google。</p>
+<p>Bash 学习的深入可真是 “从入门到入土”，个人感觉最佳实践应该是把 Bash 作为脚本入口，包一层别的脚本语言（比如 Python），后续工作全交由后者处理。</p>
+        
+          <p><a class="excerpt-btn" href="/2018/08/20/bash-is-untype/"><span>阅读全文</span></a></p>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/DevOps/">DevOps</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Bash/">Bash</a>
+    </span>
+    
+
+    </div>
+
+    
+    <div class="article-meta pull-right">
+      <span>
+        <i class="icon-comments"></i>
+        <span>
+          <a href="/2018/08/20/bash-is-untype/#comment">评论</a>
+        </span>
+      </span>
+    </div>
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
     <h3 class="article-title"><a href="/2018/06/04/android-so-loading-2/"><span>动态下发 so 库在 Android APK 安装包瘦身方面的应用</span></a></h3>
     
   
@@ -165,7 +238,7 @@
     <div class="entry">
       
         <!-- draft
-Android静态代码扫描效率优化与实践 - 美团
+Android 静态代码扫描效率优化与实践 - 美团
 [https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA](https://mp.weixin.qq.com/s/cY6rUrrjYRaIV--UzjiUgA)
 1. 背景
 2. 思考
@@ -229,7 +302,7 @@ Android静态代码扫描效率优化与实践 - 美团
 
   
     
-    <h3 class="article-title"><a href="/2017/04/09/android/global-accessing-context/"><span>一种Android应用内全局获取Context实例的装置</span></a></h3>
+    <h3 class="article-title"><a href="/2017/04/09/android/global-accessing-context/"><span>一种 Android 应用内全局获取 Context 实例的装置</span></a></h3>
     
   
 
@@ -249,11 +322,11 @@ Android静态代码扫描效率优化与实践 - 美团
   <div class="article-content">
     <div class="entry">
       
-        <p>哥白尼·罗斯福·马丁路德·李开复·嫁衣曾经说过</p>
+        <p>哥白尼・罗斯福・马丁路德・李开复・嫁衣曾经说过</p>
 <blockquote>
 <p>Where there is an Android App, there is an Application context.</p>
 </blockquote>
-<p>没毛病，扎心了。App运行的时候，肯定是存在至少一个Application实例的。同时，Context我们再熟悉不过了，写代码的时候经常需要使用到Context实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过attach方法传递进我们需要用到的类。Context实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然App运行的时候，Application实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取Context实例，这样以来就不需要上面那些繁琐的传递方式。</p>
+<p>没毛病，扎心了。App 运行的时候，肯定是存在至少一个 Application 实例的。同时，Context 我们再熟悉不过了，写代码的时候经常需要使用到 Context 实例，它一般是通过构造方法传递进来，通过方法的形式参数传递进来，或者是通过 attach 方法传递进我们需要用到的类。Context 实在是太重要了，以至于我经常恨不得着藏着掖着，随身带着，这样需要用到的时候就能立刻掏出来用用。但是换个角度想想，既然 App 运行的时候，Application 实例总是存在的，那么为何不设置一个全局可以访问的静态方法用于获取 Context 实例，这样以来就不需要上面那些繁琐的传递方式。</p>
 <p>说到这里，有的人可能说想这不是我们经常干的好事吗，有必要说的这么玄乎？少侠莫急，请听吾辈徐徐道来。<br>
         
           <p><a class="excerpt-btn" href="/2017/04/09/android/global-accessing-context/"><span>阅读全文</span></a></p>
@@ -325,8 +398,8 @@ Android静态代码扫描效率优化与实践 - 美团
   <div class="article-content">
     <div class="entry">
       
-        <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard又搞了个大新闻</a>），主要吐槽的是项目里面使用ProGuard工具导致的一个诡异的坑。其中根本的原因就是，ProGuard混淆Java注解类的时候，把两个方法混淆成同样的名字，导致dx工具在打包<code>.dex</code>文件的时候报错。</p>
-<p>本来以为这件事情算是告一段落了，没想到自己还是太Naive了。今天早上突然收到了ProGuard开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
+        <p>昨天刚刚发表了一篇文章（<a href="http://kaedea.com/2017/03/20/android/naughty-proguard/">ProGuard 又搞了个大新闻</a>），主要吐槽的是项目里面使用 ProGuard 工具导致的一个诡异的坑。其中根本的原因就是，ProGuard 混淆 Java 注解类的时候，把两个方法混淆成同样的名字，导致 dx 工具在打包 <code>.dex</code> 文件的时候报错。</p>
+<p>本来以为这件事情算是告一段落了，没想到自己还是太 Naive 了。今天早上突然收到了 ProGuard 开发者发来的一份邮件，Exciting！邮件里谈到了这次的坑出现的真正原因 —— Java 源码和字节码（bytecode）里方法的重载（OverLoading）。</p>
         
           <p><a class="excerpt-btn" href="/2017/03/21/android/naughty-proguard-tuduki/"><span>阅读全文</span></a></p>
         
@@ -397,8 +470,8 @@ Android静态代码扫描效率优化与实践 - 美团
   <div class="article-content">
     <div class="entry">
       
-        <p>一般情况下，Android项目经常开启ProGuard功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简Java API的名字来减少代码的总量，从而精简应用编译后的体积。</p>
-<p>ProGuard有个比较坑爹的问题。在开发阶段，我们一般不启用ProGuard，只有在构建Release包的时候才开启。因此，如果有一些API被混淆了会出现BUG，那么在开发阶段我们往往无法察觉BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。<br>不过今天被ProGuard坑的不是混淆API导致的BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
+        <p>一般情况下，Android 项目经常开启 ProGuard 功能来混淆代码，一方面可以降低应用被反编译后代码的友善度，增加被逆向的难度，另一方面开可以通过精简 Java API 的名字来减少代码的总量，从而精简应用编译后的体积。</p>
+<p>ProGuard 有个比较坑爹的问题。在开发阶段，我们一般不启用 ProGuard，只有在构建 Release 包的时候才开启。因此，如果有一些 API 被混淆了会出现 BUG，那么在开发阶段我们往往无法察觉 BUG，只有在构建发布包的时候才发现，甚至要等发布到线上了才能发现，这种时候解决问题的成本就很大了。<br>不过今天被 ProGuard 坑的不是混淆 API 导致的 BUG，这货在之前相当长的一段时间里一直相安无事，最近突然又搞了个大新闻，而且问题排查起来相当蹊跷、诡异。</p>
         
           <p><a class="excerpt-btn" href="/2017/03/20/android/naughty-proguard/"><span>阅读全文</span></a></p>
         
@@ -482,7 +555,7 @@ Android静态代码扫描效率优化与实践 - 美团
 <p><a href="https://github.com/kaedea/comment-formatter" target="_blank" rel="noopener">Check it out</a>.</p>
 <!-- Generated by HexoWriter
 notion-down.version = 0.2.2
-notion-down.revision = b'd0a04b0'
+notion-down.revision = b'808ded4'
 Title = IDEA 注释优化插件：Comment Formatter
 Date = 2016-12-01
 Published = true
@@ -562,8 +635,8 @@ hexo.link = https://github.com/kaedea/comment-formatter
   <div class="article-content">
     <div class="entry">
       
-        <p>在Android Kikat及以前的Android系统上，构建或安装Apk会出现“<strong>65535方法数超标</strong>”以及“<strong>INSTALL_FAILED_DEXOPT</strong>”问题，MultiDex是Google为了解决这个问题问题而开发的一个Support库。MultiDex出现的具体背景、使用方式可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给App启用 MultiDex功能</a>，而MultiDex Support库的工作机制、源码分析可以参考<a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex工作原理分析和优化方案</a>。</p>
-<p>MultiDex的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在App第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据Apk包的大小、Android系统版本的不同，这个卡顿时间一般是2000到5000毫秒左右，极端的情况下甚至可以到20000+毫秒。通过之前的分析，我们知道具体的卡顿产生在MultiDex解压、优化dex这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装Apk前先对新版本的Apk做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
+        <p>在 Android Kikat 及以前的 Android 系统上，构建或安装 Apk 会出现 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题，MultiDex 是 Google 为了解决这个问题问题而开发的一个 Support 库。MultiDex 出现的具体背景、使用方式可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>，而 MultiDex Support 库的工作机制、源码分析可以参考 <a href="http://kaedea.com/2016/11/11/android/multidex-source-code/">MultiDex 工作原理分析和优化方案</a>。</p>
+<p>MultiDex 的使用虽然很简单便捷，但是有个比较蛋疼的问题，就是在 App 第一次冷启动的时候会产生明显的卡顿现象。经过测试和统计，根据 Apk 包的大小、Android 系统版本的不同，这个卡顿时间一般是 2000 到 5000 毫秒左右，极端的情况下甚至可以到 20000 + 毫秒。通过之前的分析，我们知道具体的卡顿产生在 MultiDex 解压、优化 dex 这两个过程，而且只在第一次冷启动的时候才会触发这两个过程。那么优化的方式也很简单，在安装 Apk 前先对新版本的 Apk 做好解压和优化工作，就能在安装后第一次冷启动的时候避开这两个耗时的过程了。</p>
         
           <p><a class="excerpt-btn" href="/2016/11/22/android/pre-multidex/"><span>阅读全文</span></a></p>
         
@@ -634,8 +707,8 @@ hexo.link = https://github.com/kaedea/comment-formatter
   <div class="article-content">
     <div class="entry">
       
-        <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过UP主我并没有放弃治疗哈，相信在不就的未来就可以看到“系统Api Hook模式”和插件化框架Frontia的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是dex文件的加载。</p>
-<p>MultiDex 是Google 为了解决 “<strong>65535方法数超标</strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个Support库，具体如何使用MultiDex现在市面已经有一大堆教程（可以参考<a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析MultiDex的工作原理，以及提供一些MultiDex优化的方案。</p>
+        <p>动态加载技术（插件化）系列已经坑了有一段时间了，不过 UP 主我并没有放弃治疗哈，相信在不就的未来就可以看到 “系统 Api Hook 模式” 和插件化框架 Frontia 的更新了。今天要讲的是动态加载技术的亲戚 —— MultiDex。他们的核心原理之一都是 dex 文件的加载。</p>
+<p>MultiDex 是 Google 为了解决 “<strong>65535 方法数超标 </strong>” 以及 “<strong>INSTALL_FAILED_DEXOPT</strong>” 问题而开发的一个 Support 库，具体如何使用 MultiDex 现在市面已经有一大堆教程（可以参考 <a href="http://kaedea.com/2015/09/02/android/enable-multidex/">给 App 启用 MultiDex 功能</a>），这里不再赘述。这篇日志主要是配合源码分析 MultiDex 的工作原理，以及提供一些 MultiDex 优化的方案。</p>
         
           <p><a class="excerpt-btn" href="/2016/11/11/android/multidex-source-code/"><span>阅读全文</span></a></p>
         
@@ -707,9 +780,9 @@ hexo.link = https://github.com/kaedea/comment-formatter
     <div class="entry">
       
         <blockquote>
-<p>LOG 是任何一种编程语言的第一个API，通常被初学者用来打印 Hello, World!。<br>有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。<br>毕竟爱情需要书写，不能是一整张白纸。</p>
+<p>LOG 是任何一种编程语言的第一个 API，通常被初学者用来打印 Hello, World!。<br>有研究显示，不使用 LOG 或者使用姿势错误的人，感情路都走得很辛苦，有七成的比例会在 34 岁的时候跟自己不爱的人结婚，而其余三成的人最后只能把遗产留给自己的猫。<br>毕竟爱情需要书写，不能是一整张白纸。</p>
 </blockquote>
-<p>LogCat是Android开发者们最熟悉不过的日志打印工具，几乎每一个Android项目里面都包含着大量的Log相关代码。不过，或许是因为Log实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
+<p>LogCat 是 Android 开发者们最熟悉不过的日志打印工具，几乎每一个 Android 项目里面都包含着大量的 Log 相关代码。不过，或许是因为 Log 实在是太过于普通，所以许多人在使用它的时候就显得非常随意，这些错误的使用姿势却会在不经意间给我们带来不少的大坑。</p>
         
           <p><a class="excerpt-btn" href="/2016/10/02/android/log-utility/"><span>阅读全文</span></a></p>
         
@@ -756,79 +829,6 @@ hexo.link = https://github.com/kaedea/comment-formatter
 
 
 
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2016/09/23/living/living-hackintosh-lh532/"><span>黑苹果初体验 - 富士通 LH532</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/09/23/living/living-hackintosh-lh532/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-09-23T00:00:00.000Z">
-          2016-09-23
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p><img src="/assets/bb50f6df_4c0f_424a_b9b3_04870fa7b35c_untitled.png" alt></p>
-<p>高中开始折腾电脑DIY，当然硬件玩不起，只是折腾系统，一开始折腾重装Windows系统，玩腻了就折腾Linux，到后来开始打算折腾Mac。在普通PC上安装苹果的OSX系统（现在叫MacOS）的行为叫做黑苹果（Mackintosh），相反的，苹果自家产品自带的系统叫做白苹果（Mackintosh）。不过安装黑苹果比起Windows和Linux实在是难多了，所以那时候看教程看得一脸懵逼就结束了。</p>
-<p>最近在公司开始正式切换到Mac系统上进行开发工作，但是回到家里就得用WIN10（Fujitsu LH532）进行开发，有个非常头疼的问题，就是Mac上的快捷键和Windows大相径庭，所以又产生了安装黑苹果的想法。看了一周的攻略之后，我迫不及待地开始了。</p>
-        
-          <p><a class="excerpt-btn" href="/2016/09/23/living/living-hackintosh-lh532/"><span>阅读全文</span></a></p>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Life/">Life</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Hackintosh/">Hackintosh</a><a href="/tags/黑苹果/">黑苹果</a>
-    </span>
-    
-
-    </div>
-
-    
-    <div class="article-meta pull-right">
-      <span>
-        <i class="icon-comments"></i>
-        <span>
-          <a href="/2016/09/23/living/living-hackintosh-lh532/#comment">评论</a>
-        </span>
-      </span>
-    </div>
-    
-  </div>
-</article>
-
-
-
 
 <section class="pagination">
   
@@ -844,7 +844,7 @@ hexo.link = https://github.com/kaedea/comment-formatter
     Theme by <a href="https://github.com/kaedea/hexo-theme-hacker" target="_blank">hexo-theme-hacker</a>
     </br>
     
-    &copy; 2022 Kaede Akatsuki
+    &copy; 2025 Kaede Akatsuki
     
   </p>
 </footer>
