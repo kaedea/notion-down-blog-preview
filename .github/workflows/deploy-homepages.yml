@@ -3,6 +3,7 @@ name: Deploy Homepages
 on:
   push:
     branches:
+      - main
       - release/deploy
   workflow_dispatch:
 
