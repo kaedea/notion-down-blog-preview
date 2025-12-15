@@ -114,7 +114,7 @@
 
 <div id="toc" class="toc-article">
       <div class="toc-content">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ワークフロー"><span class="toc-text">ワークフロー</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NotionDown-の実行"><span class="toc-text">NotionDown の実行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ワークフロー"><span class="toc-text">ワークフロー</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NotionDown-の実行"><span class="toc-text">NotionDown の実行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#レガシー-API-のサポート-token-v2"><span class="toc-text">レガシー API のサポート (token_v2)</span></a></li></ol>
       </div>
 </div>
 <style>
@@ -165,32 +165,38 @@
 </li>
 <li>PyPI パブリッシャ</li>
 <li>Notion APIs<ul>
-<li><del>notion-py (3rd party)</del></li>
-<li>notion-sdk (official)</li>
+<li><del>notion-py (3rd party)</del>, Deprecated, 下記の “<strong> レガシー API のサポート (token_v2)” の部分を参考する </strong></li>
+<li>notion-sdk (official), Currently supported</li>
 </ul>
 </li>
 </ul>
 <h2 id="ワークフロー"><a href="#ワークフロー" class="headerlink" title="ワークフロー"></a>ワークフロー</h2><p><img src="/assets/notiondown_workflows_notiondown.png" alt="NotionDown Workflows"></p>
 <p>NotionDown は <a href="https://github.com/jamalex/notion-py" target="_blank" rel="noopener">notion-py</a> を使って Notion Page のデータを読み込む、そしてコンフィグレーションによって、目標な MD ファイルを生成する。</p>
-<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><blockquote>
-<p>notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
+<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a><strong>Basic usage</strong></h3><blockquote>
+<p>notion-down &gt;&gt; Notion APIs (notion-sdk-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
 </blockquote>
-<h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a>Advanced usage</h3><blockquote>
-<p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
+<h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a><strong>Advanced usage</strong></h3><blockquote>
+<p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-sdk-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
 </blockquote>
 <h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>準備：</p>
 <ol>
-<li><code>notion_token_v2</code> を取る。</li>
+<li>Notion <a href="https://developers.notion.com/docs/getting-started" target="_blank" rel="noopener">Integration Token</a> を取る。</li>
 <li>ルーツページの <code>public notion blog_url</code> を取る。</li>
 <li><code>notion-down/main.py</code> を実行する。</li>
 </ol>
-<p><code>notion_token_v2</code> のゲットする方法は <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_gettokenv2.md" target="_blank" rel="noopener">ここに</a> ある。</p>
+<p><code>notion_token</code> のゲットする方法は <a href="https://developers.notion.com/docs/getting-started" target="_blank" rel="noopener">ここに</a> ある。 (token_v2 &amp; notion-py を使用するレガシー API のサポートについては、ブランチ <a href="https://github.com/kaedea/notion-down/tree/archive/token-v2-support" target="_blank" rel="noopener">archive/token-v2-support</a> を参照してください。)</p>
 <p><a href="https://www.notion.so/kaedea/NotionDown-Posts-Template-f77f3322915a4ab48caa0f2e76e9d733" target="_blank" rel="noopener">NotionDown Posts Template</a> を自分の Notion Workspace にコピーする、そしてその URL を <code>blog_url</code> をしてつかいます（既存するルーツページを使うのもオッケー）。ちなみに、ルーツページを Public にセットすることが必要です。</p>
 <h3 id="NotionDown-の実行"><a href="#NotionDown-の実行" class="headerlink" title="NotionDown の実行"></a>NotionDown の実行</h3><p><code>notion-down/main.py</code> の使い方：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --token_v2 &lt;token_v2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># アーギュメントのコンフィグ：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --notion_token &lt;notion_token&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># アーギュメントのコンフィグ：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
 <p>くわりコンフィグレーションはここに <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_custom_configs.md" target="_blank" rel="noopener">Custom Configurations</a>。</p>
 <p>以降は NotionDown のそれぞれな使い方を紹介する。</p>
-<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>チェック <code>/.circleci/config.yaml</code>：</p>
+<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>GitHub Actions スクリプト <code>/.github/workflows</code> を参照してください。</p>
+<ul>
+<li><code>build-readme.yml</code>: README.md を生成する GitHub Actions Workflow。</li>
+<li><code>build-hexo.yml</code>: デーモン Hexo ソースコードを生成する GitHub Actions workflow、チェック <a href="https://github.com/kaedea/notion-down-hexo-showcase% E3%80%82" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase。</a></li>
+<li><code>pycorrector-test.yml</code>: スペルチェックの GitHub Actions workflow。</li>
+</ul>
+<p>CircleCI スクリプト <code>/.circleci/config.yaml</code> も参照してください：</p>
 <ul>
 <li><code>test-build-readme</code>: README.md を生成する CircleCI Jobs。</li>
 <li><code>test-build-hexo</code>: デーモン Hexo ソースコードを生成する CircleCI jobs、チェック <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>。</li>
@@ -204,9 +210,10 @@
 <li>Notion image page source replacing (WIP)</li>
 </ul>
 <h3 id="UnitTest-Examples"><a href="#UnitTest-Examples" class="headerlink" title="UnitTest Examples"></a>UnitTest Examples</h3><p>チェック <code>test/</code>。</p>
+<h2 id="レガシー-API-のサポート-token-v2"><a href="#レガシー-API-のサポート-token-v2" class="headerlink" title="レガシー API のサポート (token_v2)"></a>レガシー API のサポート (token_v2)</h2><p>NotionDown の最新 API は、サードパーティの token_v2 から公式の Integration Token に移行しました。token_v2 と notion-py を使用するレガシー API のサポートについては、ブランチ <a href="https://github.com/kaedea/notion-down/tree/archive/token-v2-support" target="_blank" rel="noopener">archive/token-v2-support</a> を参照してください。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 1.0.1
-notion-down.revision = b'0dbab00'
+notion-down.revision = b'a359dbd'
 Title = Project NotionDown 🇯🇵
 Date = 2021-05-01
 Published = true

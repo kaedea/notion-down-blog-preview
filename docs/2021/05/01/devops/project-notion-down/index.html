@@ -114,7 +114,7 @@
 
 <div id="toc" class="toc-article">
       <div class="toc-content">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行-NotionDown"><span class="toc-text">运行 NotionDown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作原理"><span class="toc-text">工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-usage"><span class="toc-text">Basic usage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-usage"><span class="toc-text">Advanced usage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-Started"><span class="toc-text">Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prepare"><span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行-NotionDown"><span class="toc-text">运行 NotionDown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Builds"><span class="toc-text">CI Builds</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Showcase-Jobs"><span class="toc-text">Showcase Jobs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnitTest-Examples"><span class="toc-text">UnitTest Examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旧自定义-API-支持-token-v2"><span class="toc-text">旧自定义 API 支持 (token_v2)</span></a></li></ol>
       </div>
 </div>
 <style>
@@ -167,32 +167,38 @@
 </li>
 <li>PyPI 发布</li>
 <li>Notion APIs<ul>
-<li><del>notion-py (3rd party)</del></li>
-<li>notion-sdk (official)</li>
+<li><del>notion-py (3rd party)</del>, 已废弃，请参考文末 <strong> 旧自定义 API 支持 (token_v2)</strong>。</li>
+<li><del>notion-sdk (official)</del>, 当前支持方案</li>
 </ul>
 </li>
 </ul>
 <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p><img src="/assets/notiondown_workflows_notiondown.png" alt="NotionDown Workflows"></p>
-<p>NotionDown 通过 <a href="https://github.com/jamalex/notion-py" target="_blank" rel="noopener">notion-py</a> 读取 Notion Page 的数据，然后再（根据配置）解析成 MD 文件。</p>
-<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><blockquote>
-<p>notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
+<p>NotionDown 通过 <a href="https://github.com/ramnes/notion-sdk-py" target="_blank" rel="noopener">notion-sdk-py</a> 读取 Notion Page 的数据，然后再（根据配置）解析成 MD 文件。</p>
+<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a><strong>Basic usage</strong></h3><blockquote>
+<p>notion-down &gt;&gt; Notion APIs (notion-sdk-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files</p>
 </blockquote>
-<h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a>Advanced usage</h3><blockquote>
-<p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
+<h3 id="Advanced-usage"><a href="#Advanced-usage" class="headerlink" title="Advanced usage"></a><strong>Advanced usage</strong></h3><blockquote>
+<p>WebHook &gt;&gt; notion-down &gt;&gt; Notion APIs (notion-sdk-py) &gt;&gt; Notion pages data &gt;&gt; generating MD files &gt;&gt; Copy into Hexo source &gt;&gt; generating webpages &gt;&gt; push to GitHub pages</p>
 </blockquote>
 <h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>前置准备：</p>
 <ol>
-<li>Prepare <code>notion_token_v2</code>.</li>
+<li>Prepare Notion <a href="https://developers.notion.com/docs/getting-started" target="_blank" rel="noopener">Integration Token</a>.</li>
 <li>Prepare <code>public notion blog_url</code> as root post for NotionDown to get the pages you want to handle.</li>
 <li>Run <code>notion-down/main.py</code> with your configs.</li>
 </ol>
-<p>参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_gettokenv2.md" target="_blank" rel="noopener">这里</a> 获取 <code>notion_token_v2</code>。</p>
+<p>参考 <a href="https://developers.notion.com/docs/getting-started" target="_blank" rel="noopener">这里</a> 获取 <code>notion_token</code>。 (关于 token_v2 &amp; notion-py 的旧版本 API 支持，请参考分支 <a href="https://github.com/kaedea/notion-down/tree/archive/token-v2-support" target="_blank" rel="noopener">archive/token-v2-support</a>。)</p>
 <p>复制一份 <a href="https://www.notion.so/kaedea/NotionDown-Posts-Template-f77f3322915a4ab48caa0f2e76e9d733" target="_blank" rel="noopener">NotionDown Posts Template</a> 到你的 Notion Workspace 并把其 URL 做为 <code>blog_url</code> (或者直接使用你自己已有的 Notion Posts)。需要注意的是，现阶段配合 notion_token_v2 使用的 Notion Posts 必须是 Public 的。</p>
 <h3 id="运行-NotionDown"><a href="#运行-NotionDown" class="headerlink" title="运行 NotionDown"></a>运行 NotionDown</h3><p>执行 Python 基本 <code>notion-down/main.py</code> :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --token_v2 &lt;token_v2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有三种方式配置 NotionDown 的运行参数：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run with cli cmd</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --blog_url &lt;Notion Post Url&gt; \</span><br><span class="line">    --notion_token &lt;notion_token&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">PYTHONPATH=./ python main.py \</span><br><span class="line">    --config_file <span class="string">'.config_file.json'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有三种方式配置 NotionDown 的运行参数：cli-args, config_file or SysEnv parameters</span></span><br><span class="line"><span class="comment"># Priority: cli args &gt; config_file &gt; SysEnv parameters &gt; NotionDown default</span></span><br></pre></td></tr></table></figure>
 <p>更详细的参数配置，请参考 <a href="https://github.com/kaedea/notion-down/blob/master/dist/parse_readme/notiondown_custom_configs.md" target="_blank" rel="noopener">Custom Configurations</a>。</p>
 <p>以下提供几种使用 NotionDown 的案例。</p>
-<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>参看以下 CI 脚本 <code>/.circleci/config.yaml</code>：</p>
+<h3 id="CI-Builds"><a href="#CI-Builds" class="headerlink" title="CI Builds"></a>CI Builds</h3><p>相关 GitHub Actions 构建脚本，参看 <code>/.github/workflows</code>：</p>
+<ul>
+<li><code>build-readme.yml</code>: GitHub Actions workflow that generating README for this repo.</li>
+<li><code>build-hexo.yml</code>: GitHub Actions workflow that generating Hexo posts for <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>.</li>
+<li><code>pycorrector-test.yml</code>: GitHub Actions workflow that that executing spelling check for the test posts.</li>
+</ul>
+<p>更多 CI 脚本 <code>/.circleci/config.yaml</code>：</p>
 <ul>
 <li><code>test-build-readme</code>: CircleCI jobs 用来生成 NotionDown 的 README.md。</li>
 <li><code>test-build-hexo</code>: CircleCI jobs 用来演示如何生成 Hexo 源文件 <a href="https://github.com/kaedea/notion-down-hexo-showcase" target="_blank" rel="noopener">https://github.com/kaedea/notion-down-hexo-showcase</a>。</li>
@@ -206,9 +212,10 @@
 <li>Notion image page source replacing (WIP)</li>
 </ul>
 <h3 id="UnitTest-Examples"><a href="#UnitTest-Examples" class="headerlink" title="UnitTest Examples"></a>UnitTest Examples</h3><p>单元测试放在 <code>test/</code>。</p>
+<h2 id="旧自定义-API-支持-token-v2"><a href="#旧自定义-API-支持-token-v2" class="headerlink" title="旧自定义 API 支持 (token_v2)"></a>旧自定义 API 支持 (token_v2)</h2><p>NotionDown 的最新 API 已从第三方 token_v2 迁移至官方 Integration Token。关于基于 token_v2 &amp; notion-py 的旧版本 API 支持，请参考分支 <a href="https://github.com/kaedea/notion-down/tree/archive/token-v2-support" target="_blank" rel="noopener">archive/token-v2-support</a>。</p>
 <!-- Generated by HexoWriter
 notion-down.version = 1.0.1
-notion-down.revision = b'0dbab00'
+notion-down.revision = b'a359dbd'
 Title = Project NotionDown
 Date = 2021-05-01
 Published = true
